@@ -62,7 +62,7 @@ public class ComputerMenu implements IMenu{
 		}
 		if(idToShow >= 1){
 			computerDAO.openConnection();
-			Computer computerToShow = computerDAO.getComputerByID(idToShow);
+			Computer computerToShow = computerDAO.getByID(idToShow);
 			if(computerToShow != null){
 				System.out.println("Nom : "+computerToShow.getName());
 				System.out.println("Date de début de production : "+computerToShow.getIntroduced());
@@ -136,7 +136,7 @@ public class ComputerMenu implements IMenu{
 		scan.nextLine();
 
 		computerDAO.openConnection();
-		computerDAO.createComputer(computer);
+		computerDAO.create(computer);
 		computerDAO.closeConnection();
 	}
 	
@@ -157,7 +157,7 @@ public class ComputerMenu implements IMenu{
 		
 		if(idToUpdate >= 1){
 			computerDAO.openConnection();
-			Computer computerToUpdate = computerDAO.getComputerByID(idToUpdate);
+			Computer computerToUpdate = computerDAO.getByID(idToUpdate);
 			if(computerToUpdate != null){
 				System.out.println("Entrez un nouveau nom si vous souhaitez le changer ("+computerToUpdate.getName()+") :");
 				String newName = scanner.nextLine();
@@ -216,7 +216,7 @@ public class ComputerMenu implements IMenu{
 					computerToUpdate.setCompanyId(Integer.parseInt(newCompanyId));
 				}
 				
-				computerDAO.updateComputer(computerToUpdate);
+				computerDAO.update(computerToUpdate);
 				computerDAO.closeConnection();
 			}
 			else{
@@ -243,7 +243,7 @@ public class ComputerMenu implements IMenu{
 		
 		if(idToDelete >= 1){
 			computerDAO.openConnection();
-			computerDAO.deleteComputer(idToDelete);
+			computerDAO.delete(idToDelete);
 			computerDAO.closeConnection();
 		}
 			

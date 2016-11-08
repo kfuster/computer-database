@@ -89,6 +89,8 @@ public class MainMenu {
 				case 3:
 					if(typeMenu == 1)
 						menu.createMenu();
+					menu.mainMenu();
+					choiceMain();
 					break;
 				case 4:
 					if(typeMenu == 1)
@@ -125,7 +127,7 @@ public class MainMenu {
 				case 1:
 					if(typeMenu == 1){
 						computerDAO.openConnection();
-						for(Computer computer :computerDAO.getAllComputers()){
+						for(Computer computer :computerDAO.getAll()){
 							System.out.println(computer.toString());
 						}
 						computerDAO.closeConnection();
@@ -134,7 +136,7 @@ public class MainMenu {
 					}
 					else if (typeMenu == 2){
 						companyDAO.openConnection();
-						for(Company company : companyDAO.getAllCompanies()){
+						for(Company company : companyDAO.getAll()){
 							System.out.println(company.toString());
 						}
 						companyDAO.closeConnection();

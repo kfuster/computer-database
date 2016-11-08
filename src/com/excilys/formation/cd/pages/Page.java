@@ -23,17 +23,27 @@ public class Page<T> {
 		populateList();
 	}
 	
-	public void nextPage(){
+	public boolean nextPage(){
 		if(page < nbPages){
 			page++;
 			populateList();
+			return true;
+		}
+		else{
+			System.out.println("Vous êtes déjà sur la dernière page");
+			return false;
 		}
 	}
 	
-	public void prevPage(){
+	public boolean prevPage(){
 		if(page > 1){
 			page--;
 			populateList();
+			return true;
+		}
+		else{
+			System.out.println("Vous êtes déjà sur la première page");
+			return false;
 		}
 			
 	}
@@ -63,10 +73,15 @@ public class Page<T> {
 		return page;
 	}
 
-	public void setPage(int page) {
+	public boolean setPage(int page) {
 		if(page >= 1 && page <= nbPages){
 			this.page = page;
 			populateList();
+			return true;
+		}
+		else{
+			System.out.println("Cette page n'est pas valide");
+			return false;
 		}
 	}
 

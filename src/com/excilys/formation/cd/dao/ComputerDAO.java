@@ -163,6 +163,30 @@ public class ComputerDAO implements IDAO<Computer>{
 	}
 	
 	/**
+	 * Get a page of computers
+	 * @param pPage the page to get
+	 * @param pLimit the number of elements by page
+	 * @return the list of elements found
+	 */
+	@Override
+	public List<Computer> getAllPaginate(int pPage, int pLimit){
+		List<Computer> allComputers = new ArrayList<>();
+		String queryComputers = "SELECT * FROM computer LIMIT ? OFFSET ?";
+		
+		try {
+			PreparedStatement ps = jdbcUtil.getConnection().prepareStatement(queryComputers);
+			ps.setInt(1, pLimit);
+			ps.setInt(2, (pPage-1)*10);
+			ResultSet rs = ps.executeQuery();
+			allComputers = parseResults(rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return allComputers;
+	}
+	
+	/**
 	 * Get all computers in DB from a company
 	 * @param pCompanyID the ID of the company we want the computers of
 	 * @return a list of computers
@@ -204,4 +228,20 @@ public class ComputerDAO implements IDAO<Computer>{
 		return resultComputers;		
 	}
 	
+	/**
+	 * Count the number of Computers in the DB
+	 */
+	public int countAll(){
+		String queryComputer = "SELECT COUNT(*) as total FROM computer";
+		int total = 0;
+		try{
+			Statement stmt = jdbcUtil.getConnection().createStatement();
+			ResultSet rs = stmt.executeQuery(queryComputer);
+			rs.next();
+			total = rs.getInt("total");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
 }

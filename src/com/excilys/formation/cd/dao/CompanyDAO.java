@@ -144,6 +144,66 @@ public class CompanyDAO implements IDAO<Company>{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	
+	/**
+	 * Get a page of companies
+	 * @param pPage the page to get
+	 * @param pLimit the number of elements by page
+	 * @return the list of elements found
+	 */
+	@Override
+	public List<Company> getAllPaginate(int pPage, int pLimit) {
+		List<Company> allCompanies = new ArrayList<>();
+		String queryCompanies = "SELECT * FROM company LIMIT ? OFFSET ?";
+		
+		try {
+			PreparedStatement ps = jdbcUtil.getConnection().prepareStatement(queryCompanies);
+			ps.setInt(1, pLimit);
+			ps.setInt(2, (pPage-1)*10);
+			ResultSet rs = ps.executeQuery();
+			allCompanies = parseResults(rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return allCompanies;
+	}
+	
+	/**
+	 * Count the total number of companies
+	 */
+	public int countAll(){
+		String queryCompany = "SELECT COUNT(*) as total FROM company";
+		int total = 0;
+		try{
+			Statement stmt = jdbcUtil.getConnection().createStatement();
+			ResultSet rs = stmt.executeQuery(queryCompany);
+			rs.next();
+			total = rs.getInt("total");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+	
+	/**
+	 * Parse a ResultSet to get companies
+	 * @param pResultSet the result set to parse
+	 * @return a list of companies
+	 */
+	private List<Company> parseResults(ResultSet pResultSet){
+		List<Company> resultCompany = new ArrayList<>();
+		try {
+			while(pResultSet.next()){
+				Company company = new Company(pResultSet.getString("name"));	
+				company.setId(pResultSet.getInt("id"));
+				resultCompany.add(company);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultCompany;		
+	}
 	
 }

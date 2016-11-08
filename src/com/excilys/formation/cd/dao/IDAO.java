@@ -9,6 +9,9 @@ import java.util.List;
  * @param <T> The Selected entity
  */
 public interface IDAO<T> {
+	
+	public void openConnection();
+	public void closeConnection();
 	/**
 	 * Method to save an object in the DB
 	 * @param objectToCreate the object to save
@@ -46,5 +49,19 @@ public interface IDAO<T> {
 	 * @return the list of all elements
 	 */
 	public List<T> getAll();
+	
+	/**
+	 * Method to get a page of elements
+	 * @param page the page to get
+	 * @param limit the number of elements by page
+	 * @return the list of found elements
+	 */
+	public List<T> getAllPaginate(int page, int limit);
+	
+	/**
+	 * Get the number of elements
+	 * @return the number of elements
+	 */
+	public int countAll();
 	
 }

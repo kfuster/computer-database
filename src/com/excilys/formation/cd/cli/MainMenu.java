@@ -188,26 +188,30 @@ public class MainMenu {
 							System.out.println("4 - Quitter");
 							System.out.println("Page "+pageCompany.getPage()+" / "+pageCompany.getNbPages());
 							
-							while (!scanner.hasNextInt()) scanner.next();
-							int nextOption = scanner.nextInt();
+							boolean ok = false;
+							while(!ok){
+								while (!scanner.hasNextInt()) scanner.next();
+								int nextOption = scanner.nextInt();
 							
-							if(nextOption == 1){
-								pageCompany.prevPage();
-							}
-							else if(nextOption == 2){
-								pageCompany.nextPage();						
-							}
-							else if(nextOption == 3){
-								scanner.nextLine();
-								System.out.print("Entrez le numéro de la page :");
-								String page = "";
-								while(page.isEmpty()){
-									page = scanner.nextLine();
+								if(nextOption == 1){
+									ok = pageCompany.prevPage();
 								}
-								pageCompany.setPage(Integer.parseInt(page));
-							}
-							else if (nextOption == 4){
-								continueLoop = false;
+								else if(nextOption == 2){
+									ok = pageCompany.nextPage();						
+								}
+								else if(nextOption == 3){
+									scanner.nextLine();
+									System.out.print("Entrez le numéro de la page :");
+									String page = "";
+									while(page.isEmpty()){
+										page = scanner.nextLine();
+									}
+									ok = pageCompany.setPage(Integer.parseInt(page));
+								}
+								else if (nextOption == 4){
+									ok = true;
+									continueLoop = false;
+								}
 							}
 						}
 						menu.listMenu();

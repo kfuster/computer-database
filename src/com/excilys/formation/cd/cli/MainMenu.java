@@ -35,6 +35,7 @@ public class MainMenu {
 		System.out.println("Voulez-vous : ");
 		System.out.println("1 : Gérer les ordinateurs");
 		System.out.println("2 : Gérer les compagnies");
+		System.out.println("3 : Quitter");
 		scanner = new Scanner(System.in);
 		while(true){
 			while (!scanner.hasNextInt()) scanner.next();
@@ -49,6 +50,9 @@ public class MainMenu {
 				case 2:
 					menu = new CompanyMenu();
 					typeMenu = 2;
+					break;
+				case 3:
+					System.exit(0);
 					break;
 				default:
 					break;
@@ -114,6 +118,7 @@ public class MainMenu {
 
 	/**
 	 * Manages the choices on the list menus
+	 * and the pagination
 	 */
 	public void choiceList(){
 		while(true){

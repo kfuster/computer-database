@@ -14,7 +14,7 @@ import com.excilys.formation.cd.entities.Company;
  * @author kfuster
  *
  */
-public class CompanyDAO {
+public class CompanyDAO implements IDAO<Company>{
 	private JDBCUtil jdbcUtil;
 	private static CompanyDAO _instance = null;
 	
@@ -41,7 +41,8 @@ public class CompanyDAO {
 	 * Saves a company in the DB
 	 * @param pCompany the company to save
 	 */
-	public void createCompany(Company pCompany){
+	@Override
+	public void create(Company pCompany){
 		String queryCompany = "INSERT INTO company(name) values(?)";
 		PreparedStatement ps;
 		try {
@@ -58,12 +59,13 @@ public class CompanyDAO {
 	 * Updates a company in the DB
 	 * @param pCompany the company to update
 	 */
-	public void updateCompany(Company pCompany){
+	@Override
+	public void update(Company pCompany){
 		String queryCompany = "UPDATE company set name=? WHERE id=?";
 		try {
 			PreparedStatement ps = jdbcUtil.getConnection().prepareStatement(queryCompany);
 			ps.setString(1, pCompany.getName());
-			ps.setInt(5, pCompany.getId());
+			ps.setInt(2, pCompany.getId());
 			ps.executeQuery();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -74,7 +76,8 @@ public class CompanyDAO {
 	/**
 	 * Delete a company in the DB
 	 */
-	public void deleteCompany(int pID){
+	@Override
+	public void delete(int pID){
 		String queryCompany = "DELETE FROM company where id=?";
 		try {
 			PreparedStatement ps = jdbcUtil.getConnection().prepareStatement(queryCompany);
@@ -91,7 +94,8 @@ public class CompanyDAO {
 	 * @param pID the ID of the company*
 	 * @return a company
 	 */
-	public Company getCompanyByID(int pID){
+	@Override
+	public Company getByID(int pID){
 		String queryCompany = "SELECT * FROM company where id=?";
 		Company company = null;
 		try {
@@ -114,7 +118,8 @@ public class CompanyDAO {
 	 * Get all companies from DB
 	 * @return a list of companies
 	 */
-	public List<Company> getAllCompanies() {
+	@Override
+	public List<Company> getAll() {
 		List<Company> allCompanies = new ArrayList<>();		
 		String queryComputers = "SELECT * FROM company";
 		
@@ -131,6 +136,13 @@ public class CompanyDAO {
 		} 
 		
 		return allCompanies;
+	}
+
+	
+	@Override
+	public Company getByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

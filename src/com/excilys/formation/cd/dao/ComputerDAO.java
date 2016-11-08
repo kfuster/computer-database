@@ -14,7 +14,7 @@ import com.excilys.formation.cd.entities.Computer;
  * @author kfuster
  *
  */
-public class ComputerDAO {
+public class ComputerDAO implements IDAO<Computer>{
 	private JDBCUtil jdbcUtil;
 	private static ComputerDAO _instance = null;
 	
@@ -41,7 +41,8 @@ public class ComputerDAO {
 	 * Saves a computer in the DB
 	 * @param pComputer the computer to save
 	 */
-	public void createComputer(Computer pComputer){
+	@Override
+	public void create(Computer pComputer){
 		String queryComputer = "INSERT INTO computer(name, introduced, discontinued, company_id) VALUES(?,?,?,?)";
 		try {
 			PreparedStatement ps = jdbcUtil.getConnection().prepareStatement(queryComputer);
@@ -60,7 +61,8 @@ public class ComputerDAO {
 	 * Updates a computer in the DB
 	 * @param pComputer the computer to update
 	 */
-	public void updateComputer(Computer pComputer){
+	@Override
+	public void update(Computer pComputer){
 		String queryComputer = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
 		try {
 			PreparedStatement ps = jdbcUtil.getConnection().prepareStatement(queryComputer);
@@ -79,7 +81,8 @@ public class ComputerDAO {
 	/**
 	 * Delete a computer in the DB
 	 */
-	public void deleteComputer(int pID){
+	@Override
+	public void delete(int pID){
 		String queryComputer = "DELETE FROM computer WHERE id=?";
 		try {
 			PreparedStatement ps = jdbcUtil.getConnection().prepareStatement(queryComputer);
@@ -96,7 +99,8 @@ public class ComputerDAO {
 	 * @param pID the ID of the computer
 	 * @return a computer
 	 */
-	public Computer getComputerByID(int pID){
+	@Override
+	public Computer getByID(int pID){
 		String queryComputer = "SELECT * FROM computer WHERE id=?";
 		Computer computer = null;
 		try {
@@ -119,7 +123,8 @@ public class ComputerDAO {
 	 * @param pName the computer's name
 	 * @return a computer
 	 */
-	public Computer getComputerByName(String pName){
+	@Override
+	public Computer getByName(String pName){
 		String queryComputer = "SELECT * FROM computer where name=?";
 		Computer computer = null;
 		try {
@@ -141,7 +146,8 @@ public class ComputerDAO {
 	 * Get all computers from DB
 	 * @return a list of computers
 	 */
-	public List<Computer> getAllComputers() {
+	@Override
+	public List<Computer> getAll() {
 		List<Computer> allComputers = new ArrayList<>();
 		String queryComputers = "SELECT * FROM computer";
 		

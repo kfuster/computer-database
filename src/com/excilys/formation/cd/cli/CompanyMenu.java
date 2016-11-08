@@ -12,9 +12,9 @@ public class CompanyMenu implements IMenu{
 	 */
 	@Override
 	public void mainMenu() {
-		System.out.println("Voici les opérations disponibles : ");
-		System.out.println("1 : Voir la liste des compagnies");
-		System.out.println("2 : Retour");
+		System.out.println("Voici les opérations disponibles :\n"
+				+ "1 : Voir la liste des compagnies\n"
+				+ "2 : Retour");
 	}
 
 	/**
@@ -22,8 +22,8 @@ public class CompanyMenu implements IMenu{
 	 */
 	@Override
 	public void listMenu() {
-		System.out.println("1 : Lister toutes les compagnies");
-		System.out.println("2 : Retour");
+		System.out.println("1 : Lister toutes les compagnies\n"
+				+ "2 : Retour");
 	}
 
 	@Override

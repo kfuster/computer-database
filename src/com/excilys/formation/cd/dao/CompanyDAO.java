@@ -48,7 +48,7 @@ public class CompanyDAO implements IDAO<Company>{
 		try {
 			ps = jdbcUtil.getConnection().prepareStatement(queryCompany);
 			ps.setString(1, pCompany.getName());
-			ps.executeQuery();
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,7 +66,7 @@ public class CompanyDAO implements IDAO<Company>{
 			PreparedStatement ps = jdbcUtil.getConnection().prepareStatement(queryCompany);
 			ps.setString(1, pCompany.getName());
 			ps.setInt(2, pCompany.getId());
-			ps.executeQuery();
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,6 +75,7 @@ public class CompanyDAO implements IDAO<Company>{
 	
 	/**
 	 * Delete a company in the DB
+	 * @param pID the id of the company to delete
 	 */
 	@Override
 	public void delete(int pID){
@@ -82,7 +83,7 @@ public class CompanyDAO implements IDAO<Company>{
 		try {
 			PreparedStatement ps = jdbcUtil.getConnection().prepareStatement(queryCompany);
 			ps.setInt(1, pID);
-			ps.executeQuery();
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -90,9 +91,9 @@ public class CompanyDAO implements IDAO<Company>{
 	}
 	
 	/**
-	 * Get a company from the DB by it's ID
-	 * @param pID the ID of the company*
-	 * @return a company
+	 * Get a company from the DB by its ID
+	 * @param pID the ID of the company
+	 * @return a company or null
 	 */
 	@Override
 	public Company getByID(int pID){

@@ -26,13 +26,13 @@ public class ComputerMenu implements IMenu{
 	 */
 	@Override
 	public void mainMenu(){
-		System.out.println("Voici les opérations disponibles : ");
-		System.out.println("1 : Voir la liste des ordinateurs");
-		System.out.println("2 : Voir les informations d'un ordinateur");
-		System.out.println("3 : Créer un ordinateur");
-		System.out.println("4 : Mettre à jour un ordinateur");
-		System.out.println("5 : Supprimer un ordinateur");
-		System.out.println("6 : Retour");
+		System.out.println("Voici les opérations disponibles : \n"
+				+ "1 : Voir la liste des ordinateurs\n"
+				+ "2 : Voir les informations d'un ordinateur\n"
+				+ "3 : Créer un ordinateur\n"
+				+ "4 : Mettre à jour un ordinateur\n"
+				+ "5 : Supprimer un ordinateur\n"
+				+ "6 : Retour");
 	}
 	
 	
@@ -41,9 +41,9 @@ public class ComputerMenu implements IMenu{
 	 */
 	@Override
 	public void listMenu(){
-		System.out.println("1 : Lister tous les ordinateurs");
-		System.out.println("2 : Lister les ordinateurs d'une company (WIP)");
-		System.out.println("3 : Retour");
+		System.out.println("1 : Lister tous les ordinateurs\n"
+				+ "2 : Lister les ordinateurs d'une company (WIP)\n"
+				+ "3 : Retour");
 	}
 	
 	/**
@@ -64,10 +64,10 @@ public class ComputerMenu implements IMenu{
 			computerDAO.openConnection();
 			Computer computerToShow = computerDAO.getByID(idToShow);
 			if(computerToShow != null){
-				System.out.println("Nom : "+computerToShow.getName());
-				System.out.println("Date de début de production : "+computerToShow.getIntroduced());
-				System.out.println("Date de fin de production : "+computerToShow.getDiscontinued());
-				System.out.println("Id de la compagnie : "+computerToShow.getCompanyId());
+				System.out.println("Nom : "+computerToShow.getName()+"\n"
+						+ "Date de début de production : "+computerToShow.getIntroduced()+"\n"
+						+ "Date de fin de production : "+computerToShow.getDiscontinued()+"\n"
+						+ "Id de la compagnie : "+computerToShow.getCompanyId());
 			}
 			else{
 				System.out.println("Aucun ordinateur trouvé");

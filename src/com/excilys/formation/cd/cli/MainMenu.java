@@ -32,10 +32,10 @@ public class MainMenu {
 	 * Allows the user to chose to manage computers or companies
 	 */
 	public void startMenu(){
-		System.out.println("Voulez-vous : ");
-		System.out.println("1 : Gérer les ordinateurs");
-		System.out.println("2 : Gérer les compagnies");
-		System.out.println("3 : Quitter");
+		System.out.println("Voulez-vous :\n"
+				+ "1 : Gérer les ordinateurs\n"
+				+ "2 : Gérer les compagnies\n"
+				+ "3 : Quitter");
 		scanner = new Scanner(System.in);
 		while(true){
 			while (!scanner.hasNextInt()) scanner.next();
@@ -137,12 +137,12 @@ public class MainMenu {
 								System.out.println(computer.toString());
 							}
 							
-							System.out.println("Options :");
-							System.out.println("1 - Page Précédente");
-							System.out.println("2 - Page Suivante");
-							System.out.println("3 - Aller à la page");
-							System.out.println("4 - Quitter");
-							System.out.println("Page "+pageComputer.getPage()+" / "+pageComputer.getNbPages());
+							System.out.println("Options :\n"
+									+ "1 - Page Précédente\n"
+									+ "2 - Page Suivante\n"
+									+ "3 - Aller à la page\n"
+									+ "4 - Quitter\n"
+									+ "Page "+pageComputer.getPage()+" / "+pageComputer.getNbPages());
 							boolean ok = false;
 							while(!ok){
 								while (!scanner.hasNextInt()) scanner.next();
@@ -181,12 +181,12 @@ public class MainMenu {
 								System.out.println(company.toString());
 							}
 							
-							System.out.println("Options :");
-							System.out.println("1 - Page Précédente");
-							System.out.println("2 - Page Suivante");
-							System.out.println("3 - Aller à la page");
-							System.out.println("4 - Quitter");
-							System.out.println("Page "+pageCompany.getPage()+" / "+pageCompany.getNbPages());
+							System.out.println("Options :\n"
+									+ "1 - Page Précédente\n"
+									+ "2 - Page Suivante\n"
+									+ "3 - Aller à la page\n"
+									+ "4 - Quitter\n"
+									+ "Page "+pageCompany.getPage()+" / "+pageCompany.getNbPages());
 							
 							boolean ok = false;
 							while(!ok){

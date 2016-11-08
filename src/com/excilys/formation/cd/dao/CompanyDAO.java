@@ -75,7 +75,7 @@ public class CompanyDAO {
 	 * Delete a company in the DB
 	 */
 	public void deleteCompany(int pID){
-		String queryCompany = "DELETE from company where id=?";
+		String queryCompany = "DELETE FROM company where id=?";
 		try {
 			PreparedStatement ps = jdbcUtil.getConnection().prepareStatement(queryCompany);
 			ps.setInt(1, pID);

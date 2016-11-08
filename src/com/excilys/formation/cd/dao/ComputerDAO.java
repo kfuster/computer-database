@@ -49,7 +49,7 @@ public class ComputerDAO {
 			ps.setDate(2, pComputer.getIntroduced());
 			ps.setDate(3, pComputer.getDiscontinued());
 			ps.setInt(4, pComputer.getCompanyId());
-			ps.executeQuery();
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,7 +61,7 @@ public class ComputerDAO {
 	 * @param pComputer the computer to update
 	 */
 	public void updateComputer(Computer pComputer){
-		String queryComputer = "UPDATE computer set name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
+		String queryComputer = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
 		try {
 			PreparedStatement ps = jdbcUtil.getConnection().prepareStatement(queryComputer);
 			ps.setString(1, pComputer.getName());
@@ -69,7 +69,7 @@ public class ComputerDAO {
 			ps.setDate(3, pComputer.getDiscontinued());
 			ps.setInt(4, pComputer.getCompanyId());
 			ps.setInt(5, pComputer.getId());
-			ps.executeQuery();
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,11 +80,11 @@ public class ComputerDAO {
 	 * Delete a computer in the DB
 	 */
 	public void deleteComputer(int pID){
-		String queryComputer = "DELETE from computer where id=?";
+		String queryComputer = "DELETE FROM computer WHERE id=?";
 		try {
 			PreparedStatement ps = jdbcUtil.getConnection().prepareStatement(queryComputer);
 			ps.setInt(1, pID);
-			ps.executeQuery();
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,13 +97,15 @@ public class ComputerDAO {
 	 * @return a computer
 	 */
 	public Computer getComputerByID(int pID){
-		String queryComputer = "SELECT * FROM computer where id=?";
+		String queryComputer = "SELECT * FROM computer WHERE id=?";
 		Computer computer = null;
 		try {
 			PreparedStatement ps = jdbcUtil.getConnection().prepareStatement(queryComputer);
 			ps.setInt(1, pID);
 			ResultSet rs = ps.executeQuery();
-			computer = parseResults(rs).get(0);
+			List<Computer> returnedComp = parseResults(rs);
+			if(!returnedComp.isEmpty())
+				computer = returnedComp.get(0);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -124,7 +126,9 @@ public class ComputerDAO {
 			PreparedStatement ps = jdbcUtil.getConnection().prepareStatement(queryComputer);
 			ps.setString(1, pName);
 			ResultSet rs = ps.executeQuery();
-			computer = parseResults(rs).get(0);
+			List<Computer> returnedComp = parseResults(rs);
+			if(!returnedComp.isEmpty())
+				computer = returnedComp.get(0);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -15,6 +15,9 @@ public class JDBCUtil {
 	public JDBCUtil(){
 	}
 	
+	/**
+	 * Open a connection
+	 */
 	public void openConnection(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -29,6 +32,9 @@ public class JDBCUtil {
 		}
 	}
 	
+	/**
+	 * Close a connection
+	 */
 	public void closeConnection(){
 		try {
 			connection.close();

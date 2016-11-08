@@ -8,6 +8,7 @@ import com.excilys.formation.cd.dao.CompanyDAO;
 import com.excilys.formation.cd.dao.ComputerDAO;
 import com.excilys.formation.cd.entities.Company;
 import com.excilys.formation.cd.entities.Computer;
+import com.excilys.formation.cd.pages.Page;
 
 /**
  * Manages menus and allows users to make operations on the entities
@@ -17,14 +18,10 @@ import com.excilys.formation.cd.entities.Computer;
 public class MainMenu {
 	private IMenu menu;
 	private static Scanner scanner;
-	private ComputerDAO computerDAO;
-	private CompanyDAO companyDAO;
 	private int typeMenu;
 	
 	public MainMenu(){
 		scanner = new Scanner(System.in);
-		computerDAO = ComputerDAO.getInstance();
-		companyDAO = CompanyDAO.getInstance();
 	}
 	
 	public static Scanner getScanner(){
@@ -125,21 +122,86 @@ public class MainMenu {
 			
 			switch(choice){
 				case 1:
+					boolean continueLoop = true;
 					if(typeMenu == 1){
-						computerDAO.openConnection();
-						for(Computer computer :computerDAO.getAll()){
-							System.out.println(computer.toString());
+						Page<Computer> pageComputer = new Page<>(10);
+						pageComputer.setDao(ComputerDAO.getInstance());
+						while(continueLoop){
+							
+							for(Computer computer : pageComputer.getElems()){
+								System.out.println(computer.toString());
+							}
+							
+							System.out.println("Options :");
+							System.out.println("1 - Page Précédente");
+							System.out.println("2 - Page Suivante");
+							System.out.println("3 - Aller à la page");
+							System.out.println("4 - Quitter");
+							System.out.println("Page "+pageComputer.getPage()+" / "+pageComputer.getNbPages());
+							
+							while (!scanner.hasNextInt()) scanner.next();
+							int nextOption = scanner.nextInt();
+							
+							if(nextOption == 1){
+								pageComputer.prevPage();
+							}
+							else if(nextOption == 2){
+								pageComputer.nextPage();						
+							}
+							else if(nextOption == 3){
+								scanner.nextLine();
+								System.out.print("Entrez le numéro de la page :");
+								String page = "";
+								while(page.isEmpty()){
+									page = scanner.nextLine();
+								}
+								pageComputer.setPage(Integer.parseInt(page));
+							}
+							else if (nextOption == 4){
+								continueLoop = false;
+							}
 						}
-						computerDAO.closeConnection();
 						menu.listMenu();
 						choiceList();
 					}
 					else if (typeMenu == 2){
-						companyDAO.openConnection();
-						for(Company company : companyDAO.getAll()){
-							System.out.println(company.toString());
+						Page<Company> pageCompany = new Page<>(10);
+						pageCompany.setDao(CompanyDAO.getInstance());
+						while(continueLoop){
+							
+							for(Company company : pageCompany.getElems()){
+								System.out.println(company.toString());
+							}
+							
+							System.out.println("Options :");
+							System.out.println("1 - Page Précédente");
+							System.out.println("2 - Page Suivante");
+							System.out.println("3 - Aller à la page");
+							System.out.println("4 - Quitter");
+							System.out.println("Page "+pageCompany.getPage()+" / "+pageCompany.getNbPages());
+							
+							while (!scanner.hasNextInt()) scanner.next();
+							int nextOption = scanner.nextInt();
+							
+							if(nextOption == 1){
+								pageCompany.prevPage();
+							}
+							else if(nextOption == 2){
+								pageCompany.nextPage();						
+							}
+							else if(nextOption == 3){
+								scanner.nextLine();
+								System.out.print("Entrez le numéro de la page :");
+								String page = "";
+								while(page.isEmpty()){
+									page = scanner.nextLine();
+								}
+								pageCompany.setPage(Integer.parseInt(page));
+							}
+							else if (nextOption == 4){
+								continueLoop = false;
+							}
 						}
-						companyDAO.closeConnection();
 						menu.listMenu();
 						choiceList();
 					}

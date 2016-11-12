@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.excilys.formation.entity.Computer;
+import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.mapper.JdbcMapper;
 
@@ -22,7 +23,7 @@ public class ComputerDaoJdbc implements ComputerDao {
     private static ComputerDaoJdbc computerDaoImpl = null;
     private static final String INSERT_COMPUTER = "INSERT INTO computer(name, introduced, discontinued, company_id) VALUES(?, ?, ?, ?)";
     private static final String UPDATE_COMPUTER = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
-    private static final String DELETE_COMPUTER = "DELETE * FROM computer WHERE id=?";
+    private static final String DELETE_COMPUTER = "DELETE FROM computer WHERE id=?";
     private static final String SELECT_JOIN = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, company.id as companyId, company.name as companyName FROM computer LEFT JOIN company ON computer.company_id=company.id";
     private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM computer";
 
@@ -38,34 +39,32 @@ public class ComputerDaoJdbc implements ComputerDao {
     }
 
     @Override
-    public Computer create(Computer pComputer) {
+    public Computer create(Computer pComputer) throws PersistenceException {
         connectionProvider.openConnection();
         String queryComputer = INSERT_COMPUTER;
         try {
-            PreparedStatement preparedStatement = connectionProvider.getConnection().prepareStatement(queryComputer);
+            PreparedStatement preparedStatement = connectionProvider.getConnection().prepareStatement(queryComputer, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, pComputer.getName());
             preparedStatement.setObject(2, pComputer.getIntroduced());
             preparedStatement.setObject(3, pComputer.getDiscontinued());
             preparedStatement.setInt(4, pComputer.getCompany().getId());
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            connectionProvider.closeConnection();
-            if(resultSet.next()) {
+            
+            if(resultSet != null && resultSet.next()) {
                 int computerId = resultSet.getInt(1);
+                connectionProvider.closeConnection();
                 pComputer.setId(computerId);
                 return pComputer;
             }
-            else {
-                return null;
-            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PersistenceException("Problème lors de la création de l'ordinateur");
         }
         return null;
     }
 
     @Override
-    public void update(Computer pComputer) {
+    public void update(Computer pComputer) throws PersistenceException {
         connectionProvider.openConnection();
         String queryComputer = UPDATE_COMPUTER;
         try {
@@ -77,13 +76,13 @@ public class ComputerDaoJdbc implements ComputerDao {
             preparedStatement.setInt(5, pComputer.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PersistenceException("Problème lors de l'update de l'ordinateur");
         }
         connectionProvider.closeConnection();
     }
 
     @Override
-    public void delete(int pID) {
+    public void delete(int pID) throws PersistenceException {
         connectionProvider.openConnection();
         String queryComputer = DELETE_COMPUTER;
         try {
@@ -91,24 +90,24 @@ public class ComputerDaoJdbc implements ComputerDao {
             preparedStatement.setInt(1, pID);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PersistenceException("Problème lors de la suppression de l'ordinateur");
         }
         connectionProvider.closeConnection();
     }
 
     @Override
-    public Computer getById(int pId){
+    public Computer getById(int pId) throws PersistenceException {
         connectionProvider.openConnection();
-        String queryComputer = SELECT_JOIN + " AND id=?";
+        String queryComputer = SELECT_JOIN + " WHERE computer.id=?";
         Computer computer = null;
         try {
             PreparedStatement ps = connectionProvider.getConnection().prepareStatement(queryComputer);
             ps.setInt(1, pId);
             ResultSet resultSet = ps.executeQuery();
-            connectionProvider.closeConnection();
             computer = JdbcMapper.mapResultToComputer(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new PersistenceException("Problème lors de la récupération de l'ordinateur");
         }
         connectionProvider.closeConnection();
         return computer;        
@@ -121,9 +120,9 @@ public class ComputerDaoJdbc implements ComputerDao {
      * @return a computer
      */
     @Override
-    public Computer getByName(String pName) {
+    public Computer getByName(String pName) throws PersistenceException {
         connectionProvider.openConnection();
-        String queryComputer = SELECT_JOIN + " AND WHERE computer.name=?";
+        String queryComputer = SELECT_JOIN + " WHERE computer.name=?";
         Computer computer = null;
         try {
             PreparedStatement preparedStatement = connectionProvider.getConnection().prepareStatement(queryComputer);
@@ -131,14 +130,14 @@ public class ComputerDaoJdbc implements ComputerDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             computer = JdbcMapper.mapResultToComputer(resultSet);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PersistenceException("Problème lors de la récupération de l'ordinateur");
         }
         connectionProvider.closeConnection();
         return computer;
     }
 
     @Override
-    public void getPage(Page<Computer> pPage) {
+    public Page<Computer> getPage(Page<Computer> pPage) throws PersistenceException {
         connectionProvider.openConnection();
         List<Computer> computers = new ArrayList<>();
         String queryComputers = SELECT_JOIN + " LIMIT ? OFFSET ?";
@@ -152,9 +151,10 @@ public class ComputerDaoJdbc implements ComputerDao {
             pPage.elems = computers;
             pPage.setTotalElem(count());
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PersistenceException("Problème lors de la récupération de la page d'ordinateurs");
         }
         connectionProvider.closeConnection();
+        return pPage;
     }
 
     /**

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.excilys.formation.entity.Company;
+import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.mapper.JdbcMapper;
 
@@ -42,7 +43,7 @@ public class CompanyDaoJdbc implements CompanyDao {
      * @return a company or null
      */
     @Override
-    public Company getById(int pId){
+    public Company getById(int pId) throws PersistenceException {
         connectionProvider.openConnection();
         Company company = null;
         try {
@@ -51,7 +52,7 @@ public class CompanyDaoJdbc implements CompanyDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             company = JdbcMapper.mapResultToCompany(resultSet);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PersistenceException("Problème lors de la récupération de la compagnie");
         }
         connectionProvider.closeConnection();
         return company;     
@@ -65,7 +66,7 @@ public class CompanyDaoJdbc implements CompanyDao {
      * @return the list of elements found
      */
     @Override
-    public void getPage(Page<Company> pPage) {
+    public Page<Company> getPage(Page<Company> pPage) throws PersistenceException {
         connectionProvider.openConnection();
         List<Company> allCompanies = new ArrayList<>();
         try {
@@ -75,11 +76,12 @@ public class CompanyDaoJdbc implements CompanyDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             allCompanies = JdbcMapper.mapResultsToCompanyList(resultSet);
             pPage.elems = (allCompanies);
-            pPage.setTotalElem(count());
+            pPage.setTotalElem(count());            
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PersistenceException("Problème lors de la récupération de la page de compagnies");
         }
         connectionProvider.closeConnection();
+        return pPage;
     }
 
     /**

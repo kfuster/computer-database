@@ -1,4 +1,5 @@
 package com.excilys.formation;
+
 import com.excilys.formation.cli.MainMenu;
 
 /**

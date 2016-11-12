@@ -4,9 +4,19 @@ import com.excilys.formation.entity.Computer;
 import com.excilys.formation.exception.PersistenceException;
 
 public interface ComputerDao extends BaseDao<Computer> {
-    default Computer getByName(String name) throws PersistenceException {
-        throw new UnsupportedOperationException("getByName() not implemented");
-    }
+    /**
+     * Get a computer by its name
+     * @param name the name of the computer to get
+     * @return a computer or null
+     * @throws PersistenceException
+     */
+    Computer getByName(String name) throws PersistenceException;
     
-    Computer getById(int id);
+    /**
+     * Get a computer by its id
+     * @param id the id of the computer to get
+     * @return a Computer or null
+     * @throws PersistenceException 
+     */
+    Computer getById(int pId) throws PersistenceException;
 }

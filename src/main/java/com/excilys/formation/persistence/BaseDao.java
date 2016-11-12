@@ -43,7 +43,8 @@ public interface BaseDao<T> {
      * Method to get a page of elements
      * 
      * @param pPage the Page to get
+     * @throws PersistenceException 
      */
-    void getPage(Page<T> pPage);
+    Page<T> getPage(Page<T> pPage) throws PersistenceException;
 
 }

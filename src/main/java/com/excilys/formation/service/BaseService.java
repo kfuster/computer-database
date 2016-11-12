@@ -2,6 +2,11 @@ package com.excilys.formation.service;
 
 import com.excilys.formation.exception.ServiceException;
 
+/**
+ * Basic service interface
+ * @author kfuster
+ *
+ */
 public interface BaseService<T> {
     default T create(T t) throws ServiceException {
         throw new UnsupportedOperationException("create() not implemented");

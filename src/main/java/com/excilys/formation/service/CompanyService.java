@@ -1,5 +1,6 @@
 package com.excilys.formation.service;
 
+import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.entity.Company;
 import com.excilys.formation.pagination.Page;
 
@@ -11,7 +12,7 @@ import com.excilys.formation.pagination.Page;
 public interface CompanyService extends BaseService<Company>{
     /**
      * Populate a list of Company according to the Page parameters
-     * @param pPage the Page containing the parameters and the list
+     * @param pPageCompany the Page containing the parameters and the list
      */
-    void getPage(Page<Company> pPage);
+    Page<CompanyDto> getPage(Page<CompanyDto> pPageCompany);
 }

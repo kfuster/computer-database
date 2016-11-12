@@ -24,13 +24,12 @@ public class ConnectionProvider {
         properties = PropertyReader.readProperties(classLoader.getResourceAsStream(CONNECTION_PROPERTIES));
     }
 
-    public static ConnectionProvider getInstance(){
-        if(connectionProvider == null){
-            connectionProvider = new ConnectionProvider();
-        }
-        
-        return connectionProvider;
-    }
+	public static ConnectionProvider getInstance() {
+		if (connectionProvider == null) {
+			connectionProvider = new ConnectionProvider();
+		}
+		return connectionProvider;
+	}
 
     /**
      * Open the connection

@@ -5,23 +5,23 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * Class to read properties
+ * Class to read properties.
  * @author kfuster
  *
  */
 public class PropertyReader {
     private static Properties properties;
-
     /**
-     * Load properties from an InputStream
+     * Load properties from an InputStream.
      * @param pInputStream the InputStrem to load
-     * @return a Properties object loaded with the InputStream properties or null
+     * @return a Properties object loaded with the InputStream properties or
+     *         null
      */
     public static Properties readProperties(InputStream pInputStream) {
-        if(pInputStream == null) {
+        if (pInputStream == null) {
             return null;
         }
-    	properties = new Properties();
+        properties = new Properties();
         try {
             properties.load(pInputStream);
         } catch (IOException e) {

@@ -6,15 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.excilys.formation.entity.Company;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.mapper.JdbcMapper;
 
 /**
- * DAO class for companies
- * 
+ * DAO class for companies.
  * @author kfuster
  *
  */
@@ -24,24 +22,24 @@ public class CompanyDaoJdbc implements CompanyDao {
     private static final String SELECT_BY_NAME = "SELECT * FROM company WHERE id=?";
     private static final String SELECT_PAGE = "SELECT * FROM company LIMIT ? OFFSET ?";
     private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM company";
-
+    /**
+     * CompanyDaoJdbc constructor.
+     * Initialize the connectionProvider.
+     */
     private CompanyDaoJdbc() {
         connectionProvider = ConnectionProvider.getInstance();
     }
-
+    /**
+     * Getter for the instance of CompanyDaoJdbc.
+     * If the instance is null, initializes it.
+     * @return the instance of CompanyDaoJdbc
+     */
     public static CompanyDaoJdbc getInstance() {
         if (companyDaoImpl == null) {
             companyDaoImpl = new CompanyDaoJdbc();
         }
         return companyDaoImpl;
     }
-
-
-    /**
-     * Get a company from the DB by its ID
-     * @param pID the ID of the company
-     * @return a company or null
-     */
     @Override
     public Company getById(int pId) throws PersistenceException {
         connectionProvider.openConnection();
@@ -55,16 +53,8 @@ public class CompanyDaoJdbc implements CompanyDao {
             throw new PersistenceException("Problème lors de la récupération de la compagnie");
         }
         connectionProvider.closeConnection();
-        return company;     
+        return company;
     }
-    
-    /**
-     * Get a page of companies
-     * 
-     * @param pPage the page to get
-     * @param pLimit the number of elements by page
-     * @return the list of elements found
-     */
     @Override
     public Page<Company> getPage(Page<Company> pPage) throws PersistenceException {
         connectionProvider.openConnection();
@@ -76,23 +66,23 @@ public class CompanyDaoJdbc implements CompanyDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             allCompanies = JdbcMapper.mapResultsToCompanyList(resultSet);
             pPage.elems = (allCompanies);
-            pPage.setTotalElem(count());            
+            pPage.setTotalElem(count());
         } catch (SQLException e) {
             throw new PersistenceException("Problème lors de la récupération de la page de compagnies");
         }
         connectionProvider.closeConnection();
         return pPage;
     }
-
     /**
-     * Count the total number of companies
+     * Count the total number of companies.
+     * @return the number of companies in the DB
      */
     private int count() {
         int total = 0;
         try {
             Statement statement = connectionProvider.getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(COUNT_ALL);
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 total = resultSet.getInt("total");
             }
         } catch (SQLException e) {
@@ -100,6 +90,4 @@ public class CompanyDaoJdbc implements CompanyDao {
         }
         return total;
     }
-
-
 }

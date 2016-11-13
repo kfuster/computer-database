@@ -1,17 +1,13 @@
 package com.excilys.formation.cli;
 
 /**
- * Interface for the menus
- * 
+ * Interface for the menus.
  * @author kfuster
  *
  */
 public interface Menu {
     /**
-     * Shows the main menu
+     * Shows the main menu.
      */
-    public void startMenu();
-
-    
-
+    void startMenu();
 }

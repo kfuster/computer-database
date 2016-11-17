@@ -17,12 +17,24 @@ import com.excilys.formation.service.util.ServiceUtil;
  */
 public class CompanyServiceImpl implements CompanyService {
     private CompanyDao companyDao;
+    private static CompanyServiceImpl companyService;
     /**
      * Constructor for CompanyServiceImpl.
      * Initializes the companyDao.
      */
-    public CompanyServiceImpl() {
+    private CompanyServiceImpl(){
         companyDao = CompanyDaoJdbc.getInstance();
+    }
+    /**
+     * Getter for the CompanyServiceImpl instance.
+     * Initializes it if null.
+     * @return the instance of CompanyServiceImpl
+     */
+    public static CompanyServiceImpl getInstance(){
+        if (companyService == null) {
+            companyService = new CompanyServiceImpl();
+        }
+        return companyService;
     }
     @Override
     public Page<CompanyDto> getPage(Page<CompanyDto> pPage) {

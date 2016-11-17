@@ -1,8 +1,5 @@
 package com.excilys.formation.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Company entity.
  * @author kfuster
@@ -12,13 +9,11 @@ public class Company {
     // ######### ATTRIBUTES #########
     private int id;
     private String name;
-    private List<Computer> computers;
     /**
      * Company constructor.
      * @param pName the name of the Company.
      */
     private Company(String pName) {
-        computers = new ArrayList<>();
         name = pName;
     }
     // ######### SETTERS/GETTERS #########
@@ -34,20 +29,7 @@ public class Company {
     public void setName(String name) {
         this.name = name;
     }
-    public List<Computer> getComputers() {
-        return computers;
-    }
-    public void setComputers(List<Computer> computers) {
-        this.computers = computers;
-    }
     // ######### METHODS #########
-    /**
-     * Method to add a Computer to the computer list of the company. UNUSED
-     * @param pComputer the computer to add
-     */
-    public void addComputer(Computer pComputer) {
-        computers.add(pComputer);
-    }
     @Override
     public int hashCode() {
         final int prime = 31;

@@ -6,10 +6,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.LoggerFactory;
 import com.excilys.formation.entity.Company;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.mapper.JdbcMapper;
+import ch.qos.logback.classic.Logger;
 
 /**
  * DAO class for companies.
@@ -17,9 +19,10 @@ import com.excilys.formation.persistence.mapper.JdbcMapper;
  *
  */
 public class CompanyDaoJdbc implements CompanyDao {
+    final Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(CompanyDaoJdbc.class);
     private ConnectionProvider connectionProvider;
     private static CompanyDaoJdbc companyDaoImpl = null;
-    private static final String SELECT_BY_NAME = "SELECT * FROM company WHERE id=?";
+    private static final String SELECT_BY_ID = "SELECT * FROM company WHERE id=?";
     private static final String SELECT_PAGE = "SELECT * FROM company LIMIT ? OFFSET ?";
     private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM company";
     /**
@@ -45,11 +48,12 @@ public class CompanyDaoJdbc implements CompanyDao {
         connectionProvider.openConnection();
         Company company = null;
         try {
-            PreparedStatement preparedStatement = connectionProvider.getConnection().prepareStatement(SELECT_BY_NAME);
+            PreparedStatement preparedStatement = connectionProvider.getConnection().prepareStatement(SELECT_BY_ID);
             preparedStatement.setInt(1, pId);
             ResultSet resultSet = preparedStatement.executeQuery();
             company = JdbcMapper.mapResultToCompany(resultSet);
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             throw new PersistenceException("Problème lors de la récupération de la compagnie");
         }
         connectionProvider.closeConnection();
@@ -66,8 +70,9 @@ public class CompanyDaoJdbc implements CompanyDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             allCompanies = JdbcMapper.mapResultsToCompanyList(resultSet);
             pPage.elems = (allCompanies);
-            pPage.setTotalElem(count());
+            pPage.setTotalElement(count());
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             throw new PersistenceException("Problème lors de la récupération de la page de compagnies");
         }
         connectionProvider.closeConnection();
@@ -86,7 +91,7 @@ public class CompanyDaoJdbc implements CompanyDao {
                 total = resultSet.getInt("total");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return total;
     }

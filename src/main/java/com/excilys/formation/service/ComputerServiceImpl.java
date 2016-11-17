@@ -18,12 +18,24 @@ import com.excilys.formation.service.util.ServiceUtil;
  */
 public class ComputerServiceImpl implements ComputerService {
     private ComputerDao computerDao;
+    private static ComputerServiceImpl computerService;
     /**
      * Constructor for ComputerServiceImpl.
      * Initializes computerDao.
      */
-    public ComputerServiceImpl() {
+    private ComputerServiceImpl() {
         computerDao = ComputerDaoJdbc.getInstance();
+    }
+    /**
+     * Getter for the ComputerServiceImpl instance.
+     * Initializes it if null.
+     * @return the instance of ComputerServiceImpl
+     */
+    public static ComputerServiceImpl getInstance(){
+        if (computerService == null) {
+            computerService = new ComputerServiceImpl();
+        }
+        return computerService;
     }
     @Override
     public ComputerDto create(ComputerDto pComputerDto) {

@@ -19,6 +19,6 @@ public class ServiceUtil {
         pNewPage.page = pPageToCopy.page;
         pNewPage.elemByPage = pPageToCopy.elemByPage;
         pNewPage.nbPages = pPageToCopy.nbPages;
-        pNewPage.totalElem = pPageToCopy.totalElem;
+        pNewPage.totalElement = pPageToCopy.totalElement;
     }
 }

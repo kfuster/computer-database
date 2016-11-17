@@ -15,13 +15,26 @@ import com.excilys.formation.service.ComputerServiceImpl;
  */
 public class ComputerMenuImpl implements ComputerMenu {
     private ComputerService computerService;
+    private static ComputerMenuImpl computerMenu;
     private Page<ComputerDto> pageComputer;
+    private Scanner scanner = MainMenu.scanner;
     /**
      * ComputerMenuImpl constructor.
      * Initialize ComputerService.
      */
-    public ComputerMenuImpl() {
-        computerService = new ComputerServiceImpl();
+    private ComputerMenuImpl() {
+        computerService = ComputerServiceImpl.getInstance();
+    }
+    /**
+     * Getter for the ComputerMenuImpl instance.
+     * Initializes it if null.
+     * @return the instance of ComputerMenuImpl
+     */
+    public static ComputerMenuImpl getInstance() {
+        if (computerMenu == null) {
+            computerMenu = new ComputerMenuImpl();
+        }
+        return computerMenu;
     }
     /**
      * Shows the main operations available.
@@ -36,45 +49,53 @@ public class ComputerMenuImpl implements ComputerMenu {
      */
     @Override
     public void startMenu() {
-        while (true) {
-            System.out.println(
-                    "Voici les opérations disponibles : \n1 : Voir la liste des ordinateurs\n2 : Voir les informations d'un ordinateur\n3 : Créer un ordinateur\n4 : Mettre à jour un ordinateur\n5 : Supprimer un ordinateur\n6 : Retour");
-            int choice = MenuUtil.waitForInt();
-            switch (choice) {
-                case 1:
-                    list();
-                    break;
-                case 2:
-                    info();
-                    break;
-                case 3:
-                    create();
-                    break;
-                case 4:
-                    update();
-                    break;
-                case 5:
-                    delete();
-                    break;
-                case 6:
-                    new MainMenu().startMenu();
-                    break;
-                default:
-                    System.out.println("Opération non disponible");
-                    break;
-            }
+        System.out.println(
+                "Voici les opérations disponibles : \n1 : Voir la liste des ordinateurs\n2 : Voir les informations d'un ordinateur\n3 : Créer un ordinateur\n4 : Mettre à jour un ordinateur\n5 : Supprimer un ordinateur\n6 : Retour");
+        int choice = MenuUtil.waitForInt();
+        if(scanner.hasNextLine()) {
+            scanner.nextLine();
+        }
+        boolean quit = false;
+        switch (choice) {
+            case 1:
+                list();
+                quit = false;
+                break;
+            case 2:
+                info();
+                quit = false;
+                break;
+            case 3:
+                create();
+                quit = false;
+                break;
+            case 4:
+                update();
+                quit = false;
+                break;
+            case 5:
+                delete();
+                quit = false;
+                break;
+            case 6:
+                quit = true;
+                break;
+            default:
+                System.out.println("Opération non disponible");
+                quit = false;
+                break;
+        }
+        if(!quit) {
+            startMenu();
         }
     }
     @Override
     public void list() {
-        boolean continueLoop = true;
         pageComputer = new Page<>(10);
         // While the user doesn't quit the list, continue.
-        while (continueLoop) {
+        do {
             showPage();
-            continueLoop = MenuUtil.manageNavigation(pageComputer);
-        }
-        startMenu();
+        } while(MenuUtil.manageNavigation(pageComputer));
     }
     /**
      * Asks the service to populate the list of elements and show them.
@@ -92,8 +113,6 @@ public class ComputerMenuImpl implements ComputerMenu {
     @Override
     public void info() {
         System.out.println("Entrez l'id de l'ordinateur dont vous souhaitez voir les infos (ou entrée pour annuler) :");
-        Scanner scan = MainMenu.scanner;
-        scan.nextLine();
         String infoId = MenuUtil.waitForLine();
         int idToShow = -1;
         if (MenuUtil.isInteger(infoId)) {
@@ -114,15 +133,11 @@ public class ComputerMenuImpl implements ComputerMenu {
     @Override
     public void create() {
         ComputerDto computerDto = new ComputerDto();
-        System.out.println("Veuillez entrez un nom pour l'ordinateur :");
-        Scanner scanner = MainMenu.scanner;
+        System.out.println("Veuillez entrez un nom pour l'ordinateur (ou entrée pour annuler) :");
         String name = "";
-        boolean valid = false;
-        while (!valid) {
-            name = scanner.nextLine();
-            if (!name.isEmpty()) {
-                valid = true;
-            }
+        name = MenuUtil.waitForLine();
+        if (name.isEmpty()) {
+            return;
         }
         computerDto.name = name;
         System.out.println(
@@ -142,8 +157,6 @@ public class ComputerMenuImpl implements ComputerMenu {
     @Override
     public void update() {
         System.out.println("Entrez l'id de l'ordinateur à mettre à jour (ou entrée pour annuler) :");
-        Scanner scanner = MainMenu.scanner;
-        scanner.nextLine();
         String input = MenuUtil.waitForLine();
         int idToUpdate = -1;
         if (MenuUtil.isInteger(input)) {
@@ -155,7 +168,7 @@ public class ComputerMenuImpl implements ComputerMenu {
                 // Asking for new name
                 System.out.println(new StringBuilder().append("Entrez un nouveau nom si vous souhaitez le changer (")
                         .append(computerDto.name).append(") :").toString());
-                String newName = scanner.nextLine();
+                String newName = MenuUtil.waitForLine();
                 if (!newName.isEmpty()) {
                     computerDto.name = newName;
                 }
@@ -188,8 +201,6 @@ public class ComputerMenuImpl implements ComputerMenu {
     @Override
     public void delete() {
         System.out.println("Entrez l'id de l'ordinateur à supprimer (ou entrée pour annuler) : ");
-        Scanner scanner = MainMenu.scanner;
-        scanner.nextLine();
         String input = MenuUtil.waitForLine();
         int idToDelete = -1;
         if (MenuUtil.isInteger(input)) {

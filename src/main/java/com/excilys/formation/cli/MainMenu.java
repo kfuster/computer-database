@@ -1,45 +1,50 @@
 package com.excilys.formation.cli;
 
 import java.util.Scanner;
+import com.excilys.formation.cli.util.MenuUtil;
 
 /**
- * First menu, allows the user to choose which kind of entity he wants to manage.
+ * First menu, allows the user to choose which kind of entity he wants to
+ * manage.
  * @author kfuster
  *
  */
 public class MainMenu implements Menu {
     public static Scanner scanner;
     /**
-     * MainMenu constructor.
-     * Initialize scanner.
+     * MainMenu constructor. Initialize scanner.
      */
     public MainMenu() {
-        scanner = new Scanner(System.in);
+        if (scanner == null) {
+            scanner = new Scanner(System.in);
+        }
     }
     /**
      * Allows the user to chose to manage computers or companies.
      */
     public void startMenu() {
         System.out.println("Voulez-vous :\n1 : Gérer les ordinateurs\n2 : Gérer les compagnies\n3 : Quitter");
-        scanner = new Scanner(System.in);
-        while (true) {
-            while (!scanner.hasNextInt()) {
-                scanner.next();
-            }
-            int choice = scanner.nextInt();
-            switch (choice) {
-                case 1:
-                    new ComputerMenuImpl().startMenu();
-                    break;
-                case 2:
-                    new CompanyMenuImpl().startMenu();
-                    break;
-                case 3:
-                    System.exit(0);
-                    break;
-                default:
-                    break;
-            }
+        int choice = MenuUtil.waitForInt();
+        boolean quit = false;
+        switch (choice) {
+        case 1:
+            ComputerMenuImpl.getInstance().startMenu();
+            quit = false;
+            break;
+        case 2:
+            CompanyMenuImpl.getInstance().startMenu();
+            quit = false;
+            break;
+        case 3:
+            quit = true;
+            break;
+        default:
+            startMenu();
+            quit = false;
+            break;
+        }
+        if (!quit) {
+            startMenu();
         }
     }
 }

@@ -141,7 +141,7 @@ public class ComputerDaoJdbc implements ComputerDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             computers = JdbcMapper.mapResultsToComputerList(resultSet);
             pPage.elems = computers;
-            pPage.setTotalElem(count());
+            pPage.setTotalElement(count());
         } catch (SQLException e) {
             throw new PersistenceException("Problème lors de la récupération de la page d'ordinateurs");
         }

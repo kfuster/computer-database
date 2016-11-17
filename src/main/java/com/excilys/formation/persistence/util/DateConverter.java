@@ -25,7 +25,7 @@ public class DateConverter {
      * @param pLocalDate the LocalDate to convert
      * @return a Timestamp or null
      */
-    public static Timestamp fromlocalDateToTimestamp(LocalDate pLocalDate) {
+    public static Timestamp fromLocalDateToTimestamp(LocalDate pLocalDate) {
         if (pLocalDate != null) {
             return Timestamp.valueOf(pLocalDate.atStartOfDay());
         }

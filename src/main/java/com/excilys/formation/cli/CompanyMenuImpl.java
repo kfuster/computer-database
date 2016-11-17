@@ -1,10 +1,12 @@
 package com.excilys.formation.cli;
 
+import org.slf4j.LoggerFactory;
 import com.excilys.formation.cli.util.MenuUtil;
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.service.CompanyService;
 import com.excilys.formation.service.CompanyServiceImpl;
+import ch.qos.logback.classic.Logger;
 
 /**
  * Manages the menus and operations for companies.
@@ -12,42 +14,51 @@ import com.excilys.formation.service.CompanyServiceImpl;
  *
  */
 public class CompanyMenuImpl implements CompanyMenu {
-    private static CompanyService companyService = new CompanyServiceImpl();
+    final Logger logger = (Logger) LoggerFactory.getLogger(CompanyMenuImpl.class);
+    private static CompanyService companyService;
+    private static CompanyMenuImpl companyMenu;
     private Page<CompanyDto> pageCompany;
     /**
      * CompanyMenuImpl constructor.
      * Initialize CompanyService.
      */
-    public CompanyMenuImpl() {
-        companyService = new CompanyServiceImpl();
+    private CompanyMenuImpl() {
+        companyService = CompanyServiceImpl.getInstance();
+    }
+    /**
+     * Getter for the CompanyMenuImpl instance.
+     * Initializes it if null.
+     * @return the instance of CompanyMenuImpl
+     */
+    public static CompanyMenuImpl getInstance() {
+        if (companyMenu == null) {
+            companyMenu = new CompanyMenuImpl();
+        }
+        return companyMenu;
     }
     @Override
     public void startMenu() {
-        System.out.println("Voici les opérations disponibles :\n1 : Voir la liste des compagnies\n2 : Retour");
-        while (true) {
-            int choice = MenuUtil.waitForInt();
-            switch (choice) {
-                case 1:
-                    list();
-                    break;
-                case 2:
-                    new MainMenu().startMenu();
-                    break;
-                default:
-                    break;
-            }
+        logger.info("Voici les opérations disponibles :\n1 : Voir la liste des compagnies\n2 : Retour");
+        int choice = MenuUtil.waitForInt();
+        switch (choice) {
+            case 1:
+                list();
+                break;
+            case 2:
+                new MainMenu().startMenu();
+                break;
+            default:
+                startMenu();
+                break;
         }
     }
 
     @Override
     public void list() {
-        boolean continueLoop = true;
         pageCompany = new Page<>(10);
-
-        while (continueLoop) {
+        do {
             showPage();
-            continueLoop = MenuUtil.manageNavigation(pageCompany);
-        }
+        }while(MenuUtil.manageNavigation(pageCompany));
         startMenu();
     }
 

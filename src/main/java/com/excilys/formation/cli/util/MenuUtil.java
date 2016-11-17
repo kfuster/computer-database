@@ -21,7 +21,8 @@ public class MenuUtil {
         while (!MainMenu.scanner.hasNextLine()) {
             MainMenu.scanner.next();
         }
-        return MainMenu.scanner.nextLine();
+        String string = MainMenu.scanner.nextLine();
+        return string;
     }
     /**
      * Wait until the scanner has a new int and returns it.
@@ -119,6 +120,7 @@ public class MenuUtil {
         boolean ok = false;
         while (!ok) {
             int nextOption = MenuUtil.waitForInt();
+            System.out.println(nextOption);
             if (nextOption == 1) {
                 ok = pPage.prevPage();
                 if (!ok) {
@@ -136,7 +138,7 @@ public class MenuUtil {
                 while (page.isEmpty() && !MenuUtil.isInteger(page)) {
                     page = MainMenu.scanner.nextLine();
                 }
-                ok = pPage.setPage(Integer.parseInt(page));
+                ok = pPage.trySetPage(Integer.parseInt(page));
                 if (!ok) {
                     System.out.println("Cette page n'existe pas");
                 }

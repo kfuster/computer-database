@@ -112,33 +112,6 @@
 	         	 }
 		     });
 		});
-		/*$("#addForm").on("submit", function(event) {
-			event.preventDefault();
-			var name = $('#computerName').val();
-			var introduced = $('#introduced').val();
-			var discontinued = $('#discontinued').val();
-			$('#computerName').nextAll().remove();
-			$('#introduced').nextAll().remove();
-			$('#discontinued').nextAll().remove();
-			var valid = true;
-			if (name == ""){
-				$('#computerName').after('<span> Veuillez entrer un nom</span>');
-				valid = false;
-			}
-			if(introduced != "" && !isValidDate(introduced)) {
-				$('#introduced').after('<span> Veuillez entrer une date au format yyyy-mm-dd</span>');
-				valid = false;
-			}
-			if(discontinued != "" && !isValidDate(discontinued)) {
-				$('#discontinued').after('<span> Veuillez entrer une date au format yyyy-mm-dd</span>');
-				valid = false;
-			}
-			if (!valid) {
-				return false;
-			}
-			$(this).off("submit");
-			this.submit();
-		});*/
 		function isValidDate(dateString) {
 			var regEx = /^\d{4}-0[1-9]|1[0-2]-\d{2}$/;
 			return dateString.match(regEx) != null;

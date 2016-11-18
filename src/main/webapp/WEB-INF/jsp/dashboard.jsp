@@ -90,9 +90,9 @@
 			</ul>
 
 			<div class="btn-group btn-group-sm pull-right" role="group">
-				<my:link currentPage="${pageComputer.page}" limit="10"/>
-				<my:link currentPage="${pageComputer.page}" limit="50"/>
-				<my:link currentPage="${pageComputer.page}" limit="100"/>
+				<my:link currentPage="${pageComputer.page}" totalElement="${pageComputer.totalElement}" limit="10"/>
+				<my:link currentPage="${pageComputer.page}" totalElement="${pageComputer.totalElement}" limit="50"/>
+				<my:link currentPage="${pageComputer.page}" totalElement="${pageComputer.totalElement}" limit="100"/>
 			</div>
 		</div>
 	</footer>

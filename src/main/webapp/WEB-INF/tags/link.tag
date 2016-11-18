@@ -2,8 +2,10 @@
 <%@ attribute name="currentPage" required="true"%>
 <%@ attribute name="numberPages" required="false"%>
 <%@ attribute name="currentLimit" required="false"%>
+<%@ attribute name="totalElement" required="false"%>
 <%@ attribute name="limit" required="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:if test="${currentPage != 0 && limit == null}">
 	<%@ variable name-given="i"%>
 	<c:set var="i" value="${currentPage-1}" />
@@ -45,6 +47,13 @@
 	
 </c:if>
 <c:if test="${limit != null && limit != 0 }">
+	<%@ variable name-given="j"%>
+	<c:set var="pageToGo" value="${currentPage}"/>
+	<c:if test="${pageToGo > ((totalElement + limit - 1) / limit)}">
+		<c:set var="pageToGo" value="${((totalElement + limit - 1) / limit)}" />
+	</c:if>
+	<fmt:formatNumber var="i" value="${pageToGo - (pageToGo % 1 == 0 ? 0 : 0.5)}" 
+    type="number" pattern="#" />
 	<button type="button" class="btn btn-default"
-		onclick="location.href='?page=${currentPage}&limit=${limit}'">${limit}</button>
+		onclick="location.href='?page=${i}&limit=${limit}'">${limit}</button>
 </c:if>

@@ -1,4 +1,4 @@
-package com.excilys.formation.persistence;
+package com.excilys.formation.persistence.jdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +9,8 @@ import java.util.List;
 import com.excilys.formation.entity.Computer;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.pagination.Page;
+import com.excilys.formation.persistence.ComputerDao;
+import com.excilys.formation.persistence.ConnectionProvider;
 import com.excilys.formation.persistence.mapper.JdbcMapper;
 
 /**

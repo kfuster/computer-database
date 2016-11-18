@@ -7,7 +7,7 @@ import com.excilys.formation.entity.Company;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.CompanyDao;
-import com.excilys.formation.persistence.CompanyDaoJdbc;
+import com.excilys.formation.persistence.jdbc.CompanyDaoJdbc;
 import com.excilys.formation.service.util.ServiceUtil;
 
 /**

@@ -1,4 +1,4 @@
-package com.excilys.formation.persistence;
+package com.excilys.formation.persistence.jdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import com.excilys.formation.entity.Company;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.pagination.Page;
+import com.excilys.formation.persistence.CompanyDao;
+import com.excilys.formation.persistence.ConnectionProvider;
 import com.excilys.formation.persistence.mapper.JdbcMapper;
 import ch.qos.logback.classic.Logger;
 

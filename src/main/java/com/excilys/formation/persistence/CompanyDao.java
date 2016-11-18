@@ -1,5 +1,6 @@
 package com.excilys.formation.persistence;
 
+import java.util.List;
 import com.excilys.formation.entity.Company;
 import com.excilys.formation.exception.PersistenceException;
 
@@ -11,4 +12,5 @@ public interface CompanyDao extends BaseDao<Company> {
      * @throws PersistenceException in case of problems while getting the company
      */
     Company getById(int pId) throws PersistenceException;
+    List<Company> getAll() throws PersistenceException;
 }

@@ -1,5 +1,6 @@
 package com.excilys.formation.service;
 
+import java.util.List;
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.entity.Company;
 import com.excilys.formation.pagination.Page;
@@ -16,4 +17,5 @@ public interface CompanyService extends BaseService<Company> {
      * @return the Page with the populated list
      */
     Page<CompanyDto> getPage(Page<CompanyDto> pPageCompany);
+    List<CompanyDto> getAll();
 }

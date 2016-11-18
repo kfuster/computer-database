@@ -9,7 +9,7 @@ import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.service.ComputerServiceImpl;
 
-public class IndexServlet extends HttpServlet {
+public class DashboardServlet extends HttpServlet {
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
         ComputerServiceImpl computerService = ComputerServiceImpl.getInstance();
         Page<ComputerDto> pageComputer = new Page<>(10);
@@ -22,6 +22,6 @@ public class IndexServlet extends HttpServlet {
         pageComputer = computerService.getPage(pageComputer);
         this.getServletContext().setAttribute("computerService", computerService);
         this.getServletContext().setAttribute("pageComputer", pageComputer);
-        this.getServletContext().getRequestDispatcher( "/WEB-INF/jsp/index.jsp" ).forward( request, response );
+        this.getServletContext().getRequestDispatcher( "/WEB-INF/jsp/dashboard.jsp" ).forward( request, response );
     }
 }

@@ -22,6 +22,7 @@ public class CompanyDaoJdbc implements CompanyDao {
     final Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(CompanyDaoJdbc.class);
     private ConnectionProvider connectionProvider;
     private static CompanyDaoJdbc companyDaoImpl = null;
+    private static final String SELECT_ALL = "SELECT * FROM company ORDER BY company.name";
     private static final String SELECT_BY_ID = "SELECT * FROM company WHERE id=?";
     private static final String SELECT_PAGE = "SELECT * FROM company LIMIT ? OFFSET ?";
     private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM company";
@@ -77,6 +78,21 @@ public class CompanyDaoJdbc implements CompanyDao {
         }
         connectionProvider.closeConnection();
         return pPage;
+    }
+    @Override
+    public List<Company> getAll() throws PersistenceException {
+        connectionProvider.openConnection();
+        List<Company> allCompanies = new ArrayList<>();
+        try {
+            Statement statement = connectionProvider.getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(SELECT_ALL);
+            allCompanies = JdbcMapper.mapResultsToCompanyList(resultSet);
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new PersistenceException("Problème lors de la récupération de la page de compagnies");
+        }
+        connectionProvider.closeConnection();
+        return allCompanies;
     }
     /**
      * Count the total number of companies.

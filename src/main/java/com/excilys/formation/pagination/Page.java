@@ -80,8 +80,11 @@ public class Page<T> {
      * of elements by pages
      */
     private void calculateNbPages() {
-        if(totalElement != 0) {
+        if(totalElement != 0 && elemByPage != 0) {
             nbPages = (totalElement + elemByPage - 1) / elemByPage;
+        }
+        else {
+            nbPages = 1;
         }
     }
     public int getTotalElement() {

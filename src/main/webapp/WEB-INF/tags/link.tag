@@ -7,16 +7,19 @@
 <c:if test="${currentPage != 0 && limit == null}">
 	<%@ variable name-given="i"%>
 	<c:set var="i" value="${currentPage-1}" />
-	<c:if test="${i < 1}">
-		<c:set var="i" value="1" />
-	</c:if>
-	<li><a href="?page=${i}&limit=${currentLimit}"
+	<c:if test="${i >= 1}">
+		<li><a href="?page=${i}&limit=${currentLimit}"
 		aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 	</a></li>
+	</c:if>
 	<%@ variable name-given="x"%>
 	<c:set var="x" value="${currentPage-2}" />
 	<c:if test="${x<1}">
 		<c:set var="x" value="1" />
+	</c:if>
+	<c:if test="${x>1}">
+		<li><a href="?page=1&limit=${currentLimit}">1</a></li>
+		<li><a href="#">...</a></li>
 	</c:if>
 	<c:forEach begin="${x}" end="${currentPage-1}" varStatus="loop">
 		<c:if test="${loop.current > 0 && loop.current < currentPage}">
@@ -33,11 +36,13 @@
 		</c:forEach>
 	</c:if>
 	<c:set var="i" value="${currentPage+1}" />
-	<c:if test="${i > numberPages}">
-		<c:set var="i" value="${numberPages}" />
-	</c:if>
-	<li><a href="?page=${i}&limit=${currentLimit}" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+	<c:if test="${i < numberPages}">
+		<li><a href="#">...</a></li>
+		<li><a href="?page=${numberPages}&limit=${currentLimit}">${numberPages}</a></li>
+		<li><a href="?page=${i}&limit=${currentLimit}" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 	</a></li>
+	</c:if>
+	
 </c:if>
 <c:if test="${limit != null && limit != 0 }">
 	<button type="button" class="btn btn-default"

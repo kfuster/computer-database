@@ -83,4 +83,14 @@ public class CompanyServiceImpl implements CompanyService {
         }
         return companiesDto;
     }
+    @Override
+    public List<CompanyDto> getAll() {
+        List<CompanyDto> allCompaniesDto = null;
+        try {
+            allCompaniesDto = companyListToDtoList(companyDao.getAll());
+        } catch (PersistenceException e) {
+            e.printStackTrace();
+        }
+        return allCompaniesDto;
+    }
 }

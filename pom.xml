@@ -4,69 +4,90 @@
 
 	<groupId>com.excilys.formation</groupId>
 	<artifactId>computer-database</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.2</version>
 	<packaging>war</packaging>
 
 	<name>computer-database</name>
-	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<junitVersion>4.12</junitVersion>
+		<seleniumVersion>3.0.1</seleniumVersion>
+		<dbUnitVersion>2.5.3</dbUnitVersion>
+		<mysqlConnectorVersion>6.0.5</mysqlConnectorVersion>
+		<mockitoVersion>1.9.5</mockitoVersion>
+		<slf4jApiVersion>1.7.21</slf4jApiVersion>
+		<logbackVersion>1.1.7</logbackVersion>
+		<groovyVersion>2.4.7</groovyVersion>
+		<compilerPluginVersion>3.6.0</compilerPluginVersion>
+		<servletApiVersion>3.1.0</servletApiVersion>
+		<jspApiVersion>2.3.1</jspApiVersion>
+		<jstlVersion>1.2</jstlVersion>
+		<checkstylePluginVersion>2.17</checkstylePluginVersion>
+		<tomcat7PluginVersion>2.2</tomcat7PluginVersion>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>${junitVersion}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.seleniumhq.selenium</groupId>
+		    <artifactId>selenium-java</artifactId>
+		    <version>${seleniumVersion}</version>
+		    <scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.dbunit</groupId>
 			<artifactId>dbunit</artifactId>
-			<version>2.5.3</version>
+			<version>${dbUnitVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>6.0.5</version>
+			<version>${mysqlConnectorVersion}</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
-			<version>1.9.5</version>
+			<version>${mockitoVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.21</version>
+			<version>${slf4jApiVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.1.7</version>
+			<version>${logbackVersion}</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
-			<version>2.4.7</version>
+			<version>${groovyVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-compiler-plugin</artifactId>
-			<version>3.6.0</version>
+			<version>${compilerPluginVersion}</version>
 			<type>maven-plugin</type>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
+			<version>${servletApiVersion}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>javax.servlet.jsp-api</artifactId>
-			<version>2.3.1</version>
+			<version>${jspApiVersion}</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- FIND SOLUTION, problem with taglib uri
@@ -79,7 +100,7 @@
 		 <dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.2</version>
+			<version>${jstlVersion}</version>
 		</dependency>
 
 	</dependencies>
@@ -90,7 +111,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.6.0</version>
+					<version>${compilerPluginVersion}</version>
 					<configuration>
 						<source>1.8</source>
 						<target>1.8</target>
@@ -99,7 +120,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-checkstyle-plugin</artifactId>
-					<version>2.17</version>
+					<version>${checkstylePluginVersion}</version>
 					<configuration>
 						<configLocation>config\checkstyle\checkstyle.xml</configLocation>
 						<suppressionsLocation>config\checkstyle\suppressions.xml</suppressionsLocation>
@@ -112,7 +133,7 @@
 				<plugin>
 					<groupId>org.apache.tomcat.maven</groupId>
 					<artifactId>tomcat7-maven-plugin</artifactId>
-					<version>2.2</version>
+					<version>${tomcat7PluginVersion}</version>
 					<configuration>
 						<url>http://localhost:8080/manager/text</url>
 						<server>TomcatServer</server>

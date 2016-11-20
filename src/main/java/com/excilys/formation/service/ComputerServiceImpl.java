@@ -1,5 +1,6 @@
 package com.excilys.formation.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import com.excilys.formation.dto.ComputerDto;
@@ -40,8 +41,16 @@ public class ComputerServiceImpl implements ComputerService {
     @Override
     public ComputerDto create(ComputerDto pComputerDto) {
         try {
-            Computer computer = new Computer.ComputerBuilder(pComputerDto.name).setDateDisc(pComputerDto.discontinued)
-                    .setDateIntro(pComputerDto.introduced)
+            LocalDate introduced = null;
+            LocalDate discontinued = null;
+            if (pComputerDto.discontinued != null) {
+                introduced = LocalDate.parse(pComputerDto.discontinued);
+            }
+            if (pComputerDto.discontinued != null) {
+                discontinued = LocalDate.parse(pComputerDto.discontinued);
+            }
+            Computer computer = new Computer.ComputerBuilder(pComputerDto.name).setDateDisc(discontinued)
+                    .setDateIntro(introduced)
                     .setCompany(
                             new Company.CompanyBuilder(pComputerDto.companyName).setId(pComputerDto.companyId).build())
                     .build();
@@ -74,8 +83,8 @@ public class ComputerServiceImpl implements ComputerService {
             computerDto = new ComputerDto();
             computerDto.id = computer.getId();
             computerDto.name = computer.getName();
-            computerDto.introduced = computer.getIntroduced();
-            computerDto.discontinued = computer.getDiscontinued();
+            computerDto.introduced = computer.getIntroduced().toString();
+            computerDto.discontinued = computer.getDiscontinued().toString();
             Company company = computer.getCompany();
             computerDto.companyId = company.getId();
             computerDto.companyName = company.getName();
@@ -98,8 +107,16 @@ public class ComputerServiceImpl implements ComputerService {
     }
     @Override
     public void update(ComputerDto pComputerDto) {
-        Computer computer = new Computer.ComputerBuilder(pComputerDto.name).setDateDisc(pComputerDto.discontinued)
-                .setDateIntro(pComputerDto.introduced).setId(pComputerDto.id)
+        LocalDate introduced = null;
+        LocalDate discontinued = null;
+        if (pComputerDto.discontinued != null) {
+            introduced = LocalDate.parse(pComputerDto.discontinued);
+        }
+        if (pComputerDto.discontinued != null) {
+            discontinued = LocalDate.parse(pComputerDto.discontinued);
+        }
+        Computer computer = new Computer.ComputerBuilder(pComputerDto.name).setDateDisc(discontinued)
+                .setDateIntro(introduced).setId(pComputerDto.id)
                 .setCompany(new Company.CompanyBuilder(pComputerDto.companyName).setId(pComputerDto.companyId).build())
                 .build();
         try {
@@ -120,7 +137,7 @@ public class ComputerServiceImpl implements ComputerService {
             for (ComputerDto computer : pListDto) {
                 Company company = new Company.CompanyBuilder(computer.companyName).setId(computer.companyId).build();
                 computers.add(new Computer.ComputerBuilder(computer.name).setCompany(company)
-                        .setDateIntro(computer.introduced).setDateDisc(computer.discontinued).setId(computer.id)
+                        .setDateIntro(LocalDate.parse(computer.introduced)).setDateDisc(LocalDate.parse(computer.discontinued)).setId(computer.id)
                         .build());
             }
         }
@@ -139,8 +156,14 @@ public class ComputerServiceImpl implements ComputerService {
                 ComputerDto computerDto = new ComputerDto();
                 computerDto.id = computer.getId();
                 computerDto.name = computer.getName();
-                computerDto.introduced = computer.getIntroduced();
-                computerDto.discontinued = computer.getDiscontinued();
+                LocalDate dateIntro = computer.getIntroduced();
+                if (dateIntro != null) {
+                    computerDto.introduced = dateIntro.toString();
+                }
+                LocalDate dateDisc = computer.getDiscontinued();
+                if (dateDisc != null) {
+                    computerDto.discontinued = dateDisc.toString();
+                }
                 Company company = computer.getCompany();
                 computerDto.companyId = company.getId();
                 computerDto.companyName = company.getName();

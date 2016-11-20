@@ -103,6 +103,7 @@
 		             },
 		             computerName :{
 		            	 required : true,
+		            	 minLenght : 3
 		             }
 		         },
 			     messages: {

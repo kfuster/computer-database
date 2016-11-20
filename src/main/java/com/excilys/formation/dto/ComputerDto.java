@@ -1,7 +1,5 @@
 package com.excilys.formation.dto;
 
-import java.time.LocalDate;
-
 /**
  * DTO class for computers.
  * @author kfuster
@@ -10,8 +8,8 @@ import java.time.LocalDate;
 public class ComputerDto {
     public int id;
     public String name;
-    public LocalDate introduced;
-    public LocalDate discontinued;
+    public String introduced;
+    public String discontinued;
     public int companyId;
     public String companyName;
     @Override
@@ -89,16 +87,16 @@ public class ComputerDto {
     public void setName(String name) {
         this.name = name;
     }
-    public LocalDate getIntroduced() {
+    public String getIntroduced() {
         return introduced;
     }
-    public void setIntroduced(LocalDate introduced) {
+    public void setIntroduced(String introduced) {
         this.introduced = introduced;
     }
-    public LocalDate getDiscontinued() {
+    public String getDiscontinued() {
         return discontinued;
     }
-    public void setDiscontinued(LocalDate discontinued) {
+    public void setDiscontinued(String discontinued) {
         this.discontinued = discontinued;
     }
     public int getCompanyId() {

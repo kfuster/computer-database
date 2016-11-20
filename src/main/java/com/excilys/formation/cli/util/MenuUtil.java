@@ -39,14 +39,15 @@ public class MenuUtil {
      * and returns the date.
      * @return a LocalDate or null
      */
-    public static LocalDate inputDate() {
+    public static String inputDate() {
         LocalDate date = null;
         boolean valid = false;
+        String dateString = null;
         while (date == null && !valid) {
-            String line = MainMenu.scanner.nextLine();
-            if (!line.isEmpty() && !line.equals("null")) {
+            dateString = MainMenu.scanner.nextLine();
+            if (!dateString.isEmpty() && !dateString.equals("null")) {
                 try {
-                    date = LocalDate.parse(line, formatter);
+                    date = LocalDate.parse(dateString, formatter);
                 } catch (DateTimeParseException e) {
                     System.out.println("La date est au mauvais format");
                 }
@@ -54,32 +55,33 @@ public class MenuUtil {
                 valid = true;
             }
         }
-        return date;
+        return dateString;
     }
     /**
      * Asks for a new date but with the possibility to keep the old one.
-     * @param pLocalDate the old date
-     * @return a LocalDate or null
+     * @param pDate the old date
+     * @return a String of containing the new date, the old one or null
      */
-    public static LocalDate inputNewDate(LocalDate pLocalDate) {
+    public static String inputNewDate(String pDate) {
         LocalDate date = null;
         boolean valid = false;
+        String dateString = null;
         while (date == null && !valid) {
-            String line = MainMenu.scanner.nextLine();
-            if (!line.isEmpty() && !line.equals("null")) {
+            dateString = MainMenu.scanner.nextLine();
+            if (!dateString.isEmpty() && !dateString.equals("null")) {
                 try {
-                    date = LocalDate.parse(line, formatter);
+                    date = LocalDate.parse(dateString, formatter);
                 } catch (DateTimeParseException e) {
                     System.out.println("La date est au mauvais format");
                 }
-            } else if (line.isEmpty()) {
-                date = pLocalDate;
+            } else if (dateString.isEmpty()) {
+                dateString = pDate;
                 valid = true;
             } else {
                 valid = true;
             }
         }
-        return date;
+        return dateString;
     }
     /**
      * Checks if a string is an integer.

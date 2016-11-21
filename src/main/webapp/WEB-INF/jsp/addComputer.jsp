@@ -10,11 +10,6 @@
 <link href="../css/jquery-ui.min.css" rel="stylesheet" media="screen">
 <link href="../css/font-awesome.css" rel="stylesheet" media="screen">
 <link href="../css/main.css" rel="stylesheet" media="screen">
-<style type="text/css">
-label.error {
-color:red;
-}
-</style>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.excilys.formation.dto.CompanyDto"%>
@@ -82,53 +77,6 @@ color:red;
 	<script src="../js/jquery-ui.min.js"></script>
 	<script src="../js/jquery.validate.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
-	<script>
-		$(function() {
-			$("#introduced").datepicker({
-				dateFormat : 'yy-mm-dd',
-				changeMonth : true,
-				changeYear : true,
-				minDate : new Date(1970, 1 - 1, 1)
-			});
-			$("#discontinued").datepicker({
-				dateFormat : 'yy-mm-dd',
-				changeMonth : true,
-				changeYear : true
-			});
-			$.validator.addMethod("validDate", function(value, element) {
-				if (value != "") {
-					return value.match(/^\d{4}-0[1-9]|1[0-2]-\d{2}$/);
-				}
-				return true;
-			}, "Entrez la date au format yyyy-mm-dd.");
-			$('#addForm').validate({
-				rules : {
-					introduced : {
-						required : false,
-						validDate : true
-					},
-					discontinued : {
-						required : false,
-						validDate : true
-					},
-					computerName : {
-						required : true,
-						minLenght : 3
-					}
-				},
-				messages : {
-					computerName : "Entrez un nom",
-					introduced : "Entrez la date au format yyyy-mm-dd.",
-					discontinued : "Entrez la date au format yyyy-mm-dd."
-				}
-			});
-			
-			
-		});
-		function isValidDate(dateString) {
-			var regEx = /^\d{4}-0[1-9]|1[0-2]-\d{2}$/;
-			return dateString.match(regEx) != null;
-		}
-	</script>
+	<script src="../js/addComputer.js"></script>
 </body>
 </html>

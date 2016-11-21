@@ -32,16 +32,17 @@
 	<c:if test="${ numberPages != 0}">
 		<c:forEach begin="${currentPage +1}" end="${currentPage+2}"
 			varStatus="loop">
-			<c:if test="${loop.current < numberPages}">
+			<c:if test="${loop.current <= numberPages}">
 				<li><a href="?page=${loop.current}&limit=${currentLimit}">${loop.current}</a></li>
+				<c:set var="x" value="${loop.current}" />
 			</c:if>
 		</c:forEach>
 	</c:if>
 	<c:set var="i" value="${currentPage+1}" />
-	<c:if test="${i < numberPages}">
+	<c:if test="${x < numberPages}">
 		<li><a href="#">...</a></li>
 		<li><a href="?page=${numberPages}&limit=${currentLimit}">${numberPages}</a></li>
-		<li><a href="?page=${i}&limit=${currentLimit}" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+		<li><a href="?page=${x+1}&limit=${currentLimit}" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 	</a></li>
 	</c:if>
 	

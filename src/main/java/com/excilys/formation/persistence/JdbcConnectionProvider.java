@@ -11,8 +11,8 @@ import com.excilys.formation.persistence.util.PropertyReader;
  * @author kfuster
  *
  */
-public class ConnectionProvider {
-    private static ConnectionProvider connectionProvider;
+public class JdbcConnectionProvider {
+    private static JdbcConnectionProvider connectionProvider;
     private Connection connection;
     private Properties properties;
     private static final String CONNECTION_PROPERTIES = "connection.properties";
@@ -20,7 +20,7 @@ public class ConnectionProvider {
      * Constructor for ConnectionProvider.
      * Initializes the properties.
      */
-    private ConnectionProvider() {
+    private JdbcConnectionProvider() {
         ClassLoader classLoader = getClass().getClassLoader();
         properties = PropertyReader.readProperties(classLoader.getResourceAsStream(CONNECTION_PROPERTIES));
     }
@@ -29,9 +29,9 @@ public class ConnectionProvider {
      * Initializes it if null.
      * @return the instance of ConnectionProvider
      */
-    public static ConnectionProvider getInstance() {
+    public static JdbcConnectionProvider getInstance() {
         if (connectionProvider == null) {
-            connectionProvider = new ConnectionProvider();
+            connectionProvider = new JdbcConnectionProvider();
         }
         return connectionProvider;
     }

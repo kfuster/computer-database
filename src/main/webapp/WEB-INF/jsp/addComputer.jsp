@@ -10,17 +10,24 @@
 <link href="../css/jquery-ui.min.css" rel="stylesheet" media="screen">
 <link href="../css/font-awesome.css" rel="stylesheet" media="screen">
 <link href="../css/main.css" rel="stylesheet" media="screen">
+<style type="text/css">
+label.error {
+color:red;
+}
+</style>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.List"%>
 <%@ page import="com.excilys.formation.dto.CompanyDto"%>
+<%@ page import="com.excilys.formation.dto.ComputerDto"%>
+<%@ page import="java.util.Map"%>
 </head>
 <body>
 	<jsp:useBean id="listCompanies" scope="application"
 		type="java.util.List<CompanyDto>" />
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="dashboard"> Application -
-				Computer Database </a>
+			<a class="navbar-brand" href="dashboard"> Application - Computer
+				Database </a>
 		</div>
 	</header>
 
@@ -35,27 +42,31 @@
 								<label for="computerName">Computer name</label> <input
 									type="text" class="form-control" id="computerName"
 									name="computerName"
-									placeholder="Computer name">
+									<c:if test="${not empty computerDto.name}">value="${computerDto.name}"</c:if>
+									placeholder="Computer Name">
+									<c:if test="${not empty errors['name']}"><span style="color:red">${errors["name"]}</span></c:if>
 							</div>
 							<div class="form-group">
 								<label for="introduced">Introduced date</label> <input
 									type="date" class="form-control" id="introduced"
-									name="introduced"
-									placeholder="Introduced date">
+									<c:if test="${not empty computerDto.introduced}">value="${computerDto.introduced}"</c:if>
+									name="introduced" placeholder="Computer Introduced">
+									<c:if test="${not empty errors['introduced']}"><span style="color:red">${errors["introduced"]}</span></c:if>
 							</div>
 							<div class="form-group">
 								<label for="discontinued">Discontinued date</label> <input
 									type="date" class="form-control" id="discontinued"
-									name="discontinued"
-									placeholder="Discontinued date">
+									<c:if test="${not empty computerDto.discontinued}">value="${computerDto.discontinued}"</c:if>
+									name="discontinued" placeholder="Computer Discontinued">
+									<c:if test="${not empty errors['discontinued']}"><span style="color:red">${errors["discontinued"]}</span></c:if>
 							</div>
 							<div class="form-group">
-								<label for="companyId">Company</label>
-								<select class="form-control" id="companyId" name="companyId">
+								<label for="companyId">Company</label> <select
+									class="form-control" id="companyId" name="companyId">
 									<c:forEach items="${listCompanies}" var="companyDto">
 										<option value="${companyDto.id}">${companyDto.name}</option>
 									</c:forEach>
-								</select> 
+								</select>
 							</div>
 						</fieldset>
 						<div class="actions pull-right">
@@ -73,45 +84,46 @@
 	<script src="../js/bootstrap.min.js"></script>
 	<script>
 		$(function() {
-		     $( "#introduced" ).datepicker({ dateFormat: 'yy-mm-dd',
-		         changeMonth: true,
-		         changeYear: true,
-		         minDate: new Date(1970, 1 - 1, 1)});
-		     $( "#discontinued" ).datepicker({ dateFormat: 'yy-mm-dd',
-		         changeMonth: true,
-		         changeYear: true});
-		     $.validator.addMethod(
-			    "validDate",
-			    function(value, element) {
-			    	if (value != "") {
-			        	return value.match(/^\d{4}-0[1-9]|1[0-2]-\d{2}$/) ;
-			    	}
-			    	return true;
-			    },
-			    "Entrez la date au format yyyy-mm-dd."
-			);
-		    $('#addForm')
-		     .validate({
-		         rules : {
-		        	 introduced : {
-		        		 required : false,
-		            	 validDate : true
-		             },
-		             discontinued : {
-		            	 required : false,
-		            	 validDate : true
-		             },
-		             computerName :{
-		            	 required : true,
-		            	 minLenght : 3
-		             }
-		         },
-			     messages: {
-			    	 computerName : "Entrez un nom",
-			    	 introduced : "Entrez la date au format yyyy-mm-dd.",
-			    	 discontinued : "Entrez la date au format yyyy-mm-dd."
-	         	 }
-		     });
+			$("#introduced").datepicker({
+				dateFormat : 'yy-mm-dd',
+				changeMonth : true,
+				changeYear : true,
+				minDate : new Date(1970, 1 - 1, 1)
+			});
+			$("#discontinued").datepicker({
+				dateFormat : 'yy-mm-dd',
+				changeMonth : true,
+				changeYear : true
+			});
+			$.validator.addMethod("validDate", function(value, element) {
+				if (value != "") {
+					return value.match(/^\d{4}-0[1-9]|1[0-2]-\d{2}$/);
+				}
+				return true;
+			}, "Entrez la date au format yyyy-mm-dd.");
+			$('#addForm').validate({
+				rules : {
+					introduced : {
+						required : false,
+						validDate : true
+					},
+					discontinued : {
+						required : false,
+						validDate : true
+					},
+					computerName : {
+						required : true,
+						minLenght : 3
+					}
+				},
+				messages : {
+					computerName : "Entrez un nom",
+					introduced : "Entrez la date au format yyyy-mm-dd.",
+					discontinued : "Entrez la date au format yyyy-mm-dd."
+				}
+			});
+			
+			
 		});
 		function isValidDate(dateString) {
 			var regEx = /^\d{4}-0[1-9]|1[0-2]-\d{2}$/;

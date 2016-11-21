@@ -1,10 +1,14 @@
 package com.excilys.formation.servlet.mapper;
 
-import java.time.LocalDate;
 import javax.servlet.http.HttpServletRequest;
 import com.excilys.formation.dto.ComputerDto;
 
 public class RequestMapper {
+    /**
+     * Fills a computerDto from the parameters of a request
+     * @param pRequest the HttpServletRequest containing the parameters
+     * @return a ComputerDto
+     */
     public static ComputerDto toComputerDto (HttpServletRequest pRequest) {
         ComputerDto computerDto = new ComputerDto();
         String name = pRequest.getParameter("computerName").trim();

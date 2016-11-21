@@ -10,6 +10,11 @@ import com.excilys.formation.pagination.Page;
 import com.excilys.formation.service.ComputerServiceImpl;
 
 public class DashboardServlet extends HttpServlet {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -9054781130738656412L;
+
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
         ComputerServiceImpl computerService = ComputerServiceImpl.getInstance();
         Page<ComputerDto> pageComputer = new Page<>(10);

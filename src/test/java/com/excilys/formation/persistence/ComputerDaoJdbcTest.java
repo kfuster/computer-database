@@ -99,7 +99,7 @@ public class ComputerDaoJdbcTest {
         computerDao = ComputerDaoJdbc.getInstance();
         Page<Computer> page = new Page<>(10);
         try {
-            page = computerDao.getPage(page);
+            page = computerDao.getPage(page, null);
         } catch (PersistenceException e) {
             e.printStackTrace();
         }

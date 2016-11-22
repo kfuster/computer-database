@@ -83,8 +83,12 @@ public class ComputerServiceImpl implements ComputerService {
             computerDto = new ComputerDto();
             computerDto.id = computer.getId();
             computerDto.name = computer.getName();
-            computerDto.introduced = computer.getIntroduced().toString();
-            computerDto.discontinued = computer.getDiscontinued().toString();
+            if (computer.getIntroduced() != null) {
+                computerDto.introduced = computer.getIntroduced().toString();
+            }
+            if (computer.getDiscontinued() != null) {
+                computerDto.discontinued = computer.getDiscontinued().toString();
+            }
             Company company = computer.getCompany();
             computerDto.companyId = company.getId();
             computerDto.companyName = company.getName();

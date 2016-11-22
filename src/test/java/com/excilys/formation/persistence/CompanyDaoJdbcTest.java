@@ -40,7 +40,7 @@ public class CompanyDaoJdbcTest {
         companyDao = CompanyDaoJdbc.getInstance();
         Page<Company> page = new Page<>(10);
         try {
-            page = companyDao.getPage(page);
+            page = companyDao.getPage(page, null);
         } catch (PersistenceException e) {
             e.printStackTrace();
         }

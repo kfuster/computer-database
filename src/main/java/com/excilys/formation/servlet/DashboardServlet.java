@@ -18,13 +18,19 @@ public class DashboardServlet extends HttpServlet {
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
         ComputerServiceImpl computerService = ComputerServiceImpl.getInstance();
         Page<ComputerDto> pageComputer = new Page<>(10);
-        if(request.getParameter("page") != null) {
+        if (request.getParameter("page") != null) {
             pageComputer.setPage(Integer.parseInt(request.getParameter("page")));
         }
-        if(request.getParameter("limit") != null) {
+        if (request.getParameter("limit") != null) {
             pageComputer.setElemByPage(Integer.parseInt(request.getParameter("limit")));
         }
-        pageComputer = computerService.getPage(pageComputer);
+        String searchFilter = null;
+        if (request.getParameter("search") != null) {
+            String search = request.getParameter("search");
+            this.getServletContext().setAttribute("filter", search);
+            searchFilter = "WHERE computer.name like '%"+search+"%' OR company.name like '%"+search+"%' ";
+        }
+        pageComputer = computerService.getPageWithFilter(pageComputer, searchFilter);
         this.getServletContext().setAttribute("computerService", computerService);
         this.getServletContext().setAttribute("pageComputer", pageComputer);
         this.getServletContext().getRequestDispatcher( "/WEB-INF/jsp/dashboard.jsp" ).forward( request, response );

@@ -38,8 +38,9 @@ public interface BaseDao<T> {
     /**
      * Method to get a page of elements.
      * @param pPage the Page to get
+     * @param pFilter an optionnal filter for the request, can be null
      * @throws PersistenceException in case of problems while getting the page
      * @return the obtained page
      */
-    Page<T> getPage(Page<T> pPage) throws PersistenceException;
+    Page<T> getPage(Page<T> pPage, String pFilter) throws PersistenceException;
 }

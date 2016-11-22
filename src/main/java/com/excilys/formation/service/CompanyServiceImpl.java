@@ -38,11 +38,15 @@ public class CompanyServiceImpl implements CompanyService {
     }
     @Override
     public Page<CompanyDto> getPage(Page<CompanyDto> pPage) {
+        return getPageWithFilter(pPage, null);
+    }
+    @Override
+    public Page<CompanyDto> getPageWithFilter(Page<CompanyDto> pPage, String pFilter) {
         Page<Company> pageCompany = new Page<Company>(10);
         ServiceUtil.copyAttributes(pPage, pageCompany);
         pageCompany.elems = dtoListToCompanyList(pPage.elems);
         try {
-            pageCompany = companyDao.getPage(pageCompany);
+            pageCompany = companyDao.getPage(pageCompany, pFilter);
         } catch (PersistenceException e) {
             e.printStackTrace();
         }

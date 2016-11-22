@@ -27,7 +27,7 @@ public class CompanyDaoJdbc implements CompanyDao {
     private static CompanyDaoJdbc companyDaoImpl = null;
     private static final String SELECT_ALL = "SELECT * FROM company ORDER BY company.name";
     private static final String SELECT_BY_ID = "SELECT * FROM company WHERE id=?";
-    private static final String SELECT_PAGE = "SELECT * FROM company LIMIT ? OFFSET ?";
+    private static final String SELECT_PAGE = "SELECT * FROM company ";
     private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM company";
     /**
      * CompanyDaoJdbc constructor.
@@ -62,16 +62,21 @@ public class CompanyDaoJdbc implements CompanyDao {
         return company;
     }
     @Override
-    public Page<Company> getPage(Page<Company> pPage) throws PersistenceException {
+    public Page<Company> getPage(Page<Company> pPage, String pFilter) throws PersistenceException {
         List<Company> allCompanies = new ArrayList<>();
+        String queryComputers = SELECT_PAGE;
+        if (pFilter != null && !pFilter.isEmpty()) {
+            queryComputers += pFilter;
+        }
+        queryComputers += " LIMIT ? OFFSET ?";
         try (Connection connection = connectionProvider.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PAGE);
+            PreparedStatement preparedStatement = connection.prepareStatement(queryComputers);
             preparedStatement.setInt(1, pPage.elemByPage);
             preparedStatement.setInt(2, (pPage.page - 1) * pPage.elemByPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             allCompanies = JdbcMapper.mapResultsToCompanyList(resultSet);
             pPage.elems = (allCompanies);
-            pPage.setTotalElement(count());
+            pPage.setTotalElement(count(pFilter));
         } catch (SQLException e) {
             logger.error(e.getMessage());
             throw new PersistenceException("Problème lors de la récupération de la page de compagnies");
@@ -93,13 +98,18 @@ public class CompanyDaoJdbc implements CompanyDao {
     }
     /**
      * Count the total number of companies.
+     * @param pFilter an optional filter string
      * @return the number of companies in the DB
      */
-    private int count() {
+    private int count(String pFilter) {
+        String query = COUNT_ALL;
+        if (pFilter != null && !pFilter.isEmpty()) {
+            query += pFilter;
+        }
         int total = 0;
         try (Connection connection = connectionProvider.getConnection()){
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(COUNT_ALL);
+            ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) {
                 total = resultSet.getInt("total");
             }

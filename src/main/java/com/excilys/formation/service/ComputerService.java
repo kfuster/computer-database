@@ -21,4 +21,5 @@ public interface ComputerService extends BaseService<ComputerDto> {
      * @return the Page with the populated list
      */
     Page<ComputerDto> getPage(Page<ComputerDto> pPage);
+    Page<ComputerDto> getPageWithFilter(Page<ComputerDto> pPage, String pFilter);
 }

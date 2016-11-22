@@ -93,11 +93,15 @@ public class ComputerServiceImpl implements ComputerService {
     }
     @Override
     public Page<ComputerDto> getPage(Page<ComputerDto> pPage) {
+        return getPageWithFilter(pPage, null);
+    }
+    @Override
+    public Page<ComputerDto> getPageWithFilter(Page<ComputerDto> pPage, String pFilter) {
         Page<Computer> pageCompany = new Page<Computer>(10);
         ServiceUtil.copyAttributes(pPage, pageCompany);
         pageCompany.elems = dtoListToComputerList(pPage.elems);
         try {
-            pageCompany = computerDao.getPage(pageCompany);
+            pageCompany = computerDao.getPage(pageCompany, pFilter);
         } catch (PersistenceException e) {
             e.printStackTrace();
         }

@@ -25,8 +25,8 @@ public class ComputerDaoJdbc implements ComputerDao {
     private static final String INSERT_COMPUTER = "INSERT INTO computer(name, introduced, discontinued, company_id) VALUES(?, ?, ?, ?)";
     private static final String UPDATE_COMPUTER = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
     private static final String DELETE_COMPUTER = "DELETE FROM computer WHERE id=?";
-    private static final String SELECT_JOIN = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, company.id as companyId, company.name as companyName FROM computer LEFT JOIN company ON computer.company_id=company.id";
-    private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM computer";
+    private static final String SELECT_JOIN = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, company.id as companyId, company.name as companyName FROM computer LEFT JOIN company ON computer.company_id=company.id ";
+    private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM computer LEFT JOIN company ON computer.company_id=company.id ";
     /**
      * Constructor for ComputerDaoJdbc.
      * Initializes the connectionProvider.
@@ -124,9 +124,13 @@ public class ComputerDaoJdbc implements ComputerDao {
         return computer;
     }
     @Override
-    public Page<Computer> getPage(Page<Computer> pPage) throws PersistenceException {
+    public Page<Computer> getPage(Page<Computer> pPage, String pFilter) throws PersistenceException {
         List<Computer> computers = new ArrayList<>();
-        String queryComputers = SELECT_JOIN + " LIMIT ? OFFSET ?";
+        String queryComputers = SELECT_JOIN;
+        if (pFilter != null && !pFilter.isEmpty()) {
+            queryComputers += pFilter;
+        }
+        queryComputers += " LIMIT ? OFFSET ?";
         try (Connection connection = connectionProvider.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(queryComputers);
             preparedStatement.setInt(1, pPage.elemByPage);
@@ -134,7 +138,7 @@ public class ComputerDaoJdbc implements ComputerDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             computers = JdbcMapper.mapResultsToComputerList(resultSet);
             pPage.elems = computers;
-            pPage.setTotalElement(count());
+            pPage.setTotalElement(count(pFilter));
         } catch (SQLException e) {
             throw new PersistenceException("Problème lors de la récupération de la page d'ordinateurs");
         }
@@ -142,13 +146,18 @@ public class ComputerDaoJdbc implements ComputerDao {
     }
     /**
      * Count the number of Computers in the DB.
+     * @param pFilter an optional filter string
      * @return the number of computers in the DB
      */
-    private int count() {
+    private int count(String pFilter) {
+        String query = COUNT_ALL;
+        if (pFilter != null && !pFilter.isEmpty()) {
+            query += pFilter;
+        }
         int total = 0;
         try (Connection connection = connectionProvider.getConnection()) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(COUNT_ALL);
+            ResultSet resultSet = statement.executeQuery(query);
             resultSet.next();
             total = resultSet.getInt("total");
         } catch (SQLException e) {

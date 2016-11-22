@@ -36,6 +36,7 @@
 			varStatus="loop">
 			<c:if test="${loop.current <= numberPages}">
 				<li><a href="?page=${loop.current}&limit=${currentLimit}<c:if test="${filter != null}">&search=${filter}</c:if>">${loop.current}</a></li>
+				<c:set var="i" value="${loop.current}" />
 			</c:if>
 			<c:set var="x" value="${loop.current}" />
 		</c:forEach>
@@ -43,8 +44,10 @@
 	<c:if test="${x < numberPages}">
 		<li><a href="#">...</a></li>
 		<li><a href="?page=${numberPages}&limit=${currentLimit}<c:if test="${filter != null}">&search=${filter}</c:if>">${numberPages}</a></li>
-		<li><a href="?page=${x+1}&limit=${currentLimit}<c:if test="${filter != null}">&search=${filter}</c:if>" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-	</a></li>
+	</c:if>
+	<c:if test="${currentPage < numberPages}">
+		<li><a href="?page=${currentPage+1}&limit=${currentLimit}<c:if test="${filter != null}">&search=${filter}</c:if>" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+		</a></li>
 	</c:if>
 	
 </c:if>
@@ -57,5 +60,5 @@
 	<fmt:formatNumber var="i" value="${pageToGo - (pageToGo % 1 == 0 ? 0 : 0.5)}" 
     type="number" pattern="#" />
 	<button type="button" class="btn btn-default"
-		onclick="location.href='?page=${i}&limit=${limit}'">${limit}</button>
+		onclick="location.href='?page=${i}&limit=${limit}<c:if test="${filter != null}">&search=${filter}</c:if>'">${limit}</button>
 </c:if>

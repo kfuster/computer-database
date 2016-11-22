@@ -13,6 +13,7 @@ import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.ComputerDao;
 import com.excilys.formation.persistence.HikariConnectionProvider;
 import com.excilys.formation.persistence.mapper.JdbcMapper;
+import com.excilys.formation.persistence.util.DateConverter;
 
 /**
  * DAO class for computers.
@@ -52,8 +53,8 @@ public class ComputerDaoJdbc implements ComputerDao {
             PreparedStatement preparedStatement = connection.prepareStatement(queryComputer,
                     PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, pComputer.getName());
-            preparedStatement.setObject(2, pComputer.getIntroduced());
-            preparedStatement.setObject(3, pComputer.getDiscontinued());
+            preparedStatement.setTimestamp(2, DateConverter.fromLocalDateToTimestamp(pComputer.getIntroduced()));
+            preparedStatement.setTimestamp(3, DateConverter.fromLocalDateToTimestamp(pComputer.getDiscontinued()));
             preparedStatement.setInt(4, pComputer.getCompany().getId());
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -74,8 +75,8 @@ public class ComputerDaoJdbc implements ComputerDao {
         try (Connection connection = connectionProvider.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(queryComputer);
             preparedStatement.setString(1, pComputer.getName());
-            preparedStatement.setObject(2, pComputer.getIntroduced());
-            preparedStatement.setObject(3, pComputer.getDiscontinued());
+            preparedStatement.setTimestamp(2, DateConverter.fromLocalDateToTimestamp(pComputer.getIntroduced()));
+            preparedStatement.setTimestamp(3, DateConverter.fromLocalDateToTimestamp(pComputer.getDiscontinued()));
             preparedStatement.setInt(4, pComputer.getCompany().getId());
             preparedStatement.setInt(5, pComputer.getId());
             preparedStatement.executeUpdate();

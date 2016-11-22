@@ -117,8 +117,8 @@ public class ComputerServiceImpl implements ComputerService {
     public void update(ComputerDto pComputerDto) {
         LocalDate introduced = null;
         LocalDate discontinued = null;
-        if (pComputerDto.discontinued != null) {
-            introduced = LocalDate.parse(pComputerDto.discontinued);
+        if (pComputerDto.introduced != null) {
+            introduced = LocalDate.parse(pComputerDto.introduced);
         }
         if (pComputerDto.discontinued != null) {
             discontinued = LocalDate.parse(pComputerDto.discontinued);

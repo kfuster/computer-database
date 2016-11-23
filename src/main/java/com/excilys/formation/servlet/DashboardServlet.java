@@ -27,10 +27,11 @@ public class DashboardServlet extends HttpServlet {
             pageComputer.setElemByPage(Integer.parseInt(request.getParameter("limit")));
         }
         String searchFilter = null;
+        this.getServletContext().setAttribute("filter", "");
         if (request.getParameter("search") != null) {
-            String search = request.getParameter("search");
+            String search = request.getParameter("search").replace("'","''");
             this.getServletContext().setAttribute("filter", search);
-            searchFilter = "WHERE computer.name like '%" + search + "%' OR company.name like '%" + search + "%' ";
+            searchFilter = "WHERE computer.name LIKE '%" + search + "%' OR company.name LIKE '%" + search + "%' ";
         }
         pageComputer = computerService.getPageWithFilter(pageComputer, searchFilter);
         this.getServletContext().setAttribute("pageComputer", pageComputer);

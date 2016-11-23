@@ -35,12 +35,14 @@ public class Validator {
         return pErrors;
     }
     /**
-     * Checks if a name is valid (contains at least 3 characters.
+     * Checks if a name is valid :
+     * - Contains at least 3 characters.
+     * - No more than one space between words
      * @param pName the name to check
      * @return a boolean
      */
     private static boolean isNameValid(String pName) {
-        Pattern pattern = Pattern.compile("\\w{3,}[ ]{0,1}\\w*");
+        Pattern pattern = Pattern.compile("\\w{3,}([ ]{0,1}\\w*)*");
         Matcher matcher = pattern.matcher(pName);
         return matcher.matches();
     }

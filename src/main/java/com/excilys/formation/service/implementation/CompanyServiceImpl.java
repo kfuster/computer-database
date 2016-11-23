@@ -55,6 +55,14 @@ public class CompanyServiceImpl implements CompanyService {
         pPage.elems = companyListToDtoList(pageCompany.elems);
         return pPage;
     }
+    @Override
+    public void delete(int pId) {
+        try {
+            companyDao.delete(pId);
+        } catch (PersistenceException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Converts a list from CompanyDto to Company.
      * @param pListDto the list to convert

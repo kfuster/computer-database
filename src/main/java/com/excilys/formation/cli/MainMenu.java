@@ -1,9 +1,11 @@
 package com.excilys.formation.cli;
 
 import java.util.Scanner;
+import org.slf4j.LoggerFactory;
 import com.excilys.formation.cli.implementation.CompanyMenuImpl;
 import com.excilys.formation.cli.implementation.ComputerMenuImpl;
 import com.excilys.formation.util.MenuUtil;
+import ch.qos.logback.classic.Logger;
 
 /**
  * First menu, allows the user to choose which kind of entity he wants to
@@ -12,6 +14,7 @@ import com.excilys.formation.util.MenuUtil;
  *
  */
 public class MainMenu implements Menu {
+    final Logger logger = (Logger) LoggerFactory.getLogger(MainMenu.class);
     public static Scanner scanner;
     /**
      * MainMenu constructor. Initialize scanner.
@@ -25,7 +28,7 @@ public class MainMenu implements Menu {
      * Allows the user to chose to manage computers or companies.
      */
     public void startMenu() {
-        System.out.println("Voulez-vous :\n1 : Gérer les ordinateurs\n2 : Gérer les compagnies\n3 : Quitter");
+        logger.info("Voulez-vous :\n1 : Gérer les ordinateurs\n2 : Gérer les compagnies\n3 : Quitter");
         int choice = MenuUtil.waitForInt();
         boolean quit = false;
         switch (choice) {

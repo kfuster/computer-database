@@ -48,26 +48,18 @@ public class CompanyMenuImpl implements CompanyMenu {
         if(scanner.hasNextLine()) {
             scanner.nextLine();
         }
-        boolean quit = false;
         switch (choice) {
             case 1:
                 list();
-                quit = false;
                 break;
             case 2:
                 delete();
-                quit = false;
                 break;
             case 3:
-                quit = true;
                 break;
             default:
                 startMenu();
-                quit = false;
                 break;
-        }
-        if(!quit) {
-            startMenu();
         }
     }
 
@@ -91,11 +83,11 @@ public class CompanyMenuImpl implements CompanyMenu {
         }
         stringBuilder.append("Page : ").append(pageCompany.page).append(" / ").append(pageCompany.nbPages)
                 .append("\nOptions :\n1 - Page Précédente\n2 - Page Suivante\n3 - Aller à la page\n4 - Quitter");
-        System.out.println(stringBuilder.toString());
+        logger.info(stringBuilder.toString());
     }
     @Override
     public void delete() {
-        System.out.println("Entrez l'id de la company à supprimer (ou entrée pour annuler) : ");
+        logger.info("Entrez l'id de la company à supprimer (ou entrée pour annuler) : ");
         String input = MenuUtil.waitForLine();
         int idToDelete = -1;
         if (MenuUtil.isInteger(input)) {
@@ -104,9 +96,9 @@ public class CompanyMenuImpl implements CompanyMenu {
         if (idToDelete >= 1) {
             try {
                 companyService.delete(idToDelete);
-                System.out.println("Company supprimé");
+                logger.info("Company supprimé");
             } catch (ServiceException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
     }

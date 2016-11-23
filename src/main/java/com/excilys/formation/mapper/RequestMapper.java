@@ -14,12 +14,15 @@ public class RequestMapper {
      */
     public static ComputerDto toComputerDto (HttpServletRequest pRequest) {
         ComputerDto computerDto = new ComputerDto();
-        String id = pRequest.getParameter("computerId").trim();
+        String id = "";
+        if (pRequest.getParameter("computerId") != null) {
+            id = pRequest.getParameter("computerId").trim();
+        }
         String name = pRequest.getParameter("computerName").trim();
         String introduced = pRequest.getParameter("introduced").trim();
         String discontinued = pRequest.getParameter("discontinued").trim();
         String companyId = pRequest.getParameter("companyId").trim();
-        if (!id.isEmpty()) {
+        if (!id.isEmpty() && MenuUtil.isInteger(id)) {
            computerDto.id = Integer.parseInt(id); 
         }
         if (!name.isEmpty()) {

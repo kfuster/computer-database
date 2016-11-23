@@ -7,6 +7,7 @@ import java.util.Scanner;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import com.excilys.formation.cli.implementation.ComputerMenuImpl;
 
 public class ComputerMenuImplTest {
     @Before

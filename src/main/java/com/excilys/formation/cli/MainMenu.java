@@ -1,6 +1,8 @@
 package com.excilys.formation.cli;
 
 import java.util.Scanner;
+import com.excilys.formation.cli.implementation.CompanyMenuImpl;
+import com.excilys.formation.cli.implementation.ComputerMenuImpl;
 import com.excilys.formation.util.MenuUtil;
 
 /**

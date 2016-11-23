@@ -2,8 +2,7 @@ package com.excilys.formation.cli;
 
 public interface ComputerMenu extends Menu {
     /**
-     * Initiate the necessary variables
-     * and calls the methods to show the list
+     * Initiate the necessary variables and calls the methods to show the list
      * and the operations.
      */
     void list();
@@ -24,5 +23,4 @@ public interface ComputerMenu extends Menu {
      * Asks the user for the id of a computer to delete and delete it.
      */
     void delete();
-
 }

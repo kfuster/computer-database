@@ -1,6 +1,8 @@
-package com.excilys.formation.cli;
+package com.excilys.formation.cli.implementation;
 
 import java.util.Scanner;
+import com.excilys.formation.cli.ComputerMenu;
+import com.excilys.formation.cli.MainMenu;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.exception.ServiceException;
 import com.excilys.formation.pagination.Page;

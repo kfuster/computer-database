@@ -21,7 +21,7 @@ public class Validator {
      */
     public static Map<String, String> validateComputerDto(ComputerDto computerDto, Map<String, String> pErrors) {
         String name = computerDto.name;
-        if (!isNameValid(name)) {
+        if (name == null || !isNameValid(name)) {
             pErrors.put("name", "Le nom n'est pas valide");
         }
         String introducedError = isDateValid(computerDto.introduced, null);

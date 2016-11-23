@@ -1,4 +1,4 @@
-package com.excilys.formation.service;
+package com.excilys.formation.service.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,8 @@ import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.CompanyDao;
 import com.excilys.formation.persistence.jdbc.CompanyDaoJdbc;
-import com.excilys.formation.service.util.ServiceUtil;
+import com.excilys.formation.service.CompanyService;
+import com.excilys.formation.util.ServiceUtil;
 
 /**
  * Manages Company services.

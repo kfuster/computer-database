@@ -1,4 +1,4 @@
-package com.excilys.formation.service;
+package com.excilys.formation.service.implementation;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,7 +10,8 @@ import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.ComputerDao;
 import com.excilys.formation.persistence.jdbc.ComputerDaoJdbc;
-import com.excilys.formation.service.util.ServiceUtil;
+import com.excilys.formation.service.ComputerService;
+import com.excilys.formation.util.ServiceUtil;
 
 /**
  * Service class for Computers.
@@ -21,18 +22,16 @@ public class ComputerServiceImpl implements ComputerService {
     private ComputerDao computerDao;
     private static ComputerServiceImpl computerService;
     /**
-     * Constructor for ComputerServiceImpl.
-     * Initializes computerDao.
+     * Constructor for ComputerServiceImpl. Initializes computerDao.
      */
     private ComputerServiceImpl() {
         computerDao = ComputerDaoJdbc.getInstance();
     }
     /**
-     * Getter for the ComputerServiceImpl instance.
-     * Initializes it if null.
+     * Getter for the ComputerServiceImpl instance. Initializes it if null.
      * @return the instance of ComputerServiceImpl
      */
-    public static ComputerServiceImpl getInstance(){
+    public static ComputerServiceImpl getInstance() {
         if (computerService == null) {
             computerService = new ComputerServiceImpl();
         }
@@ -69,6 +68,17 @@ public class ComputerServiceImpl implements ComputerService {
         } catch (PersistenceException e) {
             e.printStackTrace();
         }
+    }
+    public boolean deleteList(List<Integer> ids) {
+        for (Integer id : ids) {
+            try {
+                computerDao.delete(id);
+            } catch (PersistenceException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
     }
     @Override
     public ComputerDto getById(int pId) {
@@ -145,8 +155,8 @@ public class ComputerServiceImpl implements ComputerService {
             for (ComputerDto computer : pListDto) {
                 Company company = new Company.CompanyBuilder(computer.companyName).setId(computer.companyId).build();
                 computers.add(new Computer.ComputerBuilder(computer.name).setCompany(company)
-                        .setDateIntro(LocalDate.parse(computer.introduced)).setDateDisc(LocalDate.parse(computer.discontinued)).setId(computer.id)
-                        .build());
+                        .setDateIntro(LocalDate.parse(computer.introduced))
+                        .setDateDisc(LocalDate.parse(computer.discontinued)).setId(computer.id).build());
             }
         }
         return computers;

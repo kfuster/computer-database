@@ -12,13 +12,10 @@
 <link href="../css/main.css" rel="stylesheet" media="screen">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %> 
-<%@ page import="com.excilys.formation.service.ComputerServiceImpl"%>
 <%@ page import="com.excilys.formation.pagination.Page"%>
 <%@ page import="com.excilys.formation.dto.ComputerDto"%>
 </head>
 <body>
-	<jsp:useBean id="computerService" scope="application"
-		type="com.excilys.formation.service.ComputerServiceImpl" />
 	<jsp:useBean id="pageComputer" scope="application"
 		type="com.excilys.formation.pagination.Page<ComputerDto>" />
 	<header class="navbar navbar-inverse navbar-fixed-top">

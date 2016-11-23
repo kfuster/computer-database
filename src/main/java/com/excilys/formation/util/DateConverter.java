@@ -1,4 +1,4 @@
-package com.excilys.formation.persistence.util;
+package com.excilys.formation.util;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;

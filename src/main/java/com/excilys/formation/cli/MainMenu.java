@@ -1,7 +1,7 @@
 package com.excilys.formation.cli;
 
 import java.util.Scanner;
-import com.excilys.formation.cli.util.MenuUtil;
+import com.excilys.formation.util.MenuUtil;
 
 /**
  * First menu, allows the user to choose which kind of entity he wants to

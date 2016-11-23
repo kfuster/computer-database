@@ -1,4 +1,4 @@
-package com.excilys.formation.persistence.mapper;
+package com.excilys.formation.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.excilys.formation.entity.Company;
 import com.excilys.formation.entity.Computer;
-import com.excilys.formation.persistence.util.DateConverter;
+import com.excilys.formation.util.DateConverter;
 
 /**
  * Mapper class for JDBC ResultSets.

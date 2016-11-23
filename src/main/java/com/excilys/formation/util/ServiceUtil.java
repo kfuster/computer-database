@@ -1,4 +1,4 @@
-package com.excilys.formation.service.util;
+package com.excilys.formation.util;
 
 import com.excilys.formation.pagination.Page;
 

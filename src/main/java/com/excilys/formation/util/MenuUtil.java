@@ -1,4 +1,4 @@
-package com.excilys.formation.cli.util;
+package com.excilys.formation.util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

@@ -1,4 +1,4 @@
-package com.excilys.formation.persistence.util;
+package com.excilys.formation.util;
 
 import java.io.IOException;
 import java.io.InputStream;

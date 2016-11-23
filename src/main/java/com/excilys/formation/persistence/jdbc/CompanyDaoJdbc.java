@@ -10,10 +10,10 @@ import java.util.List;
 import org.slf4j.LoggerFactory;
 import com.excilys.formation.entity.Company;
 import com.excilys.formation.exception.PersistenceException;
+import com.excilys.formation.mapper.JdbcMapper;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.CompanyDao;
 import com.excilys.formation.persistence.HikariConnectionProvider;
-import com.excilys.formation.persistence.mapper.JdbcMapper;
 import ch.qos.logback.classic.Logger;
 
 /**

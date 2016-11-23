@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import com.excilys.formation.entity.Computer;
 import com.excilys.formation.exception.PersistenceException;
+import com.excilys.formation.mapper.JdbcMapper;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.ComputerDao;
 import com.excilys.formation.persistence.HikariConnectionProvider;
-import com.excilys.formation.persistence.mapper.JdbcMapper;
-import com.excilys.formation.persistence.util.DateConverter;
+import com.excilys.formation.util.DateConverter;
 
 /**
  * DAO class for computers.
@@ -85,12 +85,30 @@ public class ComputerDaoJdbc implements ComputerDao {
         }
     }
     @Override
-    public void delete(int pID) throws PersistenceException {
+    public boolean delete(int pID) throws PersistenceException {
         String queryComputer = DELETE_COMPUTER;
         try (Connection connection = connectionProvider.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryComputer);
-            preparedStatement.setInt(1, pID);
-            preparedStatement.executeUpdate();
+            connection.setAutoCommit(false);
+            
+            int affectedRow = 0;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(queryComputer))
+            {
+                preparedStatement.setInt(1, pID);
+                affectedRow = preparedStatement.executeUpdate();
+            }
+            catch(SQLException e)
+            {
+                connection.rollback();
+                throw new PersistenceException("Problème lors de la suppression de l'ordinateur");
+            }
+            
+            connection.commit();
+            if( affectedRow == 1) {
+                return true;
+            }
+            else {
+                return false;
+            }
         } catch (SQLException e) {
             throw new PersistenceException("Problème lors de la suppression de l'ordinateur");
         }

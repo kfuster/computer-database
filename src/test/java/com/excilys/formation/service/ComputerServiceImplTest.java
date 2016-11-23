@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.exception.ServiceException;
 import com.excilys.formation.pagination.Page;
+import com.excilys.formation.service.implementation.ComputerServiceImpl;
 
 public class ComputerServiceImplTest {
     @Before

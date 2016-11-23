@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.exception.ServiceException;
-import com.excilys.formation.service.CompanyServiceImpl;
+import com.excilys.formation.mapper.RequestMapper;
 import com.excilys.formation.service.ComputerService;
-import com.excilys.formation.service.ComputerServiceImpl;
-import com.excilys.formation.servlet.mapper.RequestMapper;
+import com.excilys.formation.service.implementation.CompanyServiceImpl;
+import com.excilys.formation.service.implementation.ComputerServiceImpl;
 import com.excilys.formation.servlet.validation.Validator;
 
 public class AddComputerServlet extends HttpServlet {

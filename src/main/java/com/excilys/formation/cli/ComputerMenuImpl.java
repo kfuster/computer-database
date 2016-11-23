@@ -1,12 +1,12 @@
 package com.excilys.formation.cli;
 
 import java.util.Scanner;
-import com.excilys.formation.cli.util.MenuUtil;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.exception.ServiceException;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.service.ComputerService;
-import com.excilys.formation.service.ComputerServiceImpl;
+import com.excilys.formation.service.implementation.ComputerServiceImpl;
+import com.excilys.formation.util.MenuUtil;
 
 /**
  * Manage the menus and operations for the computers.

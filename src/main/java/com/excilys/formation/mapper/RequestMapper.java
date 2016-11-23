@@ -1,7 +1,10 @@
-package com.excilys.formation.servlet.mapper;
+package com.excilys.formation.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import com.excilys.formation.dto.ComputerDto;
+import com.excilys.formation.util.MenuUtil;
 
 public class RequestMapper {
     /**
@@ -35,5 +38,20 @@ public class RequestMapper {
             }
         }        
         return computerDto;   
+    }
+    /**
+     * Get a list of ids from a request
+     * @param pRequest the HttpServletRequest containing the list of ids
+     * @return a List of ids
+     */
+    public static List<Integer> toIdList (HttpServletRequest pRequest) {
+        List<Integer> listIds = new ArrayList<>();
+        String[] stringIdArray = pRequest.getParameter("selection").trim().split(",");
+        for (String id : stringIdArray) {
+            if (MenuUtil.isInteger(id)) {
+                listIds.add(Integer.parseInt(id));
+            }
+        }
+        return listIds;
     }
 }

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.management.RuntimeErrorException;
-import com.excilys.formation.persistence.util.PropertyReader;
+import com.excilys.formation.util.PropertyReader;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 

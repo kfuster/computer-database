@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.pagination.Page;
+import com.excilys.formation.service.implementation.CompanyServiceImpl;
 
 public class CompanyServiceImplTest {
     @Before

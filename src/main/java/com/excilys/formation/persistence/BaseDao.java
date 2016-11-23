@@ -32,7 +32,7 @@ public interface BaseDao<T> {
      * @param idToDelete ID of the object to delete
      * @throws PersistenceException in case of problems while deleting
      */
-    default void delete(int idToDelete) throws PersistenceException {
+    default boolean delete(int idToDelete) throws PersistenceException {
         throw new UnsupportedOperationException("delete() not implemented");
     };
     /**

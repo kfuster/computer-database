@@ -1,11 +1,11 @@
 package com.excilys.formation.cli;
 
 import org.slf4j.LoggerFactory;
-import com.excilys.formation.cli.util.MenuUtil;
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.service.CompanyService;
-import com.excilys.formation.service.CompanyServiceImpl;
+import com.excilys.formation.service.implementation.CompanyServiceImpl;
+import com.excilys.formation.util.MenuUtil;
 import ch.qos.logback.classic.Logger;
 
 /**

@@ -67,19 +67,13 @@ public class CompanyDaoJdbc implements CompanyDao {
         try (Connection connection = connectionProvider.getConnection()) {
             connection.setAutoCommit(false);
             int affectedRow = 0;
-            try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_COMPUTER)) {
-                preparedStatement.setInt(1, pID);
-                affectedRow += preparedStatement.executeUpdate();
+            try (PreparedStatement preparedStatementComputer = connection.prepareStatement(DELETE_COMPUTER);
+                    PreparedStatement preparedStatementCompany = connection.prepareStatement(DELETE_COMPANY)) {
+                preparedStatementComputer.setInt(1, pID);
+                preparedStatementComputer.executeUpdate();
+                preparedStatementCompany.setInt(1, pID);
+                affectedRow = preparedStatementCompany.executeUpdate();
             } catch (SQLException e) {
-                e.printStackTrace();
-                connection.rollback();
-                throw new PersistenceException("Problème lors de la suppression des ordinateurs de la compagnie");
-            }
-            try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_COMPANY)) {
-                preparedStatement.setInt(1, pID);
-                affectedRow = preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
                 connection.rollback();
                 throw new PersistenceException("Problème lors de la suppression de la compagnie");
             }

@@ -7,4 +7,9 @@ public interface CompanyMenu extends Menu {
      * and the operations.
      */
     void list();
+    /**
+     * Asks the user for the id of a company to delete and delete it 
+     * and the associated computers.
+     */
+    void delete();
 }

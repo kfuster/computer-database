@@ -1,7 +1,11 @@
-package com.excilys.formation.cli;
+package com.excilys.formation.cli.implementation;
 
+import java.util.Scanner;
 import org.slf4j.LoggerFactory;
+import com.excilys.formation.cli.CompanyMenu;
+import com.excilys.formation.cli.MainMenu;
 import com.excilys.formation.dto.CompanyDto;
+import com.excilys.formation.exception.ServiceException;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.service.CompanyService;
 import com.excilys.formation.service.implementation.CompanyServiceImpl;
@@ -18,6 +22,7 @@ public class CompanyMenuImpl implements CompanyMenu {
     private static CompanyService companyService;
     private static CompanyMenuImpl companyMenu;
     private Page<CompanyDto> pageCompany;
+    private Scanner scanner = MainMenu.scanner;
     /**
      * CompanyMenuImpl constructor.
      * Initialize CompanyService.
@@ -38,18 +43,31 @@ public class CompanyMenuImpl implements CompanyMenu {
     }
     @Override
     public void startMenu() {
-        logger.info("Voici les opérations disponibles :\n1 : Voir la liste des compagnies\n2 : Retour");
+        logger.info("Voici les opérations disponibles :\n1 : Voir la liste des compagnies\n2 : Supprimer une compagnie\n3 : Retour");
         int choice = MenuUtil.waitForInt();
+        if(scanner.hasNextLine()) {
+            scanner.nextLine();
+        }
+        boolean quit = false;
         switch (choice) {
             case 1:
                 list();
+                quit = false;
                 break;
             case 2:
-                new MainMenu().startMenu();
+                delete();
+                quit = false;
+                break;
+            case 3:
+                quit = true;
                 break;
             default:
                 startMenu();
+                quit = false;
                 break;
+        }
+        if(!quit) {
+            startMenu();
         }
     }
 
@@ -74,5 +92,22 @@ public class CompanyMenuImpl implements CompanyMenu {
         stringBuilder.append("Page : ").append(pageCompany.page).append(" / ").append(pageCompany.nbPages)
                 .append("\nOptions :\n1 - Page Précédente\n2 - Page Suivante\n3 - Aller à la page\n4 - Quitter");
         System.out.println(stringBuilder.toString());
+    }
+    @Override
+    public void delete() {
+        System.out.println("Entrez l'id de la company à supprimer (ou entrée pour annuler) : ");
+        String input = MenuUtil.waitForLine();
+        int idToDelete = -1;
+        if (MenuUtil.isInteger(input)) {
+            idToDelete = Integer.parseInt(input);
+        }
+        if (idToDelete >= 1) {
+            try {
+                companyService.delete(idToDelete);
+                System.out.println("Company supprimé");
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

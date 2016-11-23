@@ -29,16 +29,17 @@ public class CompanyDaoJdbc implements CompanyDao {
     private static final String SELECT_BY_ID = "SELECT * FROM company WHERE id=?";
     private static final String SELECT_PAGE = "SELECT * FROM company ";
     private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM company";
+    private static final String DELETE_COMPANY = "DELETE FROM company WHERE id=?";
+    private static final String DELETE_COMPUTER = "DELETE FROM computer WHERE company_id=?";
     /**
-     * CompanyDaoJdbc constructor.
-     * Initialize the connectionProvider.
+     * CompanyDaoJdbc constructor. Initialize the connectionProvider.
      */
     private CompanyDaoJdbc() {
         connectionProvider = HikariConnectionProvider.getInstance();
     }
     /**
-     * Getter for the instance of CompanyDaoJdbc.
-     * If the instance is null, initializes it.
+     * Getter for the instance of CompanyDaoJdbc. If the instance is null,
+     * initializes it.
      * @return the instance of CompanyDaoJdbc
      */
     public static CompanyDaoJdbc getInstance() {
@@ -60,6 +61,37 @@ public class CompanyDaoJdbc implements CompanyDao {
             throw new PersistenceException("Problème lors de la récupération de la compagnie");
         }
         return company;
+    }
+    @Override
+    public boolean delete(int pID) throws PersistenceException {
+        try (Connection connection = connectionProvider.getConnection()) {
+            connection.setAutoCommit(false);
+            int affectedRow = 0;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_COMPUTER)) {
+                preparedStatement.setInt(1, pID);
+                affectedRow += preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                connection.rollback();
+                throw new PersistenceException("Problème lors de la suppression des ordinateurs de la compagnie");
+            }
+            try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_COMPANY)) {
+                preparedStatement.setInt(1, pID);
+                affectedRow = preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                connection.rollback();
+                throw new PersistenceException("Problème lors de la suppression de la compagnie");
+            }
+            connection.commit();
+            if (affectedRow == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new PersistenceException("Problème lors de la suppression de la compagnie");
+        }
     }
     @Override
     public Page<Company> getPage(Page<Company> pPage, String pFilter) throws PersistenceException {
@@ -107,7 +139,7 @@ public class CompanyDaoJdbc implements CompanyDao {
             query += pFilter;
         }
         int total = 0;
-        try (Connection connection = connectionProvider.getConnection()){
+        try (Connection connection = connectionProvider.getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) {

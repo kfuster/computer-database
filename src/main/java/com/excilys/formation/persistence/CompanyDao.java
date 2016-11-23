@@ -13,4 +13,11 @@ public interface CompanyDao extends BaseDao<Company> {
      */
     Company getById(int pId) throws PersistenceException;
     List<Company> getAll() throws PersistenceException;
+    /**
+     * Deletes a company and all related computers. 
+     * @param pID the id of the company to delete
+     * @return a boolean indicating if at least a row was affected
+     * @throws PersistenceException 
+     */
+    boolean delete(int pId) throws PersistenceException;
 }

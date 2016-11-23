@@ -88,7 +88,6 @@ public class ComputerDaoJdbc implements ComputerDao {
     public boolean delete(int pID) throws PersistenceException {
         String queryComputer = DELETE_COMPUTER;
         try (Connection connection = connectionProvider.getConnection()) {
-            connection.setAutoCommit(false);
             
             int affectedRow = 0;
             try (PreparedStatement preparedStatement = connection.prepareStatement(queryComputer))
@@ -98,11 +97,9 @@ public class ComputerDaoJdbc implements ComputerDao {
             }
             catch(SQLException e)
             {
-                connection.rollback();
                 throw new PersistenceException("Problème lors de la suppression de l'ordinateur");
             }
             
-            connection.commit();
             if( affectedRow == 1) {
                 return true;
             }

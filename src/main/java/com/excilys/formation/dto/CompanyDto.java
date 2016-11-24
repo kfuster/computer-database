@@ -6,13 +6,13 @@ package com.excilys.formation.dto;
  *
  */
 public class CompanyDto {
-    public int id;
+    public long id;
     public String name;
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
+        result = (int) (prime * result + id);
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
@@ -39,10 +39,10 @@ public class CompanyDto {
         return new StringBuilder().append("Company [id=").append(id).append(", name=").append(name).append("]")
                 .toString();
     }
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
     public String getName() {

@@ -48,10 +48,10 @@ public class ComputerServiceImpl implements ComputerService {
             if (pComputerDto.discontinued != null) {
                 discontinued = LocalDate.parse(pComputerDto.discontinued);
             }
-            Computer computer = new Computer.ComputerBuilder(pComputerDto.name).setDateDisc(discontinued)
-                    .setDateIntro(introduced)
-                    .setCompany(
-                            new Company.CompanyBuilder(pComputerDto.companyName).setId(pComputerDto.companyId).build())
+            Computer computer = new Computer.ComputerBuilder(pComputerDto.name).dateDisc(discontinued)
+                    .dateIntro(introduced)
+                    .company(
+                            new Company.CompanyBuilder(pComputerDto.companyName).id(pComputerDto.companyId).build())
                     .build();
             computerDao.create(computer);
             pComputerDto.id = computer.getId();
@@ -62,7 +62,7 @@ public class ComputerServiceImpl implements ComputerService {
         return null;
     }
     @Override
-    public void delete(int pId) {
+    public void delete(long pId) {
         try {
             computerDao.delete(pId);
         } catch (PersistenceException e) {
@@ -81,7 +81,7 @@ public class ComputerServiceImpl implements ComputerService {
         return true;
     }
     @Override
-    public ComputerDto getById(int pId) {
+    public ComputerDto getById(long pId) {
         Computer computer = null;
         try {
             computer = computerDao.getById(pId);
@@ -133,9 +133,9 @@ public class ComputerServiceImpl implements ComputerService {
         if (pComputerDto.discontinued != null) {
             discontinued = LocalDate.parse(pComputerDto.discontinued);
         }
-        Computer computer = new Computer.ComputerBuilder(pComputerDto.name).setDateDisc(discontinued)
-                .setDateIntro(introduced).setId(pComputerDto.id)
-                .setCompany(new Company.CompanyBuilder(pComputerDto.companyName).setId(pComputerDto.companyId).build())
+        Computer computer = new Computer.ComputerBuilder(pComputerDto.name).dateDisc(discontinued)
+                .dateIntro(introduced).id(pComputerDto.id)
+                .company(new Company.CompanyBuilder(pComputerDto.companyName).id(pComputerDto.companyId).build())
                 .build();
         try {
             computerDao.update(computer);
@@ -153,10 +153,10 @@ public class ComputerServiceImpl implements ComputerService {
         if (pListDto != null) {
             computers = new ArrayList<>();
             for (ComputerDto computer : pListDto) {
-                Company company = new Company.CompanyBuilder(computer.companyName).setId(computer.companyId).build();
-                computers.add(new Computer.ComputerBuilder(computer.name).setCompany(company)
-                        .setDateIntro(LocalDate.parse(computer.introduced))
-                        .setDateDisc(LocalDate.parse(computer.discontinued)).setId(computer.id).build());
+                Company company = new Company.CompanyBuilder(computer.companyName).id(computer.companyId).build();
+                computers.add(new Computer.ComputerBuilder(computer.name).company(company)
+                        .dateIntro(LocalDate.parse(computer.introduced))
+                        .dateDisc(LocalDate.parse(computer.discontinued)).id(computer.id).build());
             }
         }
         return computers;

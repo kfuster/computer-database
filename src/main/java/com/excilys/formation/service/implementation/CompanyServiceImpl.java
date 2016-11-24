@@ -1,5 +1,7 @@
 package com.excilys.formation.service.implementation;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import com.excilys.formation.dto.CompanyDto;
@@ -7,7 +9,10 @@ import com.excilys.formation.entity.Company;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.CompanyDao;
+import com.excilys.formation.persistence.ComputerDao;
+import com.excilys.formation.persistence.HikariConnectionProvider;
 import com.excilys.formation.persistence.jdbc.CompanyDaoJdbc;
+import com.excilys.formation.persistence.jdbc.ComputerDaoJdbc;
 import com.excilys.formation.service.CompanyService;
 import com.excilys.formation.util.ServiceUtil;
 
@@ -18,6 +23,7 @@ import com.excilys.formation.util.ServiceUtil;
  */
 public class CompanyServiceImpl implements CompanyService {
     private CompanyDao companyDao;
+    private ComputerDao computerDao;
     private static CompanyServiceImpl companyService;
     /**
      * Constructor for CompanyServiceImpl.
@@ -25,6 +31,7 @@ public class CompanyServiceImpl implements CompanyService {
      */
     private CompanyServiceImpl(){
         companyDao = CompanyDaoJdbc.getInstance();
+        computerDao = ComputerDaoJdbc.getInstance();
     }
     /**
      * Getter for the CompanyServiceImpl instance.
@@ -56,10 +63,14 @@ public class CompanyServiceImpl implements CompanyService {
         return pPage;
     }
     @Override
-    public void delete(int pId) {
-        try {
-            companyDao.delete(pId);
-        } catch (PersistenceException e) {
+    public void delete(long pId) {
+        try (Connection connection = HikariConnectionProvider.getInstance().getConnection()) {
+            connection.setAutoCommit(false);
+            companyDao.delete(pId, connection);
+            computerDao.deleteByCompany(pId, connection);
+            connection.commit();
+            connection.setAutoCommit(true);
+        } catch (PersistenceException | SQLException e) {
             e.printStackTrace();
         }
     }
@@ -73,7 +84,7 @@ public class CompanyServiceImpl implements CompanyService {
         if (pListDto != null) {
             companies = new ArrayList<>();
             for (CompanyDto company : pListDto) {
-                companies.add(new Company.CompanyBuilder(company.name).setId(company.id).build());
+                companies.add(new Company.CompanyBuilder(company.name).id(company.id).build());
             }
         }
         return companies;

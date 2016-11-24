@@ -14,7 +14,7 @@ public interface ComputerService extends BaseService<ComputerDto> {
      * @param pId the id of the Computer to get
      * @return the ComputerDto of the computer obtained from the DB
      */
-    ComputerDto getById(int pId);
+    ComputerDto getById(long pId);
     /**
      * Populate a list of Computer according to the Page parameters.
      * @param pPage the Page containing the parameters and the list

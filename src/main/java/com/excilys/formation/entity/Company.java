@@ -5,9 +5,9 @@ package com.excilys.formation.entity;
  * @author kfuster
  *
  */
-public class Company {
+public final class Company {
     // ######### ATTRIBUTES #########
-    private int id;
+    private long id;
     private String name;
     /**
      * Company constructor.
@@ -17,10 +17,10 @@ public class Company {
         name = pName;
     }
     // ######### SETTERS/GETTERS #########
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
     public String getName() {
@@ -34,7 +34,7 @@ public class Company {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
+        result = (int) (prime * result + id);
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
@@ -68,7 +68,7 @@ public class Company {
                 .toString();
     }
     public static class CompanyBuilder {
-        private int id;
+        private long id;
         private String name;
         /**
          * CompanyBuilder constructor.
@@ -82,7 +82,7 @@ public class Company {
          * @param pId the Company's Id
          * @return the CompanyBuilder
          */
-        public CompanyBuilder setId(int pId) {
+        public CompanyBuilder id(long pId) {
             id = pId;
             return this;
         }

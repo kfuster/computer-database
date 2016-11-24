@@ -6,20 +6,20 @@ package com.excilys.formation.dto;
  *
  */
 public class ComputerDto {
-    public int id;
+    public long id;
     public String name;
     public String introduced;
     public String discontinued;
-    public int companyId;
+    public long companyId;
     public String companyName;
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + companyId;
+        result = (int) (prime * result + companyId);
         result = prime * result + ((companyName == null) ? 0 : companyName.hashCode());
         result = prime * result + ((discontinued == null) ? 0 : discontinued.hashCode());
-        result = prime * result + id;
+        result = (int) (prime * result + id);
         result = prime * result + ((introduced == null) ? 0 : introduced.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
@@ -75,10 +75,10 @@ public class ComputerDto {
         }
         return stringBuilder.toString();
     }
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
     public String getName() {
@@ -99,10 +99,10 @@ public class ComputerDto {
     public void setDiscontinued(String discontinued) {
         this.discontinued = discontinued;
     }
-    public int getCompanyId() {
+    public long getCompanyId() {
         return companyId;
     }
-    public void setCompanyId(int companyId) {
+    public void setCompanyId(long companyId) {
         this.companyId = companyId;
     }
     public String getCompanyName() {

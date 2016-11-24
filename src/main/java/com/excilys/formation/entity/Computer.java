@@ -7,9 +7,9 @@ import java.time.LocalDate;
  * @author kfuster
  *
  */
-public class Computer {
+public final class Computer {
     // ######### ATTRIBUTES #########
-    private int id;
+    private long id;
     private String name;
     private LocalDate introduced;
     private LocalDate discontinued;
@@ -22,10 +22,10 @@ public class Computer {
         name = pName;
     }
     // ######### GETTERS/SETTERS #########
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
     public String getName() {
@@ -59,7 +59,7 @@ public class Computer {
         int result = 1;
         result = prime * result + ((company == null) ? 0 : company.hashCode());
         result = prime * result + ((discontinued == null) ? 0 : discontinued.hashCode());
-        result = prime * result + id;
+        result = (int) (prime * result + id);
         result = prime * result + ((introduced == null) ? 0 : introduced.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
@@ -116,7 +116,7 @@ public class Computer {
                 .append(", company=").append(company).append("]").toString();
     }
     public static class ComputerBuilder {
-        private int id;
+        private long id;
         private String name;
         private LocalDate introduced;
         private LocalDate discontinued;
@@ -133,7 +133,7 @@ public class Computer {
          * @param pCompany the Computer's Company
          * @return the ComputerBuilder
          */
-        public ComputerBuilder setCompany(Company pCompany) {
+        public ComputerBuilder company(Company pCompany) {
             company = pCompany;
             return this;
         }
@@ -142,7 +142,7 @@ public class Computer {
          * @param pId the Computer's Id
          * @return the ComputerBuilder
          */
-        public ComputerBuilder setId(int pId) {
+        public ComputerBuilder id(long pId) {
             id = pId;
             return this;
         }
@@ -151,7 +151,7 @@ public class Computer {
          * @param pDate the Computer's introduced date
          * @return the ComputerBuilder
          */
-        public ComputerBuilder setDateIntro(LocalDate pDate) {
+        public ComputerBuilder dateIntro(LocalDate pDate) {
             introduced = pDate;
             return this;
         }
@@ -160,7 +160,7 @@ public class Computer {
          * @param pDate the Computer's discontinued date
          * @return the ComputerBuilder
          */
-        public ComputerBuilder setDateDisc(LocalDate pDate) {
+        public ComputerBuilder dateDisc(LocalDate pDate) {
             discontinued = pDate;
             return this;
         }

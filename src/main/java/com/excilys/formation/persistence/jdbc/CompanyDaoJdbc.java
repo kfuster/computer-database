@@ -30,7 +30,6 @@ public class CompanyDaoJdbc implements CompanyDao {
     private static final String SELECT_PAGE = "SELECT * FROM company ";
     private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM company";
     private static final String DELETE_COMPANY = "DELETE FROM company WHERE id=?";
-    private static final String DELETE_COMPUTER = "DELETE FROM computer WHERE company_id=?";
     /**
      * CompanyDaoJdbc constructor. Initialize the connectionProvider.
      */
@@ -49,11 +48,11 @@ public class CompanyDaoJdbc implements CompanyDao {
         return companyDaoImpl;
     }
     @Override
-    public Company getById(int pId) throws PersistenceException {
+    public Company getById(long pId) throws PersistenceException {
         Company company = null;
         try (Connection connection = connectionProvider.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);
-            preparedStatement.setInt(1, pId);
+            preparedStatement.setLong(1, pId);
             ResultSet resultSet = preparedStatement.executeQuery();
             company = JdbcMapper.mapResultToCompany(resultSet);
         } catch (SQLException e) {
@@ -63,21 +62,16 @@ public class CompanyDaoJdbc implements CompanyDao {
         return company;
     }
     @Override
-    public boolean delete(int pID) throws PersistenceException {
-        try (Connection connection = connectionProvider.getConnection()) {
-            connection.setAutoCommit(false);
+    public boolean delete(long pID, Connection pConnection) throws PersistenceException {
+        try {
             int affectedRow = 0;
-            try (PreparedStatement preparedStatementComputer = connection.prepareStatement(DELETE_COMPUTER);
-                    PreparedStatement preparedStatementCompany = connection.prepareStatement(DELETE_COMPANY)) {
-                preparedStatementComputer.setInt(1, pID);
-                preparedStatementComputer.executeUpdate();
-                preparedStatementCompany.setInt(1, pID);
+            try (PreparedStatement preparedStatementCompany = pConnection.prepareStatement(DELETE_COMPANY)) {
+                preparedStatementCompany.setLong(1, pID);
                 affectedRow = preparedStatementCompany.executeUpdate();
             } catch (SQLException e) {
-                connection.rollback();
+                pConnection.rollback();
                 throw new PersistenceException("Problème lors de la suppression de la compagnie");
             }
-            connection.commit();
             if (affectedRow == 1) {
                 return true;
             } else {

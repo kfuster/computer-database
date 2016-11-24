@@ -87,12 +87,12 @@ public class JdbcMapper {
     private static Computer extractComputer(ResultSet pResultSet) throws SQLException   {
         // Get the company from the row
         Company company = new Company.CompanyBuilder(pResultSet.getString("companyName"))
-                .setId(pResultSet.getInt("companyId")).build();
+                .id(pResultSet.getInt("companyId")).build();
         // Get the computer from the row
-        Computer computer = new Computer.ComputerBuilder(pResultSet.getString("name")).setCompany(company)
-                .setId(pResultSet.getInt("id"))
-                .setDateDisc(DateConverter.fromTimestampToLocalDate(pResultSet.getTimestamp("discontinued")))
-                .setDateIntro(DateConverter.fromTimestampToLocalDate(pResultSet.getTimestamp("introduced"))).build();
+        Computer computer = new Computer.ComputerBuilder(pResultSet.getString("name")).company(company)
+                .id(pResultSet.getInt("id"))
+                .dateDisc(DateConverter.fromTimestampToLocalDate(pResultSet.getTimestamp("discontinued")))
+                .dateIntro(DateConverter.fromTimestampToLocalDate(pResultSet.getTimestamp("introduced"))).build();
         return computer;
     }
     /**
@@ -103,7 +103,7 @@ public class JdbcMapper {
      */
     private static Company extractCompany(ResultSet pResultSet) throws SQLException {
         // Get the company from the row
-        Company company = new Company.CompanyBuilder(pResultSet.getString("name")).setId(pResultSet.getInt("id"))
+        Company company = new Company.CompanyBuilder(pResultSet.getString("name")).id(pResultSet.getInt("id"))
                 .build();
         return company;
     }

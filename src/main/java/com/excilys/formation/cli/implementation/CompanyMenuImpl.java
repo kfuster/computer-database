@@ -65,6 +65,7 @@ public class CompanyMenuImpl implements CompanyMenu {
     @Override
     public void list() {
         pageCompany = new Page<>(10);
+        pageFilter.setPageNum(1);
         do {
             pageCompany = controller.getPageCompany(pageFilter);
             showPage();

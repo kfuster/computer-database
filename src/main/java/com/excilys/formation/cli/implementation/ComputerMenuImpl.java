@@ -94,6 +94,7 @@ public class ComputerMenuImpl implements ComputerMenu {
     }
     @Override
     public void list() {
+        pageFilter.setPageNum(1);
         pageComputer = new Page<>(10);
         // While the user doesn't quit the list, continue.
         do {

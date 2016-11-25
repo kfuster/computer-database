@@ -8,6 +8,7 @@
 <!-- Bootstrap -->
 <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="../css/font-awesome.css" rel="stylesheet" media="screen">
+<link href="../css/jquery-ui.min.css" rel="stylesheet" media="screen">
 <link href="../css/main.css" rel="stylesheet" media="screen">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>

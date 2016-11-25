@@ -169,6 +169,9 @@ public final class Computer {
          * @return a Computer
          */
         public Computer build() {
+            if (name.length() < 3 ) {
+                throw new IllegalArgumentException("Computer name must be at least 3 characters");
+            }
             Computer computer = new Computer(name);
             computer.id = id;
             computer.company = company;

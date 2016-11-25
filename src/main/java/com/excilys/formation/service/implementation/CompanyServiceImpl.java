@@ -27,6 +27,7 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyDao companyDao;
     private ComputerDao computerDao;
     private static CompanyServiceImpl companyService;
+    private static Connection connection;
     /**
      * Constructor for CompanyServiceImpl.
      * Initializes the companyDao.
@@ -34,6 +35,11 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyServiceImpl(){
         companyDao = CompanyDaoJdbc.getInstance();
         computerDao = ComputerDaoJdbc.getInstance();
+        try {
+            connection = HikariConnectionProvider.getInstance().getConnection();
+        } catch (SQLException e) {
+            logger.error("Error init CompanyService : ", e);
+        }
     }
     /**
      * Getter for the CompanyServiceImpl instance.
@@ -49,7 +55,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Page<Company> getPage(PageFilter pPageFilter) {
         try {
-            return companyDao.getPage(pPageFilter);
+            return companyDao.getPage(connection, pPageFilter);
         } catch (PersistenceException e) {
             logger.info(e.getMessage());
         }
@@ -57,16 +63,26 @@ public class CompanyServiceImpl implements CompanyService {
     }
     @Override
     public boolean delete(long pId) throws ServiceException {
-        try (Connection connection = HikariConnectionProvider.getInstance().getConnection()) {
+        try {
             connection.setAutoCommit(false);
-            companyDao.delete(pId, connection);
-            boolean result = computerDao.deleteByCompany(pId, connection);
+            companyDao.delete(connection, pId);
+            boolean result = computerDao.deleteByCompany(connection, pId);
             connection.commit();
             connection.setAutoCommit(true);
             return result;
         } catch (PersistenceException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                logger.error("Error CompanyService : delete : ", e1);
+            }
             logger.info(e.getMessage());
         } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                logger.error("Error CompanyService : delete : ", e1);
+            }
             logger.error("Error CompanyService : delete : ", e);
             throw new ServiceException("Erreur lors de la suppression de la companie");
         }
@@ -76,7 +92,7 @@ public class CompanyServiceImpl implements CompanyService {
     public List<Company> getAll() {
         List<Company> allCompanies = null;
         try {
-            allCompanies = companyDao.getAll();
+            allCompanies = companyDao.getAll(connection);
         } catch (PersistenceException e) {
             logger.info(e.getMessage());
         }

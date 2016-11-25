@@ -12,7 +12,7 @@ public interface CompanyDao extends BaseDao<Company> {
      * @return a Company
      * @throws PersistenceException in case of problems while getting the company
      */
-    Company getById(long pId) throws PersistenceException;
-    List<Company> getAll() throws PersistenceException;
-    boolean delete(long pId, Connection connection) throws PersistenceException;
+    Company getById(Connection pConnection, long pId) throws PersistenceException;
+    List<Company> getAll(Connection pConnection) throws PersistenceException;
+    boolean delete(Connection pConnection, long pId) throws PersistenceException;
 }

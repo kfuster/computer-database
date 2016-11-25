@@ -3,13 +3,26 @@ package com.excilys.formation.persistence;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.sql.DataSource;
+import org.slf4j.LoggerFactory;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import ch.qos.logback.classic.Logger;
 
 public class HikariConnectionProvider {
     private static HikariConnectionProvider connectionProvider;
+    final static Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(HikariConnectionProvider.class);
     private static final String HIKARI_PROPERTIES = "src/main/resources/hikari.properties";
     private static DataSource dataSource;
+    private static final ThreadLocal<Connection> CONNECTION = new ThreadLocal<Connection>() {
+        public Connection initialValue() {
+            try {
+                return dataSource.getConnection();
+            } catch (SQLException e) {
+                logger.error("Error CompanyDao : ThreadLocal initialValue : ", e);
+            }
+            return null;
+        }
+    };
     /**
      * Constructor for HikariConnectionProvider.
      * Initializes the properties.
@@ -30,6 +43,6 @@ public class HikariConnectionProvider {
         return connectionProvider;
     }
     public Connection getConnection () throws SQLException {
-        return dataSource.getConnection();
+        return CONNECTION.get();
     }
 }

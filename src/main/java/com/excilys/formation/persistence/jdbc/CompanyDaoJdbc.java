@@ -14,7 +14,6 @@ import com.excilys.formation.model.Company;
 import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.CompanyDao;
-import com.excilys.formation.persistence.HikariConnectionProvider;
 import ch.qos.logback.classic.Logger;
 
 /**
@@ -23,20 +22,14 @@ import ch.qos.logback.classic.Logger;
  *
  */
 public class CompanyDaoJdbc implements CompanyDao {
-    final Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(CompanyDaoJdbc.class);
-    private HikariConnectionProvider connectionProvider;
+    final static Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(CompanyDaoJdbc.class);
     private static CompanyDaoJdbc companyDaoImpl = null;
     private static final String SELECT_ALL = "SELECT * FROM company ORDER BY company.name";
     private static final String SELECT_BY_ID = "SELECT * FROM company WHERE id=?";
     private static final String SELECT_PAGE = "SELECT * FROM company ";
     private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM company";
     private static final String DELETE_COMPANY = "DELETE FROM company WHERE id=?";
-    /**
-     * CompanyDaoJdbc constructor. Initialize the connectionProvider.
-     */
-    private CompanyDaoJdbc() {
-        connectionProvider = HikariConnectionProvider.getInstance();
-    }
+
     /**
      * Getter for the instance of CompanyDaoJdbc. If the instance is null,
      * initializes it.
@@ -49,10 +42,9 @@ public class CompanyDaoJdbc implements CompanyDao {
         return companyDaoImpl;
     }
     @Override
-    public Company getById(long pId) throws PersistenceException {
+    public Company getById(Connection pConnection, long pId) throws PersistenceException {
         Company company = null;
-        try (Connection connection = connectionProvider.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);
+        try (PreparedStatement preparedStatement = pConnection.prepareStatement(SELECT_BY_ID);) {
             preparedStatement.setLong(1, pId);
             ResultSet resultSet = preparedStatement.executeQuery();
             company = JdbcMapper.mapResultToCompany(resultSet);
@@ -63,7 +55,7 @@ public class CompanyDaoJdbc implements CompanyDao {
         return company;
     }
     @Override
-    public boolean delete(long pID, Connection pConnection) throws PersistenceException {
+    public boolean delete(Connection pConnection, long pID) throws PersistenceException {
         try {
             int affectedRow = 0;
             try (PreparedStatement preparedStatementCompany = pConnection.prepareStatement(DELETE_COMPANY)) {
@@ -85,13 +77,12 @@ public class CompanyDaoJdbc implements CompanyDao {
         }
     }
     @Override
-    public Page<Company> getPage(PageFilter pPageFilter) throws PersistenceException {
+    public Page<Company> getPage(Connection pConnection, PageFilter pPageFilter) throws PersistenceException {
         List<Company> allCompanies = new ArrayList<>();
         String queryComputers = SELECT_PAGE;
         queryComputers += " LIMIT ? OFFSET ?";
         Page<Company> pPage = null;
-        try (Connection connection = connectionProvider.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryComputers);
+        try (PreparedStatement preparedStatement = pConnection.prepareStatement(queryComputers)) {
             preparedStatement.setInt(1, pPageFilter.getElementsByPage());
             preparedStatement.setInt(2, (pPageFilter.getPageNum() - 1) * pPageFilter.getElementsByPage());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -99,7 +90,7 @@ public class CompanyDaoJdbc implements CompanyDao {
             pPage = new Page<>(pPageFilter.getElementsByPage());
             pPage.page = pPageFilter.getPageNum();
             pPage.elems = (allCompanies);
-            pPage.setTotalElement(count(""));
+            pPage.setTotalElement(count(pConnection, ""));
             pPageFilter.setNbPage(pPage.nbPages);
         } catch (SQLException e) {
             logger.error("Error in CompanyDao : getPage : ", e);
@@ -108,10 +99,9 @@ public class CompanyDaoJdbc implements CompanyDao {
         return pPage;
     }
     @Override
-    public List<Company> getAll() throws PersistenceException {
+    public List<Company> getAll(Connection pConnection) throws PersistenceException {
         List<Company> allCompanies = new ArrayList<>();
-        try (Connection connection = connectionProvider.getConnection()) {
-            Statement statement = connection.createStatement();
+        try (Statement statement = pConnection.createStatement();) {
             ResultSet resultSet = statement.executeQuery(SELECT_ALL);
             allCompanies = JdbcMapper.mapResultsToCompanyList(resultSet);
         } catch (SQLException e) {
@@ -125,14 +115,13 @@ public class CompanyDaoJdbc implements CompanyDao {
      * @param pFilter an optional filter string
      * @return the number of companies in the DB
      */
-    private int count(String pFilter) {
+    private int count(Connection pConnection, String pFilter) {
         String query = COUNT_ALL;
         if (pFilter != null && !pFilter.isEmpty()) {
             query += pFilter;
         }
         int total = 0;
-        try (Connection connection = connectionProvider.getConnection()) {
-            Statement statement = connection.createStatement();
+        try (Statement statement = pConnection.createStatement();) {
             ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) {
                 total = resultSet.getInt("total");

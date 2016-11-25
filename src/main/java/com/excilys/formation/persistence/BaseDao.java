@@ -1,5 +1,6 @@
 package com.excilys.formation.persistence;
 
+import java.sql.Connection;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
@@ -17,7 +18,7 @@ public interface BaseDao<T> {
      * @throws PersistenceException in case of problems while creating
      * @return the object created
      */
-    default T create(T t) throws PersistenceException {
+    default T create(Connection pConnection, T t) throws PersistenceException {
         throw new UnsupportedOperationException("create() not implemented");
     };
     /**
@@ -25,7 +26,7 @@ public interface BaseDao<T> {
      * @param t the object to update
      * @throws PersistenceException in case of problems while updating
      */
-    default void update(T t) throws PersistenceException {
+    default void update(Connection pConnection, T t) throws PersistenceException {
         throw new UnsupportedOperationException("update() not implemented");
     };
     /**
@@ -33,7 +34,7 @@ public interface BaseDao<T> {
      * @param idToDelete ID of the object to delete
      * @throws PersistenceException in case of problems while deleting
      */
-    default boolean delete(long idToDelete) throws PersistenceException {
+    default boolean delete(Connection pConnection, long idToDelete) throws PersistenceException {
         throw new UnsupportedOperationException("delete() not implemented");
     };
     /**
@@ -42,5 +43,5 @@ public interface BaseDao<T> {
      * @throws PersistenceException in case of problems while getting the page
      * @return the obtained page
      */
-    Page<T> getPage(PageFilter pPageFilter) throws PersistenceException;
+    Page<T> getPage(Connection pConnection, PageFilter pPageFilter) throws PersistenceException;
 }

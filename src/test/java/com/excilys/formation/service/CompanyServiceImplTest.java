@@ -4,7 +4,8 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import com.excilys.formation.dto.CompanyDto;
+import com.excilys.formation.model.Company;
+import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.service.implementation.CompanyServiceImpl;
 
@@ -24,13 +25,16 @@ public class CompanyServiceImplTest {
     @Test
     public void testGetPage() {
         CompanyService companyService = CompanyServiceImpl.getInstance();
-        Page<CompanyDto> page = new Page<>(10);
-        page = companyService.getPage(page);
+        PageFilter pageFilter = new PageFilter();
+        pageFilter.setElementsByPage(10);
+        pageFilter.setPageNum(1);
+        Page<Company> page = new Page<>(10);
+        page = companyService.getPage(pageFilter);
         assertNotNull("Get page : page not null", page);
         assertNotNull("Get page : list not null", page.elems);
         assertNotNull("Get page : first element not null", page.elems.get(0));
-        assertEquals("Get page : first element Company", page.elems.get(0).getClass().getSimpleName(), "CompanyDto");
+        assertEquals("Get page : first element Company", page.elems.get(0).getClass().getSimpleName(), "Company");
         assertNotNull("Get page : last element not null", page.elems.get(page.elems.size()-1));
-        assertEquals("Get page : last element Company", page.elems.get(page.elems.size()-1).getClass().getSimpleName(), "CompanyDto");
+        assertEquals("Get page : last element Company", page.elems.get(page.elems.size()-1).getClass().getSimpleName(), "Company");
     }
 }

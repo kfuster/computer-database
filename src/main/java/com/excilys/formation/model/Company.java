@@ -1,4 +1,4 @@
-package com.excilys.formation.entity;
+package com.excilys.formation.model;
 
 /**
  * Company entity.

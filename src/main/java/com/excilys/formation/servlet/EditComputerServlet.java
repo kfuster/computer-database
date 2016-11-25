@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.exception.ServiceException;
+import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.mapper.RequestMapper;
 import com.excilys.formation.service.ComputerService;
 import com.excilys.formation.service.implementation.CompanyServiceImpl;
@@ -28,8 +29,8 @@ public class EditComputerServlet extends HttpServlet {
         ComputerService computerService = ComputerServiceImpl.getInstance();
         String computerId = request.getParameter("id");
         if (computerId != null && !computerId.trim().isEmpty()) {
-            ComputerDto computerDto = computerService.getById(Integer.parseInt(computerId));
-            List<CompanyDto> listCompanies = companyService.getAll();
+            ComputerDto computerDto = DtoMapper.fromComputer(computerService.getById(Integer.parseInt(computerId)));
+            List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
             this.getServletContext().setAttribute("listCompanies", listCompanies);
             this.getServletContext().setAttribute("computerDto", computerDto);
             this.getServletContext().getRequestDispatcher( "/WEB-INF/jsp/editComputer.jsp" ).forward( request, response );    
@@ -49,7 +50,7 @@ public class EditComputerServlet extends HttpServlet {
         }
         ComputerService computerService = ComputerServiceImpl.getInstance();
         try {
-            computerService.update(computerDto);
+            computerService.update(DtoMapper.toComputer(computerDto));
             PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Ordinateur mis à jour');");

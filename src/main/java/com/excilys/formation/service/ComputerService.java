@@ -1,6 +1,7 @@
 package com.excilys.formation.service;
 
-import com.excilys.formation.dto.ComputerDto;
+import com.excilys.formation.model.Computer;
+import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 
 /**
@@ -8,18 +9,18 @@ import com.excilys.formation.pagination.Page;
  * @author kfuster
  *
  */
-public interface ComputerService extends BaseService<ComputerDto> {
+public interface ComputerService extends BaseService<Computer> {
     /**
      * Get a computer by its id.
      * @param pId the id of the Computer to get
      * @return the ComputerDto of the computer obtained from the DB
      */
-    ComputerDto getById(long pId);
+    Computer getById(long pId);
     /**
-     * Populate a list of Computer according to the Page parameters.
-     * @param pPage the Page containing the parameters and the list
+     * Populate a page of Computer according to the ViewDto parameters.
+     * @param pPageFilter the PageFilter containing the parameters
      * @return the Page with the populated list
      */
-    Page<ComputerDto> getPage(Page<ComputerDto> pPage);
-    Page<ComputerDto> getPageWithFilter(Page<ComputerDto> pPage, String pFilter);
+    Page<Computer> getPage(PageFilter pPageFilter);
+    Page<Computer> getPageWithFilter(PageFilter pPageFilter, String pFilter);
 }

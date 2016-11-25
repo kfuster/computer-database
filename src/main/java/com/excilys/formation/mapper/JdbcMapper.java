@@ -4,8 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import com.excilys.formation.entity.Company;
-import com.excilys.formation.entity.Computer;
+import com.excilys.formation.model.Company;
+import com.excilys.formation.model.Computer;
 import com.excilys.formation.util.DateConverter;
 
 /**

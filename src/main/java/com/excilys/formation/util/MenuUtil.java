@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import com.excilys.formation.cli.MainMenu;
-import com.excilys.formation.pagination.Page;
+import com.excilys.formation.model.util.PageFilter;
 
 /**
  * A Util class for menus.
@@ -114,24 +114,32 @@ public class MenuUtil {
         return true;
     }
     /**
-     * Manage the page navigation in the menus.
-     * @param pPage the Page on which to operate
+     * Manage the navigation in the list of objects.
+     * @param pPageFilter the pPageFilter on which to operate
      * @return a boolean indicating if the operation was successful
      */
-    public static boolean manageNavigation(Page<?> pPage) {
+    public static boolean manageNavigation(PageFilter pPageFilter) {
         boolean ok = false;
         while (!ok) {
             int nextOption = MenuUtil.waitForInt();
             System.out.println(nextOption);
             if (nextOption == 1) {
-                ok = pPage.prevPage();
-                if (!ok) {
+                if (pPageFilter.getPageNum() - 1 >= 1) {
+                    pPageFilter.setPageNum(pPageFilter.getPageNum()-1);
+                    ok = true;
+                }
+                else {
                     System.out.println("Vous êtes déjà sur la première page");
+                    ok = false;
                 }
             } else if (nextOption == 2) {
-                ok = pPage.nextPage();
-                if (!ok) {
+                if (pPageFilter.getPageNum() + 1 <= pPageFilter.getNbPage()) {
+                    pPageFilter.setPageNum(pPageFilter.getPageNum()+1);
+                    ok = true;
+                }
+                else {
                     System.out.println("Vous êtes déjà sur la dernière page");
+                    ok = false;
                 }
             } else if (nextOption == 3) {
                 MainMenu.scanner.nextLine();
@@ -140,9 +148,14 @@ public class MenuUtil {
                 while (page.isEmpty() && !MenuUtil.isInteger(page)) {
                     page = MainMenu.scanner.nextLine();
                 }
-                ok = pPage.trySetPage(Integer.parseInt(page));
-                if (!ok) {
+                int newPage = Integer.parseInt(page);
+                if (0 < newPage && newPage <= pPageFilter.getNbPage()) {
+                    pPageFilter.setPageNum(newPage);
+                    ok =true;
+                }
+                else {
                     System.out.println("Cette page n'existe pas");
+                    ok = false;
                 }
             } else if (nextOption == 4) {
                 return false;

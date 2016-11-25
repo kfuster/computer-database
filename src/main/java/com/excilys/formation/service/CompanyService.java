@@ -1,8 +1,8 @@
 package com.excilys.formation.service;
 
 import java.util.List;
-import com.excilys.formation.dto.CompanyDto;
-import com.excilys.formation.entity.Company;
+import com.excilys.formation.model.Company;
+import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 
 /**
@@ -12,11 +12,11 @@ import com.excilys.formation.pagination.Page;
  */
 public interface CompanyService extends BaseService<Company> {
     /**
-     * Populate a list of Company according to the Page parameters.
-     * @param pPageCompany the Page containing the parameters and the list
+     * Populate a list of Company according to the PageFilter parameters.
+     * @param pPageFilter the PageFilter containing the parameters
      * @return the Page with the populated list
      */
-    Page<CompanyDto> getPage(Page<CompanyDto> pPageCompany);
-    Page<CompanyDto> getPageWithFilter(Page<CompanyDto> pPageCompany, String pFilter);
-    List<CompanyDto> getAll();
+    Page<Company> getPage(PageFilter pPageFilter);
+    Page<Company> getPageWithFilter(PageFilter pPageFilter, String pFilter);
+    List<Company> getAll();
 }

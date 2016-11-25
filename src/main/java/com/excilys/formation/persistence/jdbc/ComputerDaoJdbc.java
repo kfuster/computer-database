@@ -7,9 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import com.excilys.formation.entity.Computer;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.mapper.JdbcMapper;
+import com.excilys.formation.model.Computer;
+import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.ComputerDao;
 import com.excilys.formation.persistence.HikariConnectionProvider;
@@ -152,23 +153,26 @@ public class ComputerDaoJdbc implements ComputerDao {
         return computer;
     }
     @Override
-    public Page<Computer> getPage(Page<Computer> pPage, String pFilter) throws PersistenceException {
+    public Page<Computer> getPage(PageFilter pPageFilter, String pFilter) throws PersistenceException {
         List<Computer> computers = new ArrayList<>();
         String queryComputers = SELECT_JOIN;
         if (pFilter != null && !pFilter.isEmpty()) {
             queryComputers += pFilter;
         }
         queryComputers += " LIMIT ? OFFSET ?";
+        Page<Computer> pPage = new Page<>(pPageFilter.getElementsByPage());
         try (Connection connection = connectionProvider.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(queryComputers);
-            preparedStatement.setInt(1, pPage.elemByPage);
-            preparedStatement.setInt(2, (pPage.page - 1) * pPage.elemByPage);
+            preparedStatement.setInt(1, pPageFilter.getElementsByPage());
+            preparedStatement.setInt(2, (pPageFilter.getPageNum() - 1) * pPageFilter.getElementsByPage());
             ResultSet resultSet = preparedStatement.executeQuery();
             computers = JdbcMapper.mapResultsToComputerList(resultSet);
+            pPage.page = pPageFilter.getPageNum();
             pPage.elems = computers;
             pPage.setTotalElement(count(pFilter));
+            pPageFilter.setNbPage(pPage.nbPages);
         } catch (SQLException e) {
-            throw new PersistenceException("Problème lors de la récupération de la page d'ordinateurs");
+            throw new PersistenceException("Problème lors de la récupération de la page d'ordinateurs", e);
         }
         return pPage;
     }

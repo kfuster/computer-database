@@ -1,17 +1,13 @@
 package com.excilys.formation.service.implementation;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import com.excilys.formation.dto.ComputerDto;
-import com.excilys.formation.entity.Company;
-import com.excilys.formation.entity.Computer;
 import com.excilys.formation.exception.PersistenceException;
+import com.excilys.formation.model.Computer;
+import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.ComputerDao;
 import com.excilys.formation.persistence.jdbc.ComputerDaoJdbc;
 import com.excilys.formation.service.ComputerService;
-import com.excilys.formation.util.ServiceUtil;
 
 /**
  * Service class for Computers.
@@ -38,36 +34,22 @@ public class ComputerServiceImpl implements ComputerService {
         return computerService;
     }
     @Override
-    public ComputerDto create(ComputerDto pComputerDto) {
+    public Computer create(Computer pComputer) {
         try {
-            LocalDate introduced = null;
-            LocalDate discontinued = null;
-            if (pComputerDto.discontinued != null) {
-                introduced = LocalDate.parse(pComputerDto.discontinued);
-            }
-            if (pComputerDto.discontinued != null) {
-                discontinued = LocalDate.parse(pComputerDto.discontinued);
-            }
-            Computer computer = new Computer.ComputerBuilder(pComputerDto.name).dateDisc(discontinued)
-                    .dateIntro(introduced)
-                    .company(
-                            new Company.CompanyBuilder(pComputerDto.companyName).id(pComputerDto.companyId).build())
-                    .build();
-            computerDao.create(computer);
-            pComputerDto.id = computer.getId();
-            return pComputerDto;
+            return computerDao.create(pComputer);
         } catch (PersistenceException e) {
             e.printStackTrace();
         }
         return null;
     }
     @Override
-    public void delete(long pId) {
+    public boolean delete(long pId) {
         try {
-            computerDao.delete(pId);
+            return computerDao.delete(pId);
         } catch (PersistenceException e) {
             e.printStackTrace();
         }
+        return false;
     }
     public boolean deleteList(List<Integer> ids) {
         for (Integer id : ids) {
@@ -81,113 +63,32 @@ public class ComputerServiceImpl implements ComputerService {
         return true;
     }
     @Override
-    public ComputerDto getById(long pId) {
-        Computer computer = null;
+    public Computer getById(long pId) {
         try {
-            computer = computerDao.getById(pId);
+            return computerDao.getById(pId);
         } catch (PersistenceException e) {
             e.printStackTrace();
         }
-        ComputerDto computerDto = null;
-        if (computer != null) {
-            computerDto = new ComputerDto();
-            computerDto.id = computer.getId();
-            computerDto.name = computer.getName();
-            if (computer.getIntroduced() != null) {
-                computerDto.introduced = computer.getIntroduced().toString();
-            }
-            if (computer.getDiscontinued() != null) {
-                computerDto.discontinued = computer.getDiscontinued().toString();
-            }
-            Company company = computer.getCompany();
-            computerDto.companyId = company.getId();
-            computerDto.companyName = company.getName();
-        }
-        return computerDto;
+        return null;
     }
     @Override
-    public Page<ComputerDto> getPage(Page<ComputerDto> pPage) {
-        return getPageWithFilter(pPage, null);
+    public Page<Computer> getPage(PageFilter pViewDto) {
+        return getPageWithFilter(pViewDto, null);
     }
-    @Override
-    public Page<ComputerDto> getPageWithFilter(Page<ComputerDto> pPage, String pFilter) {
-        Page<Computer> pageCompany = new Page<Computer>(10);
-        ServiceUtil.copyAttributes(pPage, pageCompany);
-        pageCompany.elems = dtoListToComputerList(pPage.elems);
+    public Page<Computer> getPageWithFilter(PageFilter pViewDto, String pFilter) {
         try {
-            pageCompany = computerDao.getPage(pageCompany, pFilter);
+            return computerDao.getPage(pViewDto, pFilter);
         } catch (PersistenceException e) {
             e.printStackTrace();
         }
-        ServiceUtil.copyAttributes(pageCompany, pPage);
-        pPage.elems = computerListToDtoList(pageCompany.elems);
-        return pPage;
+        return null;
     }
     @Override
-    public void update(ComputerDto pComputerDto) {
-        LocalDate introduced = null;
-        LocalDate discontinued = null;
-        if (pComputerDto.introduced != null) {
-            introduced = LocalDate.parse(pComputerDto.introduced);
-        }
-        if (pComputerDto.discontinued != null) {
-            discontinued = LocalDate.parse(pComputerDto.discontinued);
-        }
-        Computer computer = new Computer.ComputerBuilder(pComputerDto.name).dateDisc(discontinued)
-                .dateIntro(introduced).id(pComputerDto.id)
-                .company(new Company.CompanyBuilder(pComputerDto.companyName).id(pComputerDto.companyId).build())
-                .build();
+    public void update(Computer pComputer) {
         try {
-            computerDao.update(computer);
+            computerDao.update(pComputer);
         } catch (PersistenceException e) {
             e.printStackTrace();
         }
-    }
-    /**
-     * Converts a list from ComputerDto to Computer.
-     * @param pListDto the list to convert
-     * @return a Computer List
-     */
-    private List<Computer> dtoListToComputerList(List<ComputerDto> pListDto) {
-        List<Computer> computers = null;
-        if (pListDto != null) {
-            computers = new ArrayList<>();
-            for (ComputerDto computer : pListDto) {
-                Company company = new Company.CompanyBuilder(computer.companyName).id(computer.companyId).build();
-                computers.add(new Computer.ComputerBuilder(computer.name).company(company)
-                        .dateIntro(LocalDate.parse(computer.introduced))
-                        .dateDisc(LocalDate.parse(computer.discontinued)).id(computer.id).build());
-            }
-        }
-        return computers;
-    }
-    /**
-     * Converts a list from Computer to ComputerDto.
-     * @param pList the list to convert
-     * @return a ComputerDto List
-     */
-    private List<ComputerDto> computerListToDtoList(List<Computer> pList) {
-        List<ComputerDto> computersDto = null;
-        if (pList != null) {
-            computersDto = new ArrayList<>();
-            for (Computer computer : pList) {
-                ComputerDto computerDto = new ComputerDto();
-                computerDto.id = computer.getId();
-                computerDto.name = computer.getName();
-                LocalDate dateIntro = computer.getIntroduced();
-                if (dateIntro != null) {
-                    computerDto.introduced = dateIntro.toString();
-                }
-                LocalDate dateDisc = computer.getDiscontinued();
-                if (dateDisc != null) {
-                    computerDto.discontinued = dateDisc.toString();
-                }
-                Company company = computer.getCompany();
-                computerDto.companyId = company.getId();
-                computerDto.companyName = company.getName();
-                computersDto.add(computerDto);
-            }
-        }
-        return computersDto;
     }
 }

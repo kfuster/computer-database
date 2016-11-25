@@ -8,9 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.LoggerFactory;
-import com.excilys.formation.entity.Company;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.mapper.JdbcMapper;
+import com.excilys.formation.model.Company;
+import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.CompanyDao;
 import com.excilys.formation.persistence.HikariConnectionProvider;
@@ -82,21 +83,25 @@ public class CompanyDaoJdbc implements CompanyDao {
         }
     }
     @Override
-    public Page<Company> getPage(Page<Company> pPage, String pFilter) throws PersistenceException {
+    public Page<Company> getPage(PageFilter pPageFilter, String pFilter) throws PersistenceException {
         List<Company> allCompanies = new ArrayList<>();
         String queryComputers = SELECT_PAGE;
         if (pFilter != null && !pFilter.isEmpty()) {
             queryComputers += pFilter;
         }
         queryComputers += " LIMIT ? OFFSET ?";
+        Page<Company> pPage = null;
         try (Connection connection = connectionProvider.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(queryComputers);
-            preparedStatement.setInt(1, pPage.elemByPage);
-            preparedStatement.setInt(2, (pPage.page - 1) * pPage.elemByPage);
+            preparedStatement.setInt(1, pPageFilter.getElementsByPage());
+            preparedStatement.setInt(2, (pPageFilter.getPageNum() - 1) * pPageFilter.getElementsByPage());
             ResultSet resultSet = preparedStatement.executeQuery();
             allCompanies = JdbcMapper.mapResultsToCompanyList(resultSet);
+            pPage = new Page<>(pPageFilter.getElementsByPage());
+            pPage.page = pPageFilter.getPageNum();
             pPage.elems = (allCompanies);
             pPage.setTotalElement(count(pFilter));
+            pPageFilter.setNbPage(pPage.nbPages);
         } catch (SQLException e) {
             logger.error(e.getMessage());
             throw new PersistenceException("Problème lors de la récupération de la page de compagnies");

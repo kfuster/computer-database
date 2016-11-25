@@ -5,9 +5,10 @@ import java.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import com.excilys.formation.entity.Company;
-import com.excilys.formation.entity.Computer;
 import com.excilys.formation.exception.PersistenceException;
+import com.excilys.formation.model.Company;
+import com.excilys.formation.model.Computer;
+import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.jdbc.ComputerDaoJdbc;
 
@@ -28,7 +29,7 @@ public class ComputerDaoJdbcTest {
     @Test
     public void testCreate() {
         computerDao = ComputerDaoJdbc.getInstance();
-        Computer computer = new Computer.ComputerBuilder("New computer").setDateIntro(LocalDate.parse("1978-03-22")).setDateDisc(LocalDate.parse("1989-06-14")).setCompany(new Company.CompanyBuilder("New company").setId(5).build()).build();
+        Computer computer = new Computer.ComputerBuilder("New computer").dateIntro(LocalDate.parse("1978-03-22")).dateDisc(LocalDate.parse("1989-06-14")).company(new Company.CompanyBuilder("New company").id(5).build()).build();
         try {
             computer = computerDao.create(computer);
         } catch (PersistenceException e) {
@@ -40,7 +41,7 @@ public class ComputerDaoJdbcTest {
     @Test
     public void testUpdate() {
         computerDao = ComputerDaoJdbc.getInstance();
-        Computer computer = new Computer.ComputerBuilder("New computer").setDateIntro(LocalDate.parse("1978-03-22")).setDateDisc(LocalDate.parse("1989-06-14")).setCompany(new Company.CompanyBuilder("New company").setId(5).build()).build();
+        Computer computer = new Computer.ComputerBuilder("New computer").dateIntro(LocalDate.parse("1978-03-22")).dateDisc(LocalDate.parse("1989-06-14")).company(new Company.CompanyBuilder("New company").id(5).build()).build();
         Computer testComputer = null; 
         try {
             computer = computerDao.create(computer);
@@ -56,9 +57,9 @@ public class ComputerDaoJdbcTest {
     @Test
     public void testDelete() {
         computerDao = ComputerDaoJdbc.getInstance();
-        Computer computer = new Computer.ComputerBuilder("New computer").setDateIntro(LocalDate.parse("1978-03-22")).setDateDisc(LocalDate.parse("1989-06-14")).setCompany(new Company.CompanyBuilder("New company").setId(5).build()).build();
+        Computer computer = new Computer.ComputerBuilder("New computer").dateIntro(LocalDate.parse("1978-03-22")).dateDisc(LocalDate.parse("1989-06-14")).company(new Company.CompanyBuilder("New company").id(5).build()).build();
         Computer testComputer = null; 
-        int idToDelete = 0;
+        long idToDelete = 0;
         try {
             computer = computerDao.create(computer);
             idToDelete = computer.getId();
@@ -97,9 +98,12 @@ public class ComputerDaoJdbcTest {
     @Test
     public void testGetPage() {
         computerDao = ComputerDaoJdbc.getInstance();
+        PageFilter pageFilter = new PageFilter();
+        pageFilter.setElementsByPage(10);
+        pageFilter.setPageNum(1);
         Page<Computer> page = new Page<>(10);
         try {
-            page = computerDao.getPage(page, null);
+            page = computerDao.getPage(pageFilter, null);
         } catch (PersistenceException e) {
             e.printStackTrace();
         }

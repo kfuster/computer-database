@@ -4,8 +4,9 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import com.excilys.formation.entity.Company;
 import com.excilys.formation.exception.PersistenceException;
+import com.excilys.formation.model.Company;
+import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.jdbc.CompanyDaoJdbc;
 
@@ -38,9 +39,12 @@ public class CompanyDaoJdbcTest {
     @Test
     public void testGetPage() {
         companyDao = CompanyDaoJdbc.getInstance();
+        PageFilter pageFilter = new PageFilter();
+        pageFilter.setElementsByPage(10);
+        pageFilter.setPageNum(1);
         Page<Company> page = new Page<>(10);
         try {
-            page = companyDao.getPage(page, null);
+            page = companyDao.getPage(pageFilter, null);
         } catch (PersistenceException e) {
             e.printStackTrace();
         }

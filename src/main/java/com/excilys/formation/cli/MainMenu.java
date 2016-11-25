@@ -28,7 +28,7 @@ public class MainMenu implements Menu {
      * Allows the user to chose to manage computers or companies.
      */
     public void startMenu() {
-        logger.info("Voulez-vous :\n1 : Gérer les ordinateurs\n2 : Gérer les compagnies\n3 : Quitter");
+        System.out.println("Voulez-vous :\n1 : Gérer les ordinateurs\n2 : Gérer les compagnies\n3 : Quitter");
         int choice = MenuUtil.waitForInt();
         boolean quit = false;
         switch (choice) {

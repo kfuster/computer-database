@@ -30,7 +30,7 @@ public interface BaseService<T> {
      * @param idToDelete the id of the object to delete
      * @throws ServiceException in case of problems during the delete
      */
-    default void delete(long idToDelete) throws ServiceException {
+    default boolean delete(long idToDelete) throws ServiceException {
         throw new UnsupportedOperationException("delete() not implemented");
     };
 }

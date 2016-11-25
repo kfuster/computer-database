@@ -1,27 +1,29 @@
-package com.excilys.formation.entity;
+package com.excilys.formation.model;
 
 import java.time.LocalDate;
 import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import com.excilys.formation.model.Company;
+import com.excilys.formation.model.Computer;
 
 public class ComputerTest {
     private Computer computer;
     @Before
     public void setUp() throws Exception {
-        computer = new Computer.ComputerBuilder("Test computer").setId(2).setDateIntro(LocalDate.parse("1991-05-24"))
-                .setDateDisc(LocalDate.parse("1992-04-21"))
-                .setCompany(new Company.CompanyBuilder("Company test").setId(3).build()).build();
+        computer = new Computer.ComputerBuilder("Test computer").id(2).dateIntro(LocalDate.parse("1991-05-24"))
+                .dateDisc(LocalDate.parse("1992-04-21"))
+                .company(new Company.CompanyBuilder("Company test").id(3).build()).build();
     }
     @After
     public void tearDown() throws Exception {
     }
     @Test
     public void testHashCode() {
-        Computer computerTest = new Computer.ComputerBuilder("Test computer").setId(2)
-                .setDateIntro(LocalDate.parse("1991-05-24")).setDateDisc(LocalDate.parse("1992-04-21"))
-                .setCompany(new Company.CompanyBuilder("Company test").setId(3).build()).build();
+        Computer computerTest = new Computer.ComputerBuilder("Test computer").id(2)
+                .dateIntro(LocalDate.parse("1991-05-24")).dateDisc(LocalDate.parse("1992-04-21"))
+                .company(new Company.CompanyBuilder("Company test").id(3).build()).build();
         assertTrue("Hashcodes equals", computer.hashCode() == computerTest.hashCode());
         computerTest.setName("Different name");
         assertTrue("Hashcodes : different names", computer.hashCode() != computerTest.hashCode());
@@ -64,20 +66,20 @@ public class ComputerTest {
     }
     @Test
     public void testGetCompany() {
-        Company company = new Company.CompanyBuilder("Company test").setId(3).build();
+        Company company = new Company.CompanyBuilder("Company test").id(3).build();
         assertEquals("Get company", computer.getCompany(), company);
     }
     @Test
     public void testSetCompany() {
-        Company company = new Company.CompanyBuilder("New company").setId(310).build();
+        Company company = new Company.CompanyBuilder("New company").id(310).build();
         computer.setCompany(company);
         assertEquals("Set company", computer.getCompany(), company);
     }
     @Test
     public void testEqualsObject() {
-        Computer computerTest = new Computer.ComputerBuilder("Test computer").setId(2)
-                .setDateIntro(LocalDate.parse("1991-05-24")).setDateDisc(LocalDate.parse("1992-04-21"))
-                .setCompany(new Company.CompanyBuilder("Company test").setId(3).build()).build();
+        Computer computerTest = new Computer.ComputerBuilder("Test computer").id(2)
+                .dateIntro(LocalDate.parse("1991-05-24")).dateDisc(LocalDate.parse("1992-04-21"))
+                .company(new Company.CompanyBuilder("Company test").id(3).build()).build();
         assertEquals("Equals", computer, computerTest);
     }
 }

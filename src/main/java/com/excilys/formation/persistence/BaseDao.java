@@ -1,6 +1,7 @@
 package com.excilys.formation.persistence;
 
 import com.excilys.formation.exception.PersistenceException;
+import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 
 /**
@@ -37,10 +38,10 @@ public interface BaseDao<T> {
     };
     /**
      * Method to get a page of elements.
-     * @param pPage the Page to get
-     * @param pFilter an optionnal filter for the request, can be null
+     * @param pPageFilter the PageFilter containing the useful informations
+     * @param pFilter an optional filter for the request, can be null
      * @throws PersistenceException in case of problems while getting the page
      * @return the obtained page
      */
-    Page<T> getPage(Page<T> pPage, String pFilter) throws PersistenceException;
+    Page<T> getPage(PageFilter pPageFilter, String pFilter) throws PersistenceException;
 }

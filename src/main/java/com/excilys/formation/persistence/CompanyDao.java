@@ -2,8 +2,8 @@ package com.excilys.formation.persistence;
 
 import java.sql.Connection;
 import java.util.List;
-import com.excilys.formation.entity.Company;
 import com.excilys.formation.exception.PersistenceException;
+import com.excilys.formation.model.Company;
 
 public interface CompanyDao extends BaseDao<Company> {
     /**

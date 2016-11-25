@@ -4,8 +4,10 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import com.excilys.formation.cli.Controller;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.exception.ServiceException;
+import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.service.implementation.ComputerServiceImpl;
 
@@ -24,51 +26,46 @@ public class ComputerServiceImplTest {
     }
     @Test
     public void testCreate() {
-        ComputerService computerService = ComputerServiceImpl.getInstance();
+        Controller controller = new Controller();
         ComputerDto computerDto = new ComputerDto();
         computerDto.name = "Test Service";
         computerDto.companyId = 7;
         ComputerDto computerDtoTest = null;
-        try {
-            computerDto = computerService.create(computerDto);
-            computerDtoTest = computerService.getById(computerDto.id);
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
+        computerDto = controller.createComputer(computerDto);
+        computerDtoTest = controller.getComputerById(computerDto.id);
         assertNotNull("Create : not null", computerDtoTest);
         assertTrue("Create : valid id", computerDtoTest.id >= 1);
         assertEquals("Create : equals name", computerDto.name, computerDtoTest.name);
         assertEquals("Create : equals companies id", computerDto.companyId, computerDtoTest.companyId);
     }
     @Test
-    public void testDelete() {
-        ComputerService computerService = ComputerServiceImpl.getInstance();
+    public void testDelete() throws ServiceException {
+        Controller controller = new Controller();
         ComputerDto computerDto = new ComputerDto();
         computerDto.name = "Test Service";
         computerDto.companyId = 7;
         ComputerDto computerDtoTest = null;
-        try {
-            computerDto = computerService.create(computerDto);
-            computerService.delete(computerDto.id);
-            computerDtoTest = computerService.getById(computerDto.id);
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
+        computerDto = controller.createComputer(computerDto);
+        controller.deleteComputer(computerDto.id);
+        computerDtoTest = controller.getComputerById(computerDto.id);
         assertTrue("Delete ", computerDtoTest == null);
     }
     @Test
     public void testGetById() {
-        ComputerService computerService = ComputerServiceImpl.getInstance();
-        ComputerDto computerDto = computerService.getById(5);
+        Controller controller = new Controller();
+        ComputerDto computerDto = controller.getComputerById(5);
         assertNotNull("Get by id : not null", computerDto);
         assertTrue("Get by id : good id", computerDto.id == 5);
         assertNotNull("Get by id : name not null", computerDto.name);
     }
     @Test
     public void testGetPage() {
-        ComputerService computerService = ComputerServiceImpl.getInstance();
+        Controller controller = new Controller();
+        PageFilter pageFilter = new PageFilter();
+        pageFilter.setElementsByPage(10);
+        pageFilter.setPageNum(1);
         Page<ComputerDto> page = new Page<>(10);
-        page = computerService.getPage(page);
+        page = controller.getPageComputer(pageFilter);
         assertNotNull("Get page : page not null", page);
         assertNotNull("Get page : list not null", page.elems);
         assertNotNull("Get page : first element not null", page.elems.get(0));
@@ -78,19 +75,15 @@ public class ComputerServiceImplTest {
     }
     @Test
     public void testUpdate() {
-        ComputerService computerService = ComputerServiceImpl.getInstance();
+        Controller controller = new Controller();
         ComputerDto computerDto = new ComputerDto();
         computerDto.name = "Test Service";
         computerDto.companyId = 7;
         ComputerDto computerDtoTest = null;
-        try {
-            computerDto = computerService.create(computerDto);
-            computerDto.name = "New name";
-            computerService.update(computerDto);
-            computerDtoTest = computerService.getById(computerDto.id);
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
+        computerDto = controller.createComputer(computerDto);
+        computerDto.name = "New name";
+        controller.updateComputer(computerDto);
+        computerDtoTest = controller.getComputerById(computerDto.id);
         assertNotNull("Update : not null", computerDtoTest);
         assertEquals("Update :  good name", computerDtoTest.name, "New name");
     }

@@ -44,12 +44,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
     @Override
     public Page<Company> getPage(PageFilter pPageFilter) {
-        return getPageWithFilter(pPageFilter, null);
-    }
-    @Override
-    public Page<Company> getPageWithFilter(PageFilter pPageFilter, String pFilter) {
         try {
-            return companyDao.getPage(pPageFilter, pFilter);
+            return companyDao.getPage(pPageFilter);
         } catch (PersistenceException e) {
             e.printStackTrace();
         }

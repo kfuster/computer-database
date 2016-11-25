@@ -44,7 +44,7 @@ public class CompanyDaoJdbcTest {
         pageFilter.setPageNum(1);
         Page<Company> page = new Page<>(10);
         try {
-            page = companyDao.getPage(pageFilter, null);
+            page = companyDao.getPage(pageFilter);
         } catch (PersistenceException e) {
             e.printStackTrace();
         }

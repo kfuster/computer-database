@@ -83,12 +83,9 @@ public class CompanyDaoJdbc implements CompanyDao {
         }
     }
     @Override
-    public Page<Company> getPage(PageFilter pPageFilter, String pFilter) throws PersistenceException {
+    public Page<Company> getPage(PageFilter pPageFilter) throws PersistenceException {
         List<Company> allCompanies = new ArrayList<>();
         String queryComputers = SELECT_PAGE;
-        if (pFilter != null && !pFilter.isEmpty()) {
-            queryComputers += pFilter;
-        }
         queryComputers += " LIMIT ? OFFSET ?";
         Page<Company> pPage = null;
         try (Connection connection = connectionProvider.getConnection()) {
@@ -100,7 +97,7 @@ public class CompanyDaoJdbc implements CompanyDao {
             pPage = new Page<>(pPageFilter.getElementsByPage());
             pPage.page = pPageFilter.getPageNum();
             pPage.elems = (allCompanies);
-            pPage.setTotalElement(count(pFilter));
+            pPage.setTotalElement(count(""));
             pPageFilter.setNbPage(pPage.nbPages);
         } catch (SQLException e) {
             logger.error(e.getMessage());

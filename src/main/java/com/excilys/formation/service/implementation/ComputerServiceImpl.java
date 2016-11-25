@@ -73,11 +73,8 @@ public class ComputerServiceImpl implements ComputerService {
     }
     @Override
     public Page<Computer> getPage(PageFilter pViewDto) {
-        return getPageWithFilter(pViewDto, null);
-    }
-    public Page<Computer> getPageWithFilter(PageFilter pViewDto, String pFilter) {
         try {
-            return computerDao.getPage(pViewDto, pFilter);
+            return computerDao.getPage(pViewDto);
         } catch (PersistenceException e) {
             e.printStackTrace();
         }

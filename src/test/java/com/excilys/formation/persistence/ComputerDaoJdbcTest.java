@@ -103,7 +103,7 @@ public class ComputerDaoJdbcTest {
         pageFilter.setPageNum(1);
         Page<Computer> page = new Page<>(10);
         try {
-            page = computerDao.getPage(pageFilter, null);
+            page = computerDao.getPage(pageFilter);
         } catch (PersistenceException e) {
             e.printStackTrace();
         }

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.mapper.JdbcMapper;
 import com.excilys.formation.model.Computer;
@@ -28,7 +29,7 @@ public class ComputerDaoJdbc implements ComputerDao {
     private static final String UPDATE_COMPUTER = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
     private static final String DELETE_COMPUTER = "DELETE FROM computer WHERE id=?";
     private static final String DELETE_COMPUTER_BY_COMPANY = "DELETE FROM computer WHERE company_id=?";
-    private static final String SELECT_JOIN = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, company.id as companyId, company.name as companyName FROM computer LEFT JOIN company ON computer.company_id=company.id ";
+    private static final String SELECT_JOIN = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, company.id as companyId, company.name as companyName FROM computer LEFT JOIN company ON computer.company_id=company.id";
     private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM computer LEFT JOIN company ON computer.company_id=company.id ";
     /**
      * Constructor for ComputerDaoJdbc. Initializes the connectionProvider.
@@ -153,13 +154,14 @@ public class ComputerDaoJdbc implements ComputerDao {
         return computer;
     }
     @Override
-    public Page<Computer> getPage(PageFilter pPageFilter, String pFilter) throws PersistenceException {
+    public Page<Computer> getPage(PageFilter pPageFilter) throws PersistenceException {
         List<Computer> computers = new ArrayList<>();
         String queryComputers = SELECT_JOIN;
-        if (pFilter != null && !pFilter.isEmpty()) {
-            queryComputers += pFilter;
+        String conditions = "";
+        if (pPageFilter.getConditions() != null && !pPageFilter.getConditions().isEmpty()) {
+            conditions += mapConditions(pPageFilter.getConditions());
         }
-        queryComputers += " LIMIT ? OFFSET ?";
+        queryComputers += conditions + " LIMIT ? OFFSET ?";
         Page<Computer> pPage = new Page<>(pPageFilter.getElementsByPage());
         try (Connection connection = connectionProvider.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(queryComputers);
@@ -169,12 +171,31 @@ public class ComputerDaoJdbc implements ComputerDao {
             computers = JdbcMapper.mapResultsToComputerList(resultSet);
             pPage.page = pPageFilter.getPageNum();
             pPage.elems = computers;
-            pPage.setTotalElement(count(pFilter));
+            pPage.setTotalElement(count(conditions));
             pPageFilter.setNbPage(pPage.nbPages);
         } catch (SQLException e) {
             throw new PersistenceException("Problème lors de la récupération de la page d'ordinateurs", e);
         }
         return pPage;
+    }
+    private String mapConditions(Map<String, String> pConditions) {
+        String conditions = "";
+        if(pConditions != null && !pConditions.isEmpty()) {
+            conditions = " WHERE";
+            if (pConditions.containsKey("computerName")) {
+                conditions += " computer.name like '%" + pConditions.get("computerName") + "%'";
+            }
+            if (pConditions.containsKey("operator")) {
+                conditions += " " + pConditions.get("operator");
+            }
+            else {
+                conditions += "OR ";
+            }
+            if (pConditions.containsKey("companyName")) {
+                conditions += " company.name like '%" + pConditions.get("companyName") + "%'";
+            }
+        }
+        return conditions;
     }
     /**
      * Count the number of Computers in the DB.

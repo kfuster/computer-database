@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.LoggerFactory;
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.exception.ServiceException;
@@ -18,12 +19,14 @@ import com.excilys.formation.service.ComputerService;
 import com.excilys.formation.service.implementation.CompanyServiceImpl;
 import com.excilys.formation.service.implementation.ComputerServiceImpl;
 import com.excilys.formation.servlet.validation.Validator;
+import ch.qos.logback.classic.Logger;
 
 public class AddComputerServlet extends HttpServlet {
     /**
      * 
      */
     private static final long serialVersionUID = 8194132027777240150L;
+    final Logger logger = (Logger) LoggerFactory.getLogger(AddComputerServlet.class);
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
         CompanyServiceImpl companyService = CompanyServiceImpl.getInstance();
         List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
@@ -52,6 +55,7 @@ public class AddComputerServlet extends HttpServlet {
             out.println("location='addComputer';");
             out.println("</script>");
         } catch (ServiceException e) {
+            logger.info(e.getMessage());
         }
     }    
 }

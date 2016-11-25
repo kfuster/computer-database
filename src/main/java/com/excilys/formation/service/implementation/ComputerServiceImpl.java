@@ -1,6 +1,7 @@
 package com.excilys.formation.service.implementation;
 
 import java.util.List;
+import org.slf4j.LoggerFactory;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.model.Computer;
 import com.excilys.formation.model.util.PageFilter;
@@ -8,6 +9,7 @@ import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.ComputerDao;
 import com.excilys.formation.persistence.jdbc.ComputerDaoJdbc;
 import com.excilys.formation.service.ComputerService;
+import ch.qos.logback.classic.Logger;
 
 /**
  * Service class for Computers.
@@ -15,6 +17,7 @@ import com.excilys.formation.service.ComputerService;
  *
  */
 public class ComputerServiceImpl implements ComputerService {
+    final Logger logger = (Logger) LoggerFactory.getLogger(ComputerServiceImpl.class);
     private ComputerDao computerDao;
     private static ComputerServiceImpl computerService;
     /**
@@ -38,7 +41,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             return computerDao.create(pComputer);
         } catch (PersistenceException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
         return null;
     }
@@ -47,7 +50,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             return computerDao.delete(pId);
         } catch (PersistenceException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
         return false;
     }
@@ -56,7 +59,7 @@ public class ComputerServiceImpl implements ComputerService {
             try {
                 computerDao.delete(id);
             } catch (PersistenceException e) {
-                e.printStackTrace();
+                logger.info(e.getMessage());
                 return false;
             }
         }
@@ -67,7 +70,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             return computerDao.getById(pId);
         } catch (PersistenceException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
         return null;
     }
@@ -76,7 +79,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             return computerDao.getPage(pViewDto);
         } catch (PersistenceException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
         return null;
     }
@@ -85,7 +88,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             computerDao.update(pComputer);
         } catch (PersistenceException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
     }
 }

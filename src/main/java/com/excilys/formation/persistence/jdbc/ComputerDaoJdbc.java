@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.LoggerFactory;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.mapper.JdbcMapper;
 import com.excilys.formation.model.Computer;
@@ -16,6 +17,7 @@ import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.ComputerDao;
 import com.excilys.formation.persistence.HikariConnectionProvider;
 import com.excilys.formation.util.DateConverter;
+import ch.qos.logback.classic.Logger;
 
 /**
  * DAO class for computers.
@@ -23,6 +25,7 @@ import com.excilys.formation.util.DateConverter;
  *
  */
 public class ComputerDaoJdbc implements ComputerDao {
+    final Logger logger = (Logger) LoggerFactory.getLogger(ComputerDaoJdbc.class);
     private HikariConnectionProvider connectionProvider;
     private static ComputerDaoJdbc computerDaoImpl = null;
     private static final String INSERT_COMPUTER = "INSERT INTO computer(name, introduced, discontinued, company_id) VALUES(?, ?, ?, ?)";
@@ -66,6 +69,7 @@ public class ComputerDaoJdbc implements ComputerDao {
                 return pComputer;
             }
         } catch (SQLException e) {
+            logger.error("Error in ComputerDao : create : ", e);
             throw new PersistenceException("Problème lors de la création de l'ordinateur");
         }
         return null;
@@ -82,6 +86,7 @@ public class ComputerDaoJdbc implements ComputerDao {
             preparedStatement.setLong(5, pComputer.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            logger.error("Error in ComputerDao : update : ", e);
             throw new PersistenceException("Problème lors de l'update de l'ordinateur");
         }
     }
@@ -93,6 +98,7 @@ public class ComputerDaoJdbc implements ComputerDao {
                 preparedStatement.setLong(1, pID);
                 affectedRow = preparedStatement.executeUpdate();
             } catch (SQLException e) {
+                logger.error("Error in ComputerDao : delete : ", e);
                 throw new PersistenceException("Problème lors de la suppression de l'ordinateur");
             }
             if (affectedRow == 1) {
@@ -101,6 +107,7 @@ public class ComputerDaoJdbc implements ComputerDao {
                 return false;
             }
         } catch (SQLException e) {
+            logger.error("Error in ComputerDao : delete : ", e);
             throw new PersistenceException("Problème lors de la suppression de l'ordinateur");
         }
     }
@@ -113,6 +120,7 @@ public class ComputerDaoJdbc implements ComputerDao {
                 affectedRow = preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 pConnection.rollback();
+                logger.error("Error in ComputerDao : deleteByCompany : ", e);
                 throw new PersistenceException("Problème lors de la suppression des ordinateur");
             }
             if (affectedRow >= 1) {
@@ -121,6 +129,7 @@ public class ComputerDaoJdbc implements ComputerDao {
                 return false;
             }
         } catch (SQLException e) {
+            logger.error("Error in ComputerDao : deleteByCompany : ", e);
             throw new PersistenceException("Problème lors de la suppression des ordinateur");
         }
     }
@@ -134,7 +143,7 @@ public class ComputerDaoJdbc implements ComputerDao {
             ResultSet resultSet = ps.executeQuery();
             computer = JdbcMapper.mapResultToComputer(resultSet);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error in ComputerDao : getById : ", e);
             throw new PersistenceException("Problème lors de la récupération de l'ordinateur");
         }
         return computer;
@@ -149,6 +158,7 @@ public class ComputerDaoJdbc implements ComputerDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             computer = JdbcMapper.mapResultToComputer(resultSet);
         } catch (SQLException e) {
+            logger.error("Error in ComputerDao : getByName : ", e);
             throw new PersistenceException("Problème lors de la récupération de l'ordinateur");
         }
         return computer;
@@ -174,7 +184,8 @@ public class ComputerDaoJdbc implements ComputerDao {
             pPage.setTotalElement(count(conditions));
             pPageFilter.setNbPage(pPage.nbPages);
         } catch (SQLException e) {
-            throw new PersistenceException("Problème lors de la récupération de la page d'ordinateurs", e);
+            logger.error("Error in ComputerDao : getPage : ", e);
+            throw new PersistenceException("Problème lors de la récupération de la page d'ordinateurs");
         }
         return pPage;
     }
@@ -214,7 +225,7 @@ public class ComputerDaoJdbc implements ComputerDao {
             resultSet.next();
             total = resultSet.getInt("total");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error in ComputerDao : count : ", e);
         }
         return total;
     }

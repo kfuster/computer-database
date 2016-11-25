@@ -1,7 +1,6 @@
 package com.excilys.formation.cli.implementation;
 
 import java.util.Scanner;
-import org.slf4j.LoggerFactory;
 import com.excilys.formation.cli.ComputerMenu;
 import com.excilys.formation.cli.Controller;
 import com.excilys.formation.cli.MainMenu;
@@ -9,7 +8,6 @@ import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.util.MenuUtil;
-import ch.qos.logback.classic.Logger;
 
 /**
  * Manage the menus and operations for the computers.
@@ -17,7 +15,6 @@ import ch.qos.logback.classic.Logger;
  *
  */
 public class ComputerMenuImpl implements ComputerMenu {
-    final Logger logger = (Logger) LoggerFactory.getLogger(ComputerMenuImpl.class);
     private static ComputerMenuImpl computerMenu;
     private Page<ComputerDto> pageComputer;
     private Scanner scanner = MainMenu.scanner;

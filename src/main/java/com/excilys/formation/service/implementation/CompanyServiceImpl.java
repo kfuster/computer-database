@@ -3,7 +3,9 @@ package com.excilys.formation.service.implementation;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import org.slf4j.LoggerFactory;
 import com.excilys.formation.exception.PersistenceException;
+import com.excilys.formation.exception.ServiceException;
 import com.excilys.formation.model.Company;
 import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
@@ -13,6 +15,7 @@ import com.excilys.formation.persistence.HikariConnectionProvider;
 import com.excilys.formation.persistence.jdbc.CompanyDaoJdbc;
 import com.excilys.formation.persistence.jdbc.ComputerDaoJdbc;
 import com.excilys.formation.service.CompanyService;
+import ch.qos.logback.classic.Logger;
 
 /**
  * Manages Company services.
@@ -20,6 +23,7 @@ import com.excilys.formation.service.CompanyService;
  *
  */
 public class CompanyServiceImpl implements CompanyService {
+    final Logger logger = (Logger) LoggerFactory.getLogger(CompanyServiceImpl.class);
     private CompanyDao companyDao;
     private ComputerDao computerDao;
     private static CompanyServiceImpl companyService;
@@ -47,12 +51,12 @@ public class CompanyServiceImpl implements CompanyService {
         try {
             return companyDao.getPage(pPageFilter);
         } catch (PersistenceException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
         return null;
     }
     @Override
-    public boolean delete(long pId) {
+    public boolean delete(long pId) throws ServiceException {
         try (Connection connection = HikariConnectionProvider.getInstance().getConnection()) {
             connection.setAutoCommit(false);
             companyDao.delete(pId, connection);
@@ -60,8 +64,11 @@ public class CompanyServiceImpl implements CompanyService {
             connection.commit();
             connection.setAutoCommit(true);
             return result;
-        } catch (PersistenceException | SQLException e) {
-            e.printStackTrace();
+        } catch (PersistenceException e) {
+            logger.info(e.getMessage());
+        } catch (SQLException e) {
+            logger.error("Error CompanyService : delete : ", e);
+            throw new ServiceException("Erreur lors de la suppression de la companie");
         }
         return false;
     }
@@ -71,7 +78,7 @@ public class CompanyServiceImpl implements CompanyService {
         try {
             allCompanies = companyDao.getAll();
         } catch (PersistenceException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
         return allCompanies;
     }

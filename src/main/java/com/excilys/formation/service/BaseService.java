@@ -2,6 +2,7 @@ package com.excilys.formation.service;
 
 import com.excilys.formation.exception.ServiceException;
 
+
 /**
  * Basic service interface.
  * @author kfuster

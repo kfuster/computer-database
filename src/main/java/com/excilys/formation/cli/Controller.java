@@ -1,5 +1,6 @@
 package com.excilys.formation.cli;
 
+import org.slf4j.LoggerFactory;
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.exception.ServiceException;
@@ -12,8 +13,10 @@ import com.excilys.formation.service.CompanyService;
 import com.excilys.formation.service.ComputerService;
 import com.excilys.formation.service.implementation.CompanyServiceImpl;
 import com.excilys.formation.service.implementation.ComputerServiceImpl;
+import ch.qos.logback.classic.Logger;
 
 public class Controller {
+    final Logger logger = (Logger) LoggerFactory.getLogger(Controller.class);
     private CompanyService companyService = CompanyServiceImpl.getInstance();
     private ComputerService computerService = ComputerServiceImpl.getInstance();
     public Page<CompanyDto> getPageCompany(PageFilter pPageFilter) {
@@ -27,7 +30,7 @@ public class Controller {
         try {
             return companyService.delete(pId);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
         return false;
     }
@@ -36,7 +39,7 @@ public class Controller {
         try {
             return DtoMapper.fromComputer(computerService.create(computer));
         } catch (ServiceException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
         return null;
     }
@@ -45,7 +48,7 @@ public class Controller {
         try {
             computerService.update(computer);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
     }
     public Page<ComputerDto> getPageComputer(PageFilter pPageFilter) {
@@ -61,7 +64,7 @@ public class Controller {
         try {
             return computerService.delete(pId);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
         return false;
     }

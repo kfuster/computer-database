@@ -6,12 +6,12 @@ package com.excilys.formation.dto;
  *
  */
 public class ComputerDto {
-    public long id;
-    public String name;
-    public String introduced;
-    public String discontinued;
-    public long companyId;
-    public String companyName;
+    private long id;
+    private String name;
+    private String introduced;
+    private String discontinued;
+    private long companyId;
+    private String companyName;
     @Override
     public int hashCode() {
         final int prime = 31;

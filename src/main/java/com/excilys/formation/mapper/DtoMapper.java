@@ -23,13 +23,13 @@ public class DtoMapper {
     public static Computer toComputer(ComputerDto pComputerDto) {
         Computer computer = null;
         if(pComputerDto != null) {
-            Company company = new Company.CompanyBuilder(pComputerDto.companyName).id(pComputerDto.companyId).build();
-            ComputerBuilder builder = new Computer.ComputerBuilder(pComputerDto.name).id(pComputerDto.id).company(company);
-            if(pComputerDto.introduced != null && !pComputerDto.introduced.isEmpty()) {
-                builder.dateIntro(LocalDate.parse(pComputerDto.introduced));
+            Company company = new Company.CompanyBuilder(pComputerDto.getCompanyName()).id(pComputerDto.getCompanyId()).build();
+            ComputerBuilder builder = new Computer.ComputerBuilder(pComputerDto.getName()).id(pComputerDto.getId()).company(company);
+            if(pComputerDto.getIntroduced() != null && !pComputerDto.getIntroduced().isEmpty()) {
+                builder.dateIntro(LocalDate.parse(pComputerDto.getIntroduced()));
             }
-            if(pComputerDto.discontinued != null && !pComputerDto.discontinued.isEmpty()) {
-                builder.dateDisc(LocalDate.parse(pComputerDto.discontinued)).id(pComputerDto.id).build();
+            if(pComputerDto.getDiscontinued() != null && !pComputerDto.getDiscontinued().isEmpty()) {
+                builder.dateDisc(LocalDate.parse(pComputerDto.getDiscontinued())).build();
             }
             computer = builder.build();
         }
@@ -59,19 +59,19 @@ public class DtoMapper {
         ComputerDto computerDto = null;
         if(pComputer != null) {
             computerDto = new ComputerDto();
-            computerDto.id = pComputer.getId();
-            computerDto.name = pComputer.getName();
+            computerDto.setId(pComputer.getId());
+            computerDto.setName(pComputer.getName());
             LocalDate dateIntro = pComputer.getIntroduced();
             if (dateIntro != null) {
-                computerDto.introduced = dateIntro.toString();
+                computerDto.setIntroduced(dateIntro.toString());
             }
             LocalDate dateDisc = pComputer.getDiscontinued();
             if (dateDisc != null) {
-                computerDto.discontinued = dateDisc.toString();
+                computerDto.setDiscontinued(dateDisc.toString());
             }
             Company company = pComputer.getCompany();
-            computerDto.companyId = company.getId();
-            computerDto.companyName = company.getName();
+            computerDto.setCompanyId(company.getId());
+            computerDto.setCompanyName(company.getName());
         }
         return computerDto;
     }
@@ -96,7 +96,7 @@ public class DtoMapper {
      * @return a Company
      */
     public static Company toCompany(CompanyDto pCompanyDto) {
-        return new Company.CompanyBuilder(pCompanyDto.name).id(pCompanyDto.id).build();       
+        return new Company.CompanyBuilder(pCompanyDto.getName()).id(pCompanyDto.getId()).build();       
     }
     /**
      * Converts a List of CompanyDto to a List of Company.
@@ -120,8 +120,8 @@ public class DtoMapper {
      */
     public static CompanyDto fromCompany(Company pCompany) {
         CompanyDto companyDto = new CompanyDto();
-        companyDto.id = pCompany.getId();
-        companyDto.name = pCompany.getName();
+        companyDto.setId(pCompany.getId());
+        companyDto.setName(pCompany.getName());
         return companyDto;
     }
     /**

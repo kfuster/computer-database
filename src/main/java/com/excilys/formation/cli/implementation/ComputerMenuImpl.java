@@ -125,10 +125,10 @@ public class ComputerMenuImpl implements ComputerMenu {
         if (idToShow >= 1) {
             ComputerDto computerToShow = controller.getComputerById(idToShow);
             if (computerToShow != null) {
-                System.out.println(new StringBuilder().append("Nom : ").append(computerToShow.name)
-                        .append("\nDate de début de production : ").append(computerToShow.introduced)
-                        .append("\nDate de fin de production : ").append(computerToShow.discontinued)
-                        .append("\nId de la compagnie : ").append(computerToShow.companyId).toString());
+                System.out.println(new StringBuilder().append("Nom : ").append(computerToShow.getName())
+                        .append("\nDate de début de production : ").append(computerToShow.getIntroduced())
+                        .append("\nDate de fin de production : ").append(computerToShow.getDiscontinued())
+                        .append("\nId de la compagnie : ").append(computerToShow.getCompanyId()).toString());
             } else {
                 System.out.println("Aucun ordinateur trouvé");
             }
@@ -143,15 +143,15 @@ public class ComputerMenuImpl implements ComputerMenu {
         if (name.isEmpty()) {
             return;
         }
-        computerDto.name = name;
+        computerDto.setName(name);
         System.out.println(
                 "Vous pouvez entrez une date de début de production au format aaaa-mm-jj (ou appuyer sur entrée pour passer)");
-        computerDto.introduced = MenuUtil.inputDate();
+        computerDto.setIntroduced(MenuUtil.inputDate());
         System.out.println(
                 "Vous pouvez entrez une date d'arrêt de production au format aaaa-mm-jj (ou appuyer sur entrée pour passer)");
-        computerDto.discontinued = MenuUtil.inputDate();
+        computerDto.setDiscontinued(MenuUtil.inputDate());
         System.out.println("Entrez l'id de la compagnie fabricant l'ordinateur");
-        computerDto.companyId = MenuUtil.waitForInt();
+        computerDto.setCompanyId(MenuUtil.waitForInt());
         controller.createComputer(computerDto);
     }
     @Override
@@ -167,26 +167,26 @@ public class ComputerMenuImpl implements ComputerMenu {
             if (computerDto != null) {
                 // Asking for new name
                 System.out.println(new StringBuilder().append("Entrez un nouveau nom si vous souhaitez le changer (")
-                        .append(computerDto.name).append(") :").toString());
+                        .append(computerDto.getName()).append(") :").toString());
                 String newName = MenuUtil.waitForLine();
                 if (!newName.isEmpty()) {
-                    computerDto.name = newName;
+                    computerDto.setName(newName);
                 }
                 // Asking for new introduced date
                 System.out.println(new StringBuilder().append("Entrez une nouvelle date de début de production (")
-                        .append(computerDto.introduced)
+                        .append(computerDto.getIntroduced())
                         .append(") au format aaaa-mm-jj (\"null\" pour retirer la date):").toString());
-                computerDto.introduced = MenuUtil.inputNewDate(computerDto.introduced);
+                computerDto.setIntroduced(MenuUtil.inputNewDate(computerDto.getIntroduced()));
                 // Asking for new discontinued date
                 System.out.println(new StringBuilder().append("Entrez une nouvelle date de fin de production (")
-                        .append(computerDto.discontinued)
+                        .append(computerDto.getDiscontinued())
                         .append(") au format aaaa-mm-jj (\"null\" pour retirer la date):").toString());
-                computerDto.discontinued = MenuUtil.inputNewDate(computerDto.discontinued);
+                computerDto.setDiscontinued(MenuUtil.inputNewDate(computerDto.getDiscontinued()));
                 // Asking for new company id
-                System.out.println("Vous pouvez entrer un nouvel id de compagnie (" + computerDto.companyId + ") :");
+                System.out.println("Vous pouvez entrer un nouvel id de compagnie (" + computerDto.getCompanyId() + ") :");
                 String newCompanyId = scanner.nextLine();
                 if (!newCompanyId.isEmpty() && MenuUtil.isInteger(newCompanyId)) {
-                    computerDto.companyId = Integer.parseInt(newCompanyId);
+                    computerDto.setCompanyId(Integer.parseInt(newCompanyId));
                 }
                 controller.updateComputer(computerDto);
             } else {

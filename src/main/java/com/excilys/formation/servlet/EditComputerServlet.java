@@ -57,7 +57,7 @@ public class EditComputerServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Ordinateur mis à jour');");
-            out.println("location='editComputer?id="+computerDto.id+"';");
+            out.println("location='editComputer?id="+computerDto.getId()+"';");
             out.println("</script>");
         } catch (ServiceException e) {
             logger.info(e.getMessage());

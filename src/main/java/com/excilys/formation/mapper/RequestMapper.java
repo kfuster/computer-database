@@ -23,21 +23,21 @@ public class RequestMapper {
         String discontinued = pRequest.getParameter("discontinued").trim();
         String companyId = pRequest.getParameter("companyId").trim();
         if (!id.isEmpty() && MenuUtil.isInteger(id)) {
-           computerDto.id = Integer.parseInt(id); 
+           computerDto.setId(Integer.parseInt(id)); 
         }
         if (!name.isEmpty()) {
-            computerDto.name = name;
+            computerDto.setName(name);
         }
         if (!introduced.isEmpty()) {
-            computerDto.introduced = introduced;
+            computerDto.setIntroduced(introduced);
         }
         if (!discontinued.isEmpty()) {
-            computerDto.discontinued = discontinued;
+            computerDto.setDiscontinued(discontinued);
         }
         if (!companyId.isEmpty()) {
             int idCompany = Integer.parseInt(companyId);
             if (idCompany != 0) {
-                computerDto.companyId = idCompany;
+                computerDto.setCompanyId(idCompany);
             }
         }        
         return computerDto;   

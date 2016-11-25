@@ -20,15 +20,15 @@ public class Validator {
      * @return pErrors with added errors if founds
      */
     public static Map<String, String> validateComputerDto(ComputerDto computerDto, Map<String, String> pErrors) {
-        String name = computerDto.name;
+        String name = computerDto.getName();
         if (name == null || !isNameValid(name)) {
             pErrors.put("name", "Le nom n'est pas valide");
         }
-        String introducedError = isDateValid(computerDto.introduced, null);
+        String introducedError = isDateValid(computerDto.getIntroduced(), null);
         if (introducedError != null) {
             pErrors.put("introduced", introducedError);
         }
-        String discontinuedError = isDateValid(computerDto.discontinued, computerDto.introduced);
+        String discontinuedError = isDateValid(computerDto.getDiscontinued(), computerDto.getIntroduced());
         if (discontinuedError != null) {
             pErrors.put("discontinued", discontinuedError);
         }

@@ -27,7 +27,7 @@
 					<h1>Edit Computer</h1>
 
 					<form action="editComputer" method="POST">
-						<input type="hidden" name="computerId" <c:if test="${not empty computerDto.id}">value="${computerDto.id}"</c:if> id="id" />
+						<input type="hidden" id="computerId" name="computerId" <c:if test="${not empty computerDto.id}">value="${computerDto.id}"</c:if>/>
 						<!-- TODO: Change this value with the computer id -->
 						<fieldset>
 							<div class="form-group">

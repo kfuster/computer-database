@@ -95,7 +95,7 @@ $(function() {
 		            
 		        }
 		        else {
-		        	search += ParameterName[1] + "&";
+		        	search += ParameterName[1] + "&order=ASC";
 		        }
 	        }
 	        else if (ParameterName[0] === "order" && same) {

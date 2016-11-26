@@ -5,10 +5,10 @@
 <c:forEach items="${pageComputer.elems}" var="computer">
 	<tr>
 		<td class="editMode">
-			<input type="checkbox" name="cb" class="cb" value="${computer.id}">
+			<input type="checkbox" id="computerId" name="cb" class="cb" value="${computer.id}">
 		</td>
 		<td>
-			<a href="editComputer?id=${computer.id}" onclick="">
+			<a id="editLink" href="editComputer?id=${computer.id}" onclick="">
             	${computer.name }
            	</a>
         </td>

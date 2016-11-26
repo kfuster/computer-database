@@ -16,12 +16,12 @@ object Edit {
     .queryParam(config.getString("application.urls.param.search").toString(), "${addComputerName}")
     .check(
       status.is(200),
-      css("#results a", "href").saveAs("computerURL")
+      css("#editLink", "href").saveAs("computerURL")
     )
   )
     .pause(3, 10)
     .exec(http("Edit: Select for edit")
-      .get(config.getString("application.baseUrl").get + "${computerURL}")
+      .get("${computerURL}")
       .check(
         status.is(200),
         css(config.getString("application.urls.idElement.edit.id").get, "value").saveAs("computer_id")

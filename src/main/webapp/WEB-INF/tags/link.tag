@@ -12,7 +12,7 @@
 	<%@ variable name-given="i"%>
 	<c:set var="i" value="${currentPage-1}" />
 	<c:if test="${i >= 1}">
-		<li><a href="?page=${i}&limit=${currentLimit}<c:if test="${filter != null}">&search=${filter}</c:if>"
+		<li><a href="?page=${i}&limit=${currentLimit}<c:if test="${filter != null}">&search=${filter}</c:if><c:if test="${column != null}">&column=${column}</c:if>"
 		aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 	</a></li>
 	</c:if>

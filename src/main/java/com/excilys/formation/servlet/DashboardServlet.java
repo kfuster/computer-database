@@ -20,22 +20,7 @@ public class DashboardServlet extends HttpServlet {
     private static final long serialVersionUID = -9054781130738656412L;
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ComputerServiceImpl computerService = ComputerServiceImpl.getInstance();
-        PageFilter pageFilter = new PageFilter();
-        pageFilter.setElementsByPage(10);
-        pageFilter.setPageNum(1);
-        if (request.getParameter("page") != null) {
-            pageFilter.setPageNum(Integer.parseInt(request.getParameter("page")));
-        }
-        if (request.getParameter("limit") != null) {
-            pageFilter.setElementsByPage(Integer.parseInt(request.getParameter("limit")));
-        }
-        this.getServletContext().setAttribute("filter", "");
-        if (request.getParameter("search") != null) {
-            String search = request.getParameter("search").replace("'","''");
-            pageFilter.addCondition("computerName", search);
-            pageFilter.addCondition("companyName", search);
-            this.getServletContext().setAttribute("filter", search);
-        }
+        PageFilter pageFilter = RequestMapper.toPageFilter(request);
         Page<ComputerDto> computerPage = PageMapper.fromComputerToComputerDto(computerService.getPage(pageFilter));
         this.getServletContext().setAttribute("pageComputer", computerPage);
         this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/dashboard.jsp").forward(request, response);

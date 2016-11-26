@@ -27,13 +27,13 @@ $('#addForm').validate({
 		},
 		computerName : {
 			required : true,
-			minlength : 3
+			minlength : 2
 		}
 	},
 	messages : {
 		computerName : {
 			required : "Entrez un nom",
-			minlength : "Le nom doit être d'au moins 3 caractères"
+			minlength : "Le nom doit être d'au moins 2 caractères"
 		},
 		introduced : "Entrez la date au format yyyy-mm-dd.",
 		discontinued : "Entrez la date au format yyyy-mm-dd."

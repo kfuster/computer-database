@@ -69,7 +69,55 @@ $(function() {
     };
 }( jQuery ));
 
-
+(function ( $ ) {
+	$.fn.columnSort = function(value) {
+		var PageURL = decodeURIComponent(window.location.search.substring(1)),
+		URLVariables = PageURL.split('&'),
+        parameterName,
+        parameterValue,
+        search="",
+        found = false,
+        same = false,
+        i;
+		for (i = 0; i < URLVariables.length; i++) {
+	        ParameterName = URLVariables[i].split('=');
+	        if(ParameterName[0] && ParameterName[0] !== "order") {
+		        search += ParameterName[0] + "=";
+		        if (ParameterName[0] === "column") {
+		        	found = true;
+		        	if(ParameterName[1] === value) {
+		        		same = true;
+		        		search += value;	
+		        	}
+		        	else {
+			            search += value + "&order=ASC&";
+		        	}
+		            
+		        }
+		        else {
+		        	search += ParameterName[1] + "&";
+		        }
+	        }
+	        else if (ParameterName[0] === "order" && same) {
+	        	if(ParameterName[1] === "ASC") {
+	        		search += "&order=DESC";
+	        	}
+	        	else {
+	        		search += "&order=ASC";
+	        	}
+	        }
+	    }
+		if (!found) {
+			var column = "";
+			if(window.location.search.length > 0) {
+				column = "&"
+			}
+			column += "column=" + value + "&order=ASC";
+			search += column
+		}
+		window.location.search = search;
+	};
+}( jQuery ));
 
 //Event handling
 //Onkeydown
@@ -90,4 +138,3 @@ $(document).keydown(function(e) {
             break;
     }
 });
-

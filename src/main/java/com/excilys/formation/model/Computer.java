@@ -169,7 +169,7 @@ public final class Computer {
          * @return a Computer
          */
         public Computer build() {
-            if (name.length() < 3 ) {
+            if (name.length() < 2 ) {
                 throw new IllegalArgumentException("Computer name must be at least 3 characters");
             }
             Computer computer = new Computer(name);

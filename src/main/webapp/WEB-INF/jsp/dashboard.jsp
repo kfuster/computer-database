@@ -65,12 +65,12 @@
 									class="fa fa-trash-o fa-lg"></i>
 							</a>
 						</span></th>
-						<th>Computer name</th>
-						<th>Introduced date</th>
+						<th id="computerName" onclick="$.fn.columnSort('computerName');">Computer name</th>
+						<th id="introduced" onclick="$.fn.columnSort('introduced');">Introduced date</th>
 						<!-- Table header for Discontinued Date -->
-						<th>Discontinued date</th>
+						<th id="discontinued" onclick="$.fn.columnSort('discontinued');">Discontinued date</th>
 						<!-- Table header for Company -->
-						<th>Company</th>
+						<th id="companyName" onclick="$.fn.columnSort('companyName');">Company</th>
 					</tr>
 				</thead>
 				<!-- Browse attribute computers -->

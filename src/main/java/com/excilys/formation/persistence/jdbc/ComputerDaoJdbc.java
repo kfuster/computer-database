@@ -167,17 +167,14 @@ public class ComputerDaoJdbc implements ComputerDao {
     private String mapConditions(Map<String, String> pConditions) {
         String conditions = "";
         if (pConditions != null && !pConditions.isEmpty()) {
-            conditions = " WHERE";
-            if (pConditions.containsKey("computerName")) {
-                conditions += " computer.name like '%" + pConditions.get("computerName") + "%'";
+            if (pConditions.containsKey("computerName") && pConditions.containsKey("companyName")) {
+                conditions = " WHERE computer.name like '%" + pConditions.get("computerName") + "%' OR  company.name like '%" + pConditions.get("companyName") + "%'";
             }
-            if (pConditions.containsKey("operator")) {
-                conditions += " " + pConditions.get("operator");
-            } else {
-                conditions += "OR ";
+            if (pConditions.containsKey("column")) {
+                conditions += " ORDER BY " + pConditions.get("column");
             }
-            if (pConditions.containsKey("companyName")) {
-                conditions += " company.name like '%" + pConditions.get("companyName") + "%'";
+            if (pConditions.containsKey("order")) {
+                conditions += " " + pConditions.get("order");
             }
         }
         return conditions;

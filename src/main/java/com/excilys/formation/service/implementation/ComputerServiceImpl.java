@@ -16,7 +16,7 @@ import ch.qos.logback.classic.Logger;
  *
  */
 public class ComputerServiceImpl implements ComputerService {
-    final Logger logger = (Logger) LoggerFactory.getLogger(ComputerServiceImpl.class);
+    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(ComputerServiceImpl.class);
     private ComputerDao computerDao;
     private static ComputerService computerService;
 
@@ -43,7 +43,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             return computerDao.create(pComputer);
         } catch (PersistenceException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
         return null;
     }
@@ -53,7 +53,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             computerDao.delete(pId);
         } catch (PersistenceException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
     }
 
@@ -62,7 +62,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             computerDao.deleteList(idList);
         } catch (PersistenceException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
     }
 
@@ -71,7 +71,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             return computerDao.getById(pId);
         } catch (PersistenceException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
         return null;
     }
@@ -81,7 +81,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             return computerDao.getPage(pViewDto);
         } catch (PersistenceException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
         return null;
     }
@@ -91,7 +91,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             computerDao.update(pComputer);
         } catch (PersistenceException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
     }
 }

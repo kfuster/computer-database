@@ -16,7 +16,7 @@ import com.excilys.formation.service.implementation.ComputerServiceImpl;
 import ch.qos.logback.classic.Logger;
 
 public class Controller {
-    final Logger logger = (Logger) LoggerFactory.getLogger(Controller.class);
+    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(Controller.class);
     private CompanyService companyService = CompanyServiceImpl.getInstance();
     private ComputerService computerService = ComputerServiceImpl.getInstance();
 
@@ -41,7 +41,7 @@ public class Controller {
         try {
             companyService.delete(pId);
         } catch (ServiceException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ public class Controller {
         try {
             return DtoMapper.fromComputer(computerService.create(computer));
         } catch (ServiceException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
         return null;
     }
@@ -72,7 +72,7 @@ public class Controller {
         try {
             computerService.update(computer);
         } catch (ServiceException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
     }
 
@@ -107,7 +107,7 @@ public class Controller {
         try {
             computerService.delete(pId);
         } catch (ServiceException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
     }
 }

@@ -10,7 +10,7 @@ import ch.qos.logback.classic.Logger;
 
 public class HikariConnectionProvider {
     private static HikariConnectionProvider connectionProvider;
-    final static Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory
+    private static final Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory
             .getLogger(HikariConnectionProvider.class);
     private static final String HIKARI_PROPERTIES = "src/main/resources/hikari.properties";
     private static DataSource dataSource;
@@ -40,7 +40,7 @@ public class HikariConnectionProvider {
             Connection connection = dataSource.getConnection();
             CONNECTION.set(connection);
         } catch (SQLException e) {
-            logger.error("Error HikariConnectionProvider : initConnection : ", e);
+            LOGGER.error("Error HikariConnectionProvider : initConnection : ", e);
         }
     }
 
@@ -48,7 +48,7 @@ public class HikariConnectionProvider {
         try {
             CONNECTION.get().commit();
         } catch (SQLException e) {
-            logger.error("Error HikariConnectionProvider : commit : ", e);
+            LOGGER.error("Error HikariConnectionProvider : commit : ", e);
         }
     }
 
@@ -56,7 +56,7 @@ public class HikariConnectionProvider {
         try {
             CONNECTION.get().setAutoCommit(false);
         } catch (SQLException e) {
-            logger.error("Error HikariConnectionProvider : initTransaction : ", e);
+            LOGGER.error("Error HikariConnectionProvider : initTransaction : ", e);
         }
     }
 
@@ -64,7 +64,7 @@ public class HikariConnectionProvider {
         try {
             CONNECTION.get().setAutoCommit(true);
         } catch (SQLException e) {
-            logger.error("Error HikariConnectionProvider : finishTransaction : ", e);
+            LOGGER.error("Error HikariConnectionProvider : finishTransaction : ", e);
         }
     }
 
@@ -72,7 +72,7 @@ public class HikariConnectionProvider {
         try {
             CONNECTION.get().rollback();
         } catch (SQLException e) {
-            logger.error("Error HikariConnectionProvider : rollback : ", e);
+            LOGGER.error("Error HikariConnectionProvider : rollback : ", e);
         }
     }
 
@@ -81,7 +81,7 @@ public class HikariConnectionProvider {
             CONNECTION.get().close();
             CONNECTION.remove();
         } catch (SQLException e) {
-            logger.error("Error HikariConnectionProvider : closeConnection : ", e);
+            LOGGER.error("Error HikariConnectionProvider : closeConnection : ", e);
         }
     }
 

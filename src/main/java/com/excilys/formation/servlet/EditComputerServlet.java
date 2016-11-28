@@ -24,7 +24,7 @@ import ch.qos.logback.classic.Logger;
 
 public class EditComputerServlet extends HttpServlet {
     private static final long serialVersionUID = 7030753372478089174L;
-    final Logger logger = (Logger) LoggerFactory.getLogger(EditComputerServlet.class);
+    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(EditComputerServlet.class);
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CompanyService companyService = CompanyServiceImpl.getInstance();
@@ -60,7 +60,7 @@ public class EditComputerServlet extends HttpServlet {
             out.println("location='editComputer?id=" + computerDto.getId() + "';");
             out.println("</script>");
         } catch (ServiceException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
     }
 }

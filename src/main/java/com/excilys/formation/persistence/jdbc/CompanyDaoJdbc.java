@@ -23,7 +23,7 @@ import ch.qos.logback.classic.Logger;
  *
  */
 public class CompanyDaoJdbc implements CompanyDao {
-    final static Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(CompanyDaoJdbc.class);
+    private static final Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(CompanyDaoJdbc.class);
     private static HikariConnectionProvider hikariConnectionProvider;
     private static CompanyDao companyDaoImpl = null;
     private static final String SELECT_ALL = "SELECT * FROM company ORDER BY company.name";
@@ -55,7 +55,7 @@ public class CompanyDaoJdbc implements CompanyDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             company = JdbcMapper.mapResultToCompany(resultSet);
         } catch (SQLException e) {
-            logger.error("Error in CompanyDao : getById : ", e);
+            LOGGER.error("Error in CompanyDao : getById : ", e);
             throw new PersistenceException("Problème lors de la récupération de la compagnie");
         }
         return company;
@@ -68,11 +68,11 @@ public class CompanyDaoJdbc implements CompanyDao {
                 preparedStatementCompany.setLong(1, pID);
             } catch (SQLException e) {
                 pConnection.rollback();
-                logger.error("Error in CompanyDao : delete : ", e);
+                LOGGER.error("Error in CompanyDao : delete : ", e);
                 throw new PersistenceException("Problème lors de la suppression de la compagnie");
             }
         } catch (SQLException e) {
-            logger.error("Error in CompanyDao : delete : ", e);
+            LOGGER.error("Error in CompanyDao : delete : ", e);
             throw new PersistenceException("Problème lors de la suppression de la compagnie");
         }
     }
@@ -97,7 +97,7 @@ public class CompanyDaoJdbc implements CompanyDao {
             pPageFilter.setNbPage(pPage.totalPages);
             resultSet.close();
         } catch (SQLException e) {
-            logger.error("Error in CompanyDao : getPage : ", e);
+            LOGGER.error("Error in CompanyDao : getPage : ", e);
             throw new PersistenceException("Problème lors de la récupération de la page de compagnies");
         }
         return pPage;
@@ -112,7 +112,7 @@ public class CompanyDaoJdbc implements CompanyDao {
                 ResultSet resultSet = statement.executeQuery(SELECT_ALL)) {
             allCompanies = JdbcMapper.mapResultsToCompanyList(resultSet);
         } catch (SQLException e) {
-            logger.error("Error in CompanyDao : getAll : ", e);
+            LOGGER.error("Error in CompanyDao : getAll : ", e);
             throw new PersistenceException("Problème lors de la récupération de la page de compagnies");
         }
         return allCompanies;
@@ -134,7 +134,7 @@ public class CompanyDaoJdbc implements CompanyDao {
                 total = resultSet.getInt("total");
             }
         } catch (SQLException e) {
-            logger.error("Error in CompanyDao : count : ", e);
+            LOGGER.error("Error in CompanyDao : count : ", e);
         }
         return total;
     }

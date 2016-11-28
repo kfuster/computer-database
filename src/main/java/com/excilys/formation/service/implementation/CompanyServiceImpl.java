@@ -22,7 +22,7 @@ import ch.qos.logback.classic.Logger;
  *
  */
 public class CompanyServiceImpl implements CompanyService {
-    final Logger logger = (Logger) LoggerFactory.getLogger(CompanyServiceImpl.class);
+    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(CompanyServiceImpl.class);
     private CompanyDao companyDao;
     private ComputerDao computerDao;
     private static CompanyService companyService;
@@ -53,7 +53,7 @@ public class CompanyServiceImpl implements CompanyService {
         try {
             return companyDao.getPage(pPageFilter);
         } catch (PersistenceException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
         return null;
     }
@@ -69,10 +69,10 @@ public class CompanyServiceImpl implements CompanyService {
             hikariConnectionProvider.closeConnection();
         } catch (PersistenceException e) {
             hikariConnectionProvider.rollback();
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         } catch (SQLException e) {
             hikariConnectionProvider.rollback();
-            logger.error("Error CompanyService : delete : ", e);
+            LOGGER.error("Error CompanyService : delete : ", e);
             throw new ServiceException("Erreur lors de la suppression de la companie");
         }
     }
@@ -83,7 +83,7 @@ public class CompanyServiceImpl implements CompanyService {
         try {
             allCompanies = companyDao.getAll();
         } catch (PersistenceException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
         return allCompanies;
     }

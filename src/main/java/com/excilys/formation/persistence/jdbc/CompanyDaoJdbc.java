@@ -89,9 +89,9 @@ public class CompanyDaoJdbc implements CompanyDao {
             allCompanies = JdbcMapper.mapResultsToCompanyList(resultSet);
             pPage = new Page<>(pPageFilter.getElementsByPage());
             pPage.page = pPageFilter.getPageNum();
-            pPage.elems = (allCompanies);
-            pPage.setTotalElement(count(connection, ""));
-            pPageFilter.setNbPage(pPage.nbPages);
+            pPage.elements = (allCompanies);
+            pPage.setTotalElements(count(connection, ""));
+            pPageFilter.setNbPage(pPage.totalPages);
             resultSet.close();
         } catch (SQLException e) {
             logger.error("Error in CompanyDao : getPage : ", e);

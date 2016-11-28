@@ -12,7 +12,7 @@ public class PageMapper {
         if (pPageCompany != null) {
             pPageCompanyDto = new Page<>(10);
             copyAttributes(pPageCompany, pPageCompanyDto);
-            pPageCompanyDto.elems = DtoMapper.fromCompanyList(pPageCompany.elems);
+            pPageCompanyDto.elements = DtoMapper.fromCompanyList(pPageCompany.elements);
         }
         return pPageCompanyDto;
     }
@@ -21,7 +21,7 @@ public class PageMapper {
         if (pPageComputer != null) {
             pPageComputerDto = new Page<>(10);
             copyAttributes(pPageComputer, pPageComputerDto);
-            pPageComputerDto.elems = DtoMapper.fromComputerList(pPageComputer.elems);
+            pPageComputerDto.elements = DtoMapper.fromComputerList(pPageComputer.elements);
         }
         return pPageComputerDto;
     }
@@ -30,7 +30,7 @@ public class PageMapper {
         if (pPageComputerDto != null) {
             pPageComputer = new Page<>(10);
             copyAttributes(pPageComputerDto, pPageComputer);
-            pPageComputerDto.elems = DtoMapper.fromComputerList(pPageComputer.elems);
+            pPageComputerDto.elements = DtoMapper.fromComputerList(pPageComputer.elements);
         }
         return pPageComputer;
     }
@@ -43,8 +43,8 @@ public class PageMapper {
      */
     public static void copyAttributes(Page<?> pPageToCopy, Page<?> pNewPage) {
         pNewPage.page = pPageToCopy.page;
-        pNewPage.elemByPage = pPageToCopy.elemByPage;
-        pNewPage.nbPages = pPageToCopy.nbPages;
-        pNewPage.totalElement = pPageToCopy.totalElement;
+        pNewPage.elementsByPage = pPageToCopy.elementsByPage;
+        pNewPage.totalPages = pPageToCopy.totalPages;
+        pNewPage.totalElements = pPageToCopy.totalElements;
     }
 }

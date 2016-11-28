@@ -17,8 +17,8 @@ public class ServiceUtil {
      */
     public static void copyAttributes(Page<?> pPageToCopy, Page<?> pNewPage) {
         pNewPage.page = pPageToCopy.page;
-        pNewPage.elemByPage = pPageToCopy.elemByPage;
-        pNewPage.nbPages = pPageToCopy.nbPages;
-        pNewPage.totalElement = pPageToCopy.totalElement;
+        pNewPage.elementsByPage = pPageToCopy.elementsByPage;
+        pNewPage.totalPages = pPageToCopy.totalPages;
+        pNewPage.totalElements = pPageToCopy.totalElements;
     }
 }

@@ -71,6 +71,7 @@ public class HikariConnectionProvider {
     public void closeConnection() {
         try {
             CONNECTION.get().close();
+            CONNECTION.remove();
         } catch (SQLException e) {
             logger.error("Error HikariConnectionProvider : closeConnection : ",e);
         }

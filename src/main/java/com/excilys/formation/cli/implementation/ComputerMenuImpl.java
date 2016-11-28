@@ -106,9 +106,7 @@ public class ComputerMenuImpl implements ComputerMenu {
      */
     private void showPage() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (ComputerDto computer : pageComputer.elements) {
-            stringBuilder.append(computer.toString()).append("\n");
-        }
+        pageComputer.getElements().forEach(computer -> stringBuilder.append(computer.toString()).append("\n"));
         stringBuilder.append("Page : ").append(pageComputer.page).append(" / ").append(pageComputer.totalPages)
                 .append("\nOptions :\n1 - Page Précédente\n2 - Page Suivante\n3 - Aller à la page\n4 - Quitter");
         System.out.println(stringBuilder.toString());

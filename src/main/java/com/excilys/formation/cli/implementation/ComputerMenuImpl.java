@@ -15,7 +15,7 @@ import com.excilys.formation.util.MenuUtil;
  *
  */
 public class ComputerMenuImpl implements ComputerMenu {
-    private static ComputerMenuImpl computerMenu;
+    private static ComputerMenu computerMenu;
     private Page<ComputerDto> pageComputer;
     private Scanner scanner = MainMenu.scanner;
     private PageFilter pageFilter;
@@ -34,7 +34,7 @@ public class ComputerMenuImpl implements ComputerMenu {
      * Initializes it if null.
      * @return the instance of ComputerMenuImpl
      */
-    public static ComputerMenuImpl getInstance() {
+    public static ComputerMenu getInstance() {
         if (computerMenu == null) {
             computerMenu = new ComputerMenuImpl();
         }

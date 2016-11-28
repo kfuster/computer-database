@@ -22,4 +22,5 @@ public interface ComputerService extends BaseService<Computer> {
      * @return the Page with the populated list
      */
     Page<Computer> getPage(PageFilter pPageFilter);
+    void deleteList(String pListId);
 }

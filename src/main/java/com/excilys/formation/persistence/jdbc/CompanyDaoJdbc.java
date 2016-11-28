@@ -25,7 +25,7 @@ import ch.qos.logback.classic.Logger;
 public class CompanyDaoJdbc implements CompanyDao {
     final static Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(CompanyDaoJdbc.class);
     private static HikariConnectionProvider hikariConnectionProvider;
-    private static CompanyDaoJdbc companyDaoImpl = null;
+    private static CompanyDao companyDaoImpl = null;
     private static final String SELECT_ALL = "SELECT * FROM company ORDER BY company.name";
     private static final String SELECT_BY_ID = "SELECT * FROM company WHERE id=?";
     private static final String SELECT_PAGE = "SELECT * FROM company ";
@@ -37,7 +37,7 @@ public class CompanyDaoJdbc implements CompanyDao {
      * initializes it.
      * @return the instance of CompanyDaoJdbc
      */
-    public static CompanyDaoJdbc getInstance() {
+    public static CompanyDao getInstance() {
         if (companyDaoImpl == null) {
             companyDaoImpl = new CompanyDaoJdbc();
             hikariConnectionProvider = HikariConnectionProvider.getInstance();

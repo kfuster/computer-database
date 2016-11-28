@@ -25,7 +25,7 @@ public class CompanyServiceImpl implements CompanyService {
     final Logger logger = (Logger) LoggerFactory.getLogger(CompanyServiceImpl.class);
     private CompanyDao companyDao;
     private ComputerDao computerDao;
-    private static CompanyServiceImpl companyService;
+    private static CompanyService companyService;
     private static HikariConnectionProvider hikariConnectionProvider;
     /**
      * Constructor for CompanyServiceImpl.
@@ -41,7 +41,7 @@ public class CompanyServiceImpl implements CompanyService {
      * Initializes it if null.
      * @return the instance of CompanyServiceImpl
      */
-    public static CompanyServiceImpl getInstance(){
+    public static CompanyService getInstance(){
         if (companyService == null) {
             companyService = new CompanyServiceImpl();
         }

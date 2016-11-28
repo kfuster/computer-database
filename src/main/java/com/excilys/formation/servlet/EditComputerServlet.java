@@ -15,6 +15,7 @@ import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.exception.ServiceException;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.mapper.RequestMapper;
+import com.excilys.formation.service.CompanyService;
 import com.excilys.formation.service.ComputerService;
 import com.excilys.formation.service.implementation.CompanyServiceImpl;
 import com.excilys.formation.service.implementation.ComputerServiceImpl;
@@ -22,13 +23,10 @@ import com.excilys.formation.servlet.validation.Validator;
 import ch.qos.logback.classic.Logger;
 
 public class EditComputerServlet extends HttpServlet {
-    /**
-     * 
-     */
     private static final long serialVersionUID = 7030753372478089174L;
     final Logger logger = (Logger) LoggerFactory.getLogger(EditComputerServlet.class);
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        CompanyServiceImpl companyService = CompanyServiceImpl.getInstance();
+        CompanyService companyService = CompanyServiceImpl.getInstance();
         ComputerService computerService = ComputerServiceImpl.getInstance();
         String computerId = request.getParameter("id");
         if (computerId != null && !computerId.trim().isEmpty()) {

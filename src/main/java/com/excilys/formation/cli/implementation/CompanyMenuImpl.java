@@ -15,7 +15,7 @@ import com.excilys.formation.util.MenuUtil;
  *
  */
 public class CompanyMenuImpl implements CompanyMenu {
-    private static CompanyMenuImpl companyMenu;
+    private static CompanyMenu companyMenu;
     private Page<CompanyDto> pageCompany;
     private PageFilter pageFilter;
     private Scanner scanner = MainMenu.scanner;
@@ -34,7 +34,7 @@ public class CompanyMenuImpl implements CompanyMenu {
      * Initializes it if null.
      * @return the instance of CompanyMenuImpl
      */
-    public static CompanyMenuImpl getInstance() {
+    public static CompanyMenu getInstance() {
         if (companyMenu == null) {
             companyMenu = new CompanyMenuImpl();
         }

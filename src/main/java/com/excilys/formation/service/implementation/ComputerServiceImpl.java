@@ -18,7 +18,7 @@ import ch.qos.logback.classic.Logger;
 public class ComputerServiceImpl implements ComputerService {
     final Logger logger = (Logger) LoggerFactory.getLogger(ComputerServiceImpl.class);
     private ComputerDao computerDao;
-    private static ComputerServiceImpl computerService;
+    private static ComputerService computerService;
     /**
      * Constructor for ComputerServiceImpl. Initializes computerDao.
      */
@@ -29,7 +29,7 @@ public class ComputerServiceImpl implements ComputerService {
      * Getter for the ComputerServiceImpl instance. Initializes it if null.
      * @return the instance of ComputerServiceImpl
      */
-    public static ComputerServiceImpl getInstance() {
+    public static ComputerService getInstance() {
         if (computerService == null) {
             computerService = new ComputerServiceImpl();
         }
@@ -52,14 +52,13 @@ public class ComputerServiceImpl implements ComputerService {
             logger.info(e.getMessage());
         }
     }
-    public boolean deleteList(String idList) {
+    @Override
+    public void deleteList(String idList) {
         try {
             computerDao.deleteList(idList);
         } catch (PersistenceException e) {
             logger.info(e.getMessage());
         }
-
-        return true;
     }
     @Override
     public Computer getById(long pId) {

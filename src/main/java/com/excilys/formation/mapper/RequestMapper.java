@@ -69,13 +69,14 @@ public class RequestMapper {
             pageFilter.setElementsByPage(Integer.parseInt(pRequest.getParameter("limit")));
         }
         
-        pRequest.getServletContext().setAttribute("filter", "");
+        pRequest.getServletContext().setAttribute("filter", null);
         if (pRequest.getParameter("search") != null) {
             String search = pRequest.getParameter("search").replace("'","''");
             pageFilter.addCondition("computerName", search);
             pageFilter.addCondition("companyName", search);
             pRequest.getServletContext().setAttribute("filter", search);
         }
+        pRequest.getServletContext().setAttribute("column", null);
         if(pRequest.getParameter("column") != null) {
             String column = pRequest.getParameter("column").replace("'","''");
             pRequest.getServletContext().setAttribute("column", column);

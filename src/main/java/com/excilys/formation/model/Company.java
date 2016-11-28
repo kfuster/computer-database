@@ -9,6 +9,8 @@ public final class Company {
     // ######### ATTRIBUTES #########
     private Long id;
     private String name;
+    public Company() {
+    }
     /**
      * Company constructor.
      * @param pName the name of the Company.

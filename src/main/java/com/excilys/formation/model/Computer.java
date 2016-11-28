@@ -14,6 +14,8 @@ public final class Computer {
     private LocalDate introduced;
     private LocalDate discontinued;
     private Company company;
+    public Computer() {
+    }
     /**
      * Computer constructor, used by ComputerBuilder.
      * @param pName the computer's name
@@ -170,7 +172,7 @@ public final class Computer {
          */
         public Computer build() {
             if (name.length() < 2 ) {
-                throw new IllegalArgumentException("Computer name must be at least 3 characters");
+                throw new IllegalArgumentException("Computer name must be at least 2 characters");
             }
             Computer computer = new Computer(name);
             computer.id = id;

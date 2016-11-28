@@ -94,13 +94,8 @@ public class CompanyMenuImpl implements CompanyMenu {
             idToDelete = Integer.parseInt(input);
         }
         if (idToDelete >= 1) {
-            boolean deleteResult = controller.deleteCompany(idToDelete);
-            if (deleteResult) {
-                System.out.println("Company supprimé");
-            }
-            else {
-                System.out.println("Company non supprimée");
-            }
+            controller.deleteCompany(idToDelete);
+            System.out.println("Company supprimée");
         }
     }
 }

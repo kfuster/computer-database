@@ -19,21 +19,35 @@ public class Controller {
     final Logger logger = (Logger) LoggerFactory.getLogger(Controller.class);
     private CompanyService companyService = CompanyServiceImpl.getInstance();
     private ComputerService computerService = ComputerServiceImpl.getInstance();
+    /**
+     * Get a Page<Company> from the service and converts it to Page<CompanyDto>.
+     * @param pPageFilter the PageFilter containing the parameters of the page
+     * @return a Page<CompanyDto>
+     */
     public Page<CompanyDto> getPageCompany(PageFilter pPageFilter) {
         if (pPageFilter != null) {
             return PageMapper.fromCompanyToCompanyDto(companyService.getPage(pPageFilter));
         }
         return null;
     }
-    
-    public boolean deleteCompany(long pId) {
+    /**
+     * Asks the service to delete a Company.
+     * @param pId the id of the Company to delete
+     * @return a boolean indicating if the Company was deleted
+     */
+    public void deleteCompany(long pId) {
         try {
-            return companyService.delete(pId);
+            companyService.delete(pId);
         } catch (ServiceException e) {
             logger.info(e.getMessage());
         }
-        return false;
     }
+    /**
+     * Asks the service to create a Computer.
+     * The given ComputerDto will be converted to a Computer then send to the service.
+     * @param pComputerDto the ComputerDto containing the informations of the Computer.
+     * @return a ComputerDto
+     */
     public ComputerDto createComputer(ComputerDto pComputerDto) {
         Computer computer = DtoMapper.toComputer(pComputerDto);
         try {
@@ -43,6 +57,11 @@ public class Controller {
         }
         return null;
     }
+    /**
+     * Asks the service to update a Computer.
+     * The given ComputerDto will be converted to a Computer then send to the service.
+     * @param pComputerDto
+     */
     public void updateComputer(ComputerDto pComputerDto) {
         Computer computer = DtoMapper.toComputer(pComputerDto);
         try {
@@ -51,21 +70,35 @@ public class Controller {
             logger.info(e.getMessage());
         }
     }
+    /**
+     * Get a Page<Computer> from the service and converts it to Page<ComputerDto>.
+     * @param pPageFilter the PageFilter containing the parameters of the page
+     * @return a Page<Computer>
+     */
     public Page<ComputerDto> getPageComputer(PageFilter pPageFilter) {
         if (pPageFilter != null) {
             return PageMapper.fromComputerToComputerDto(computerService.getPage(pPageFilter));
         }
         return null;
     }
+    /**
+     * Get a Computer from the service and converts it to ComputerDto.
+     * @param pId the id of the Computer to get
+     * @return a ComputerDto
+     */
     public ComputerDto getComputerById(long pId) {
         return DtoMapper.fromComputer(computerService.getById(pId));
     }
-    public boolean deleteComputer(long pId) {
+    /**
+     * Asks the service to delete a Computer.
+     * @param pId the id of the Computer to delete
+     * @return a boolean indicating if the Computer was deleted
+     */
+    public void deleteComputer(long pId) {
         try {
-            return computerService.delete(pId);
+            computerService.delete(pId);
         } catch (ServiceException e) {
             logger.info(e.getMessage());
         }
-        return false;
     }
 }

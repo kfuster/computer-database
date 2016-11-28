@@ -12,6 +12,42 @@ public class ComputerDto {
     private String discontinued;
     private Long companyId;
     private String companyName;
+    public long getId() {
+        return id;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getIntroduced() {
+        return introduced;
+    }
+    public void setIntroduced(String introduced) {
+        this.introduced = introduced;
+    }
+    public String getDiscontinued() {
+        return discontinued;
+    }
+    public void setDiscontinued(String discontinued) {
+        this.discontinued = discontinued;
+    }
+    public long getCompanyId() {
+        return companyId;
+    }
+    public void setCompanyId(long companyId) {
+        this.companyId = companyId;
+    }
+    public String getCompanyName() {
+        return companyName;
+    }
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -75,40 +111,81 @@ public class ComputerDto {
         }
         return stringBuilder.toString();
     }
-    public long getId() {
-        return id;
-    }
-    public void setId(long id) {
-        this.id = id;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getIntroduced() {
-        return introduced;
-    }
-    public void setIntroduced(String introduced) {
-        this.introduced = introduced;
-    }
-    public String getDiscontinued() {
-        return discontinued;
-    }
-    public void setDiscontinued(String discontinued) {
-        this.discontinued = discontinued;
-    }
-    public long getCompanyId() {
-        return companyId;
-    }
-    public void setCompanyId(long companyId) {
-        this.companyId = companyId;
-    }
-    public String getCompanyName() {
-        return companyName;
-    }
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public static class ComputerDtoBuilder {
+        private Long id;
+        private String name;
+        private String introduced;
+        private String discontinued;
+        private Long companyId;
+        private String companyName;
+        /**
+         * ComputerDtoBuilder's constructor.
+         * @param pName the computer's name
+         */
+        public ComputerDtoBuilder(String pName) {
+            name = pName;
+        }
+        /**
+         * Setter for the ComputerDtoBuilder's companyId.
+         * @param pCompanyId the Company's Id
+         * @return the ComputerDtoBuilder
+         */
+        public ComputerDtoBuilder companyId(long pCompanyId) {
+            companyId = pCompanyId;
+            return this;
+        }
+        /**
+         * Setter for the ComputerDtoBuilder's company.
+         * @param pCompany the Computer's Company
+         * @return the ComputerDtoBuilder
+         */
+        public ComputerDtoBuilder companyName(String pCompanyName) {
+            companyName = pCompanyName;
+            return this;
+        }
+        /**
+         * Setter for the ComputerDtoBuilder's id.
+         * @param pId the Computer's Id
+         * @return the ComputerDtoBuilder
+         */
+        public ComputerDtoBuilder id(long pId) {
+            id = pId;
+            return this;
+        }
+        /**
+         * Setter for the ComputerDtoBuilder's introduced date.
+         * @param pDate the Computer's introduced date
+         * @return the ComputerDtoBuilder
+         */
+        public ComputerDtoBuilder introduced(String pDate) {
+            introduced = pDate;
+            return this;
+        }
+        /**
+         * Setter for the ComputerDtoBuilder's discontinued date.
+         * @param pDate the Computer's discontinued date
+         * @return the ComputerDtoBuilder
+         */
+        public ComputerDtoBuilder discontinued(String pDate) {
+            discontinued = pDate;
+            return this;
+        }
+        /**
+         * Build a ComputerDto from the ComputerDtoBuilder's attributes.
+         * @return a ComputerDto
+         */
+        public ComputerDto build() {
+            if (name.length() < 2 ) {
+                throw new IllegalArgumentException("Computer name must be at least 2 characters");
+            }
+            ComputerDto computerDto = new ComputerDto();
+            computerDto.id = id;
+            computerDto.name = name;
+            computerDto.companyId = companyId;
+            computerDto.companyName = companyName;
+            computerDto.discontinued = discontinued;
+            computerDto.introduced = introduced;
+            return computerDto;
+        }
     }
 }

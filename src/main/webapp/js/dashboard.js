@@ -92,10 +92,9 @@ $(function() {
 		        	else {
 			            search += value + "&order=ASC&";
 		        	}
-		            
 		        }
 		        else {
-		        	search += ParameterName[1] + "&order=ASC";
+		        	search += ParameterName[1] + "&";
 		        }
 	        }
 	        else if (ParameterName[0] === "order" && same) {

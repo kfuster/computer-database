@@ -29,6 +29,7 @@ public class ComputerDaoJdbc implements ComputerDao {
     private static final String INSERT_COMPUTER = "INSERT INTO computer(name, introduced, discontinued, company_id) VALUES(?, ?, ?, ?)";
     private static final String UPDATE_COMPUTER = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
     private static final String DELETE_COMPUTER = "DELETE FROM computer WHERE id=?";
+    private static final String DELETE_COMPUTER_LIST = "DELETE FROM computer WHERE id IN";
     private static final String DELETE_COMPUTER_BY_COMPANY = "DELETE FROM computer WHERE company_id=?";
     private static final String SELECT_JOIN = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, company.id as companyId, company.name as companyName FROM computer LEFT JOIN company ON computer.company_id=company.id";
     private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM computer LEFT JOIN company ON computer.company_id=company.id ";
@@ -93,6 +94,15 @@ public class ComputerDaoJdbc implements ComputerDao {
             return true;
         } else {
             return false;
+        }
+    }
+    public void deleteList(Connection pConnection, String idList) throws PersistenceException {
+        String query = DELETE_COMPUTER_LIST + " (" + idList + ");";
+        try (PreparedStatement preparedStatement = pConnection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Error in ComputerDao : delete : ", e);
+            throw new PersistenceException("Problème lors de la suppression des ordinateurs");
         }
     }
     @Override

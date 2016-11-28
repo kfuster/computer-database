@@ -65,11 +65,11 @@ public class CompanyServiceImpl implements CompanyService {
     public boolean delete(long pId) throws ServiceException {
         try {
             connection.setAutoCommit(false);
+            computerDao.deleteByCompany(connection, pId);
             companyDao.delete(connection, pId);
-            boolean result = computerDao.deleteByCompany(connection, pId);
             connection.commit();
             connection.setAutoCommit(true);
-            return result;
+            return true;
         } catch (PersistenceException e) {
             try {
                 connection.rollback();

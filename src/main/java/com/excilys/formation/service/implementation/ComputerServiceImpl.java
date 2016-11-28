@@ -2,7 +2,6 @@ package com.excilys.formation.service.implementation;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 import org.slf4j.LoggerFactory;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.model.Computer;
@@ -63,15 +62,13 @@ public class ComputerServiceImpl implements ComputerService {
         }
         return false;
     }
-    public boolean deleteList(List<Integer> ids) {
-        for (Integer id : ids) {
-            try {
-                computerDao.delete(connection, id);
-            } catch (PersistenceException e) {
-                logger.info(e.getMessage());
-                return false;
-            }
+    public boolean deleteList(String idList) {
+        try {
+            computerDao.deleteList(connection, idList);
+        } catch (PersistenceException e) {
+            logger.info(e.getMessage());
         }
+
         return true;
     }
     @Override

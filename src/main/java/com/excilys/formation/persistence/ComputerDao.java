@@ -27,4 +27,5 @@ public interface ComputerDao extends BaseDao<Computer> {
      * @throws PersistenceException in case of problems while deleting the computers
      */
     boolean deleteByCompany(Connection pConnection, long id) throws PersistenceException;
+    void deleteList(Connection pConnection, String pIdList) throws PersistenceException;
 }

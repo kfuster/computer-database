@@ -6,11 +6,11 @@ package com.excilys.formation.dto;
  *
  */
 public class ComputerDto {
-    private long id;
+    private Long id;
     private String name;
     private String introduced;
     private String discontinued;
-    private long companyId;
+    private Long companyId;
     private String companyName;
     @Override
     public int hashCode() {

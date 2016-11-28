@@ -7,7 +7,7 @@ package com.excilys.formation.model;
  */
 public final class Company {
     // ######### ATTRIBUTES #########
-    private long id;
+    private Long id;
     private String name;
     /**
      * Company constructor.
@@ -68,7 +68,7 @@ public final class Company {
                 .toString();
     }
     public static class CompanyBuilder {
-        private long id;
+        private Long id;
         private String name;
         /**
          * CompanyBuilder constructor.

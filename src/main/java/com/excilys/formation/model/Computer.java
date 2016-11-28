@@ -9,7 +9,7 @@ import java.time.LocalDate;
  */
 public final class Computer {
     // ######### ATTRIBUTES #########
-    private long id;
+    private Long id;
     private String name;
     private LocalDate introduced;
     private LocalDate discontinued;
@@ -116,7 +116,7 @@ public final class Computer {
                 .append(", company=").append(company).append("]").toString();
     }
     public static class ComputerBuilder {
-        private long id;
+        private Long id;
         private String name;
         private LocalDate introduced;
         private LocalDate discontinued;

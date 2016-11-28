@@ -1,11 +1,8 @@
 package com.excilys.formation.mapper;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.model.util.PageFilter;
-import com.excilys.formation.util.MenuUtil;
 
 public class RequestMapper {
     /**
@@ -23,8 +20,8 @@ public class RequestMapper {
         String introduced = pRequest.getParameter("introduced").trim();
         String discontinued = pRequest.getParameter("discontinued").trim();
         String companyId = pRequest.getParameter("companyId").trim();
-        if (!id.isEmpty() && MenuUtil.isInteger(id)) {
-            computerDto.setId(Integer.parseInt(id));
+        if (!id.isEmpty()) {
+            computerDto.setId(Long.parseLong(id));
         }
         if (!name.isEmpty()) {
             computerDto.setName(name);
@@ -36,27 +33,12 @@ public class RequestMapper {
             computerDto.setDiscontinued(discontinued);
         }
         if (!companyId.isEmpty()) {
-            int idCompany = Integer.parseInt(companyId);
+            long idCompany = Long.parseLong(companyId);
             if (idCompany != 0) {
                 computerDto.setCompanyId(idCompany);
             }
         }
         return computerDto;
-    }
-    /**
-     * Get a list of ids from a request
-     * @param pRequest the HttpServletRequest containing the list of ids
-     * @return a List of ids
-     */
-    public static List<Integer> toIdList(HttpServletRequest pRequest) {
-        List<Integer> listIds = new ArrayList<>();
-        String[] stringIdArray = pRequest.getParameter("selection").trim().split(",");
-        for (String id : stringIdArray) {
-            if (MenuUtil.isInteger(id)) {
-                listIds.add(Integer.parseInt(id));
-            }
-        }
-        return listIds;
     }
     public static PageFilter toPageFilter (HttpServletRequest pRequest) {
         PageFilter pageFilter = new PageFilter();

@@ -30,7 +30,7 @@ public class EditComputerServlet extends HttpServlet {
         ComputerService computerService = ComputerServiceImpl.getInstance();
         String computerId = request.getParameter("id");
         if (computerId != null && !computerId.trim().isEmpty()) {
-            ComputerDto computerDto = DtoMapper.fromComputer(computerService.getById(Integer.parseInt(computerId)));
+            ComputerDto computerDto = DtoMapper.fromComputer(computerService.getById(Long.parseLong(computerId)));
             List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
             this.getServletContext().setAttribute("listCompanies", listCompanies);
             this.getServletContext().setAttribute("computerDto", computerDto);

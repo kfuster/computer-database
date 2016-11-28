@@ -84,36 +84,6 @@ public class MenuUtil {
         return dateString;
     }
     /**
-     * Checks if a string is an integer.
-     * @param pStringToCheck the String to check
-     * @return a boolean
-     */
-    public static boolean isInteger(String pStringToCheck) {
-        if (pStringToCheck == null) {
-            return false;
-        }
-        int length = pStringToCheck.length();
-        if (length == 0) {
-            return false;
-        }
-        int i = 0;
-        // we check if the string starts with "-" and the length is > 1
-        if (pStringToCheck.charAt(0) == '-') {
-            if (length == 1) {
-                return false;
-            }
-            i = 1;
-        }
-        // we check each char of the string to see if it's a number
-        for (; i < length; i++) {
-            char c = pStringToCheck.charAt(i);
-            if (c < '0' || c > '9') {
-                return false;
-            }
-        }
-        return true;
-    }
-    /**
      * Manage the navigation in the list of objects.
      * @param pPageFilter the pPageFilter on which to operate
      * @return a boolean indicating if the operation was successful
@@ -144,11 +114,14 @@ public class MenuUtil {
             } else if (nextOption == 3) {
                 MainMenu.scanner.nextLine();
                 System.out.print("Entrez le numéro de la page :");
-                String page = "";
-                while (page.isEmpty() && !MenuUtil.isInteger(page)) {
-                    page = MainMenu.scanner.nextLine();
-                }
-                int newPage = Integer.parseInt(page);
+                String page = waitForLine();
+                int newPage = 0;
+                try {
+                    newPage = Integer.parseInt(page);
+                } catch (NumberFormatException e) {
+                    System.out.println("Vous devez entrer un nombre");
+                    return false;
+                }                
                 if (0 < newPage && newPage <= pPageFilter.getNbPage()) {
                     pPageFilter.setPageNum(newPage);
                     ok =true;

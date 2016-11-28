@@ -6,7 +6,7 @@ package com.excilys.formation.dto;
  *
  */
 public class CompanyDto {
-    private long id;
+    private Long id;
     private String name;
     @Override
     public int hashCode() {

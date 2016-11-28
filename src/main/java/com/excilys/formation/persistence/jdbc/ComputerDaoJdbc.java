@@ -60,7 +60,7 @@ public class ComputerDaoJdbc implements ComputerDao {
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet != null && resultSet.next()) {
-                int computerId = resultSet.getInt(1);
+                long computerId = resultSet.getLong(1);
                 pComputer.setId(computerId);
                 resultSet.close();
                 return pComputer;

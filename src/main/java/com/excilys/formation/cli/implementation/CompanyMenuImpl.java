@@ -89,13 +89,14 @@ public class CompanyMenuImpl implements CompanyMenu {
     public void delete() {
         System.out.println("Entrez l'id de la company à supprimer (ou entrée pour annuler) : ");
         String input = MenuUtil.waitForLine();
-        int idToDelete = -1;
-        if (MenuUtil.isInteger(input)) {
-            idToDelete = Integer.parseInt(input);
+        long idToDelete = -1;
+        try {
+            idToDelete = Long.parseLong(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Vous devez entrer un nombre");
+            return;
         }
-        if (idToDelete >= 1) {
-            controller.deleteCompany(idToDelete);
-            System.out.println("Company supprimée");
-        }
+        controller.deleteCompany(idToDelete);
+        System.out.println("Company supprimée");
     }
 }

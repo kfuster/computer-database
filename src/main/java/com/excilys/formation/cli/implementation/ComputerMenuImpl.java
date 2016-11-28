@@ -21,8 +21,7 @@ public class ComputerMenuImpl implements ComputerMenu {
     private PageFilter pageFilter;
     private Controller controller = new Controller();
     /**
-     * ComputerMenuImpl constructor.
-     * Initialize ComputerService.
+     * ComputerMenuImpl constructor. Initialize ComputerService.
      */
     private ComputerMenuImpl() {
         pageFilter = new PageFilter();
@@ -30,8 +29,7 @@ public class ComputerMenuImpl implements ComputerMenu {
         pageFilter.setPageNum(1);
     }
     /**
-     * Getter for the ComputerMenuImpl instance.
-     * Initializes it if null.
+     * Getter for the ComputerMenuImpl instance. Initializes it if null.
      * @return the instance of ComputerMenuImpl
      */
     public static ComputerMenu getInstance() {
@@ -53,42 +51,43 @@ public class ComputerMenuImpl implements ComputerMenu {
      */
     @Override
     public void startMenu() {
-        System.out.println("Voici les opérations disponibles : \n1 : Voir la liste des ordinateurs\n2 : Voir les informations d'un ordinateur\n3 : Créer un ordinateur\n4 : Mettre à jour un ordinateur\n5 : Supprimer un ordinateur\n6 : Retour");
+        System.out.println(
+                "Voici les opérations disponibles : \n1 : Voir la liste des ordinateurs\n2 : Voir les informations d'un ordinateur\n3 : Créer un ordinateur\n4 : Mettre à jour un ordinateur\n5 : Supprimer un ordinateur\n6 : Retour");
         int choice = MenuUtil.waitForInt();
-        if(scanner.hasNextLine()) {
+        if (scanner.hasNextLine()) {
             scanner.nextLine();
         }
         boolean quit = false;
         switch (choice) {
-            case 1:
-                list();
-                quit = false;
-                break;
-            case 2:
-                info();
-                quit = false;
-                break;
-            case 3:
-                create();
-                quit = false;
-                break;
-            case 4:
-                update();
-                quit = false;
-                break;
-            case 5:
-                delete();
-                quit = false;
-                break;
-            case 6:
-                quit = true;
-                break;
-            default:
-                System.out.println("Opération non disponible");
-                quit = false;
-                break;
+        case 1:
+            list();
+            quit = false;
+            break;
+        case 2:
+            info();
+            quit = false;
+            break;
+        case 3:
+            create();
+            quit = false;
+            break;
+        case 4:
+            update();
+            quit = false;
+            break;
+        case 5:
+            delete();
+            quit = false;
+            break;
+        case 6:
+            quit = true;
+            break;
+        default:
+            System.out.println("Opération non disponible");
+            quit = false;
+            break;
         }
-        if(!quit) {
+        if (!quit) {
             startMenu();
         }
     }
@@ -100,7 +99,7 @@ public class ComputerMenuImpl implements ComputerMenu {
         do {
             pageComputer = controller.getPageComputer(pageFilter);
             showPage();
-        } while(MenuUtil.manageNavigation(pageFilter));
+        } while (MenuUtil.manageNavigation(pageFilter));
     }
     /**
      * Asks the service to populate the list of elements and show them.
@@ -118,20 +117,21 @@ public class ComputerMenuImpl implements ComputerMenu {
     public void info() {
         System.out.println("Entrez l'id de l'ordinateur dont vous souhaitez voir les infos (ou entrée pour annuler) :");
         String infoId = MenuUtil.waitForLine();
-        int idToShow = -1;
-        if (MenuUtil.isInteger(infoId)) {
-            idToShow = Integer.parseInt(infoId);
+        long idToShow = -1;
+        try {
+            idToShow = Long.parseLong(infoId);
+        } catch (NumberFormatException e) {
+            System.out.println("Vous devez entrer un nombre");
+            return;
         }
-        if (idToShow >= 1) {
-            ComputerDto computerToShow = controller.getComputerById(idToShow);
-            if (computerToShow != null) {
-                System.out.println(new StringBuilder().append("Nom : ").append(computerToShow.getName())
-                        .append("\nDate de début de production : ").append(computerToShow.getIntroduced())
-                        .append("\nDate de fin de production : ").append(computerToShow.getDiscontinued())
-                        .append("\nId de la compagnie : ").append(computerToShow.getCompanyId()).toString());
-            } else {
-                System.out.println("Aucun ordinateur trouvé");
-            }
+        ComputerDto computerToShow = controller.getComputerById(idToShow);
+        if (computerToShow != null) {
+            System.out.println(new StringBuilder().append("Nom : ").append(computerToShow.getName())
+                    .append("\nDate de début de production : ").append(computerToShow.getIntroduced())
+                    .append("\nDate de fin de production : ").append(computerToShow.getDiscontinued())
+                    .append("\nId de la compagnie : ").append(computerToShow.getCompanyId()).toString());
+        } else {
+            System.out.println("Aucun ordinateur trouvé");
         }
     }
     @Override
@@ -158,53 +158,61 @@ public class ComputerMenuImpl implements ComputerMenu {
     public void update() {
         System.out.println("Entrez l'id de l'ordinateur à mettre à jour (ou entrée pour annuler) :");
         String input = MenuUtil.waitForLine();
-        int idToUpdate = -1;
-        if (MenuUtil.isInteger(input)) {
-            idToUpdate = Integer.parseInt(input);
+        long idToUpdate = -1;
+        try {
+            idToUpdate = Long.parseLong(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Vous devez entrer un nombre");
+            return;
         }
-        if (idToUpdate >= 1) {
-            ComputerDto computerDto = controller.getComputerById(idToUpdate);
-            if (computerDto != null) {
-                // Asking for new name
-                System.out.println(new StringBuilder().append("Entrez un nouveau nom si vous souhaitez le changer (")
-                        .append(computerDto.getName()).append(") :").toString());
-                String newName = MenuUtil.waitForLine();
-                if (!newName.isEmpty()) {
-                    computerDto.setName(newName);
-                }
-                // Asking for new introduced date
-                System.out.println(new StringBuilder().append("Entrez une nouvelle date de début de production (")
-                        .append(computerDto.getIntroduced())
-                        .append(") au format aaaa-mm-jj (\"null\" pour retirer la date):").toString());
-                computerDto.setIntroduced(MenuUtil.inputNewDate(computerDto.getIntroduced()));
-                // Asking for new discontinued date
-                System.out.println(new StringBuilder().append("Entrez une nouvelle date de fin de production (")
-                        .append(computerDto.getDiscontinued())
-                        .append(") au format aaaa-mm-jj (\"null\" pour retirer la date):").toString());
-                computerDto.setDiscontinued(MenuUtil.inputNewDate(computerDto.getDiscontinued()));
-                // Asking for new company id
-                System.out.println("Vous pouvez entrer un nouvel id de compagnie (" + computerDto.getCompanyId() + ") :");
-                String newCompanyId = scanner.nextLine();
-                if (!newCompanyId.isEmpty() && MenuUtil.isInteger(newCompanyId)) {
-                    computerDto.setCompanyId(Integer.parseInt(newCompanyId));
-                }
-                controller.updateComputer(computerDto);
-            } else {
-                System.out.println("Aucun ordinateur trouvé");
+        ComputerDto computerDto = controller.getComputerById(idToUpdate);
+        if (computerDto != null) {
+            // Asking for new name
+            System.out.println(new StringBuilder().append("Entrez un nouveau nom si vous souhaitez le changer (")
+                    .append(computerDto.getName()).append(") :").toString());
+            String newName = MenuUtil.waitForLine();
+            if (!newName.isEmpty()) {
+                computerDto.setName(newName);
             }
+            // Asking for new introduced date
+            System.out.println(new StringBuilder().append("Entrez une nouvelle date de début de production (")
+                    .append(computerDto.getIntroduced())
+                    .append(") au format aaaa-mm-jj (\"null\" pour retirer la date):").toString());
+            computerDto.setIntroduced(MenuUtil.inputNewDate(computerDto.getIntroduced()));
+            // Asking for new discontinued date
+            System.out.println(new StringBuilder().append("Entrez une nouvelle date de fin de production (")
+                    .append(computerDto.getDiscontinued())
+                    .append(") au format aaaa-mm-jj (\"null\" pour retirer la date):").toString());
+            computerDto.setDiscontinued(MenuUtil.inputNewDate(computerDto.getDiscontinued()));
+            // Asking for new company id
+            System.out.println("Vous pouvez entrer un nouvel id de compagnie (" + computerDto.getCompanyId() + ") :");
+            String newCompanyId = scanner.nextLine();
+            if (!newCompanyId.isEmpty()) {
+                try {
+                    long companyId = Long.parseLong(newCompanyId);
+                    computerDto.setCompanyId(companyId);
+                } catch (NumberFormatException e) {
+                    System.out.println("Vous devez entrer un nombre");
+                    return;
+                }
+            }
+            controller.updateComputer(computerDto);
+        } else {
+            System.out.println("Aucun ordinateur trouvé");
         }
     }
     @Override
     public void delete() {
         System.out.println("Entrez l'id de l'ordinateur à supprimer (ou entrée pour annuler) : ");
         String input = MenuUtil.waitForLine();
-        int idToDelete = -1;
-        if (MenuUtil.isInteger(input)) {
-            idToDelete = Integer.parseInt(input);
+        long idToDelete = -1;
+        try {
+            idToDelete = Long.parseLong(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Vous devez entrer un nombre");
+            return;
         }
-        if (idToDelete >= 1) {
-            controller.deleteComputer(idToDelete);
-            System.out.println("Ordinateur supprimé");
-        }
+        controller.deleteComputer(idToDelete);
+        System.out.println("Ordinateur supprimé");
     }
 }

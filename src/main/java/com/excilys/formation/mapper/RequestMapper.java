@@ -40,7 +40,8 @@ public class RequestMapper {
         }
         return computerDto;
     }
-    public static PageFilter toPageFilter (HttpServletRequest pRequest) {
+
+    public static PageFilter toPageFilter(HttpServletRequest pRequest) {
         PageFilter pageFilter = new PageFilter();
         pageFilter.setElementsByPage(10);
         pageFilter.setPageNum(1);
@@ -50,28 +51,27 @@ public class RequestMapper {
         if (pRequest.getParameter("limit") != null) {
             pageFilter.setElementsByPage(Integer.parseInt(pRequest.getParameter("limit")));
         }
-        
         pRequest.getServletContext().setAttribute("filter", null);
         if (pRequest.getParameter("search") != null) {
-            String search = pRequest.getParameter("search").replace("'","''");
+            String search = pRequest.getParameter("search").replace("'", "''");
             pageFilter.addCondition("computerName", search);
             pageFilter.addCondition("companyName", search);
             pRequest.getServletContext().setAttribute("filter", search);
         }
         pRequest.getServletContext().setAttribute("column", null);
-        if(pRequest.getParameter("column") != null) {
-            String column = pRequest.getParameter("column").replace("'","''");
+        if (pRequest.getParameter("column") != null) {
+            String column = pRequest.getParameter("column").replace("'", "''");
             pRequest.getServletContext().setAttribute("column", column);
             if ("computerName".equals(column)) {
-               column = "computer.name"; 
+                column = "computer.name";
             }
             if ("companyName".equals(column)) {
-                column = "company.name"; 
-             }
+                column = "company.name";
+            }
             pageFilter.addCondition("column", column);
         }
-        if(pRequest.getParameter("order") != null) {
-            String order = pRequest.getParameter("order").replace("'","''");
+        if (pRequest.getParameter("order") != null) {
+            String order = pRequest.getParameter("order").replace("'", "''");
             pageFilter.addCondition("order", order);
             pRequest.getServletContext().setAttribute("order", order);
         }

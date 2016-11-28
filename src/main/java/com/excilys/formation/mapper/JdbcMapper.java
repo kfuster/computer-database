@@ -31,6 +31,7 @@ public class JdbcMapper {
         }
         return computerList;
     }
+
     /**
      * Loop on a ResultSet to map it to a company list.
      * @param pResultSet The ResultSet to map
@@ -48,6 +49,7 @@ public class JdbcMapper {
         }
         return companyList;
     }
+
     /**
      * Map a ResultSet to a Computer.
      * @param pResultSet the ResultSet to map
@@ -63,6 +65,7 @@ public class JdbcMapper {
         }
         return computer;
     }
+
     /**
      * Map a ResultSet to a Company.
      * @param pResultSet the ResultSet to map
@@ -78,13 +81,14 @@ public class JdbcMapper {
         }
         return company;
     }
+
     /**
      * Extract a Computer from a ResultSet.
      * @param pResultSet the ResultSet on a specific row
      * @return a Computer
      * @throws SQLException in case of problems with operating on the ResultSet
      */
-    private static Computer extractComputer(ResultSet pResultSet) throws SQLException   {
+    private static Computer extractComputer(ResultSet pResultSet) throws SQLException {
         // Get the company from the row
         Company company = new Company.CompanyBuilder(pResultSet.getString("companyName"))
                 .id(pResultSet.getInt("companyId")).build();
@@ -95,6 +99,7 @@ public class JdbcMapper {
                 .dateIntro(DateConverter.fromTimestampToLocalDate(pResultSet.getTimestamp("introduced"))).build();
         return computer;
     }
+
     /**
      * Extract a Company from a ResultSet.
      * @param pResultSet the ResultSet on a specific row
@@ -103,8 +108,7 @@ public class JdbcMapper {
      */
     private static Company extractCompany(ResultSet pResultSet) throws SQLException {
         // Get the company from the row
-        Company company = new Company.CompanyBuilder(pResultSet.getString("name")).id(pResultSet.getInt("id"))
-                .build();
+        Company company = new Company.CompanyBuilder(pResultSet.getString("name")).id(pResultSet.getInt("id")).build();
         return company;
     }
 }

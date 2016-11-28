@@ -19,6 +19,7 @@ public class Controller {
     final Logger logger = (Logger) LoggerFactory.getLogger(Controller.class);
     private CompanyService companyService = CompanyServiceImpl.getInstance();
     private ComputerService computerService = ComputerServiceImpl.getInstance();
+
     /**
      * Get a Page<Company> from the service and converts it to Page<CompanyDto>.
      * @param pPageFilter the PageFilter containing the parameters of the page
@@ -30,6 +31,7 @@ public class Controller {
         }
         return null;
     }
+
     /**
      * Asks the service to delete a Company.
      * @param pId the id of the Company to delete
@@ -42,10 +44,12 @@ public class Controller {
             logger.info(e.getMessage());
         }
     }
+
     /**
-     * Asks the service to create a Computer.
-     * The given ComputerDto will be converted to a Computer then send to the service.
-     * @param pComputerDto the ComputerDto containing the informations of the Computer.
+     * Asks the service to create a Computer. The given ComputerDto will be
+     * converted to a Computer then send to the service.
+     * @param pComputerDto the ComputerDto containing the informations of the
+     *            Computer.
      * @return a ComputerDto
      */
     public ComputerDto createComputer(ComputerDto pComputerDto) {
@@ -57,9 +61,10 @@ public class Controller {
         }
         return null;
     }
+
     /**
-     * Asks the service to update a Computer.
-     * The given ComputerDto will be converted to a Computer then send to the service.
+     * Asks the service to update a Computer. The given ComputerDto will be
+     * converted to a Computer then send to the service.
      * @param pComputerDto
      */
     public void updateComputer(ComputerDto pComputerDto) {
@@ -70,8 +75,10 @@ public class Controller {
             logger.info(e.getMessage());
         }
     }
+
     /**
-     * Get a Page<Computer> from the service and converts it to Page<ComputerDto>.
+     * Get a Page<Computer> from the service and converts it to
+     * Page<ComputerDto>.
      * @param pPageFilter the PageFilter containing the parameters of the page
      * @return a Page<Computer>
      */
@@ -81,6 +88,7 @@ public class Controller {
         }
         return null;
     }
+
     /**
      * Get a Computer from the service and converts it to ComputerDto.
      * @param pId the id of the Computer to get
@@ -89,6 +97,7 @@ public class Controller {
     public ComputerDto getComputerById(long pId) {
         return DtoMapper.fromComputer(computerService.getById(pId));
     }
+
     /**
      * Asks the service to delete a Computer.
      * @param pId the id of the Computer to delete

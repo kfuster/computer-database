@@ -11,6 +11,7 @@ import java.util.Properties;
  */
 public class PropertyReader {
     private static Properties properties;
+
     /**
      * Load properties from an InputStream.
      * @param pInputStream the InputStrem to load

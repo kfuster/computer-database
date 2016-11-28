@@ -9,8 +9,10 @@ public final class Company {
     // ######### ATTRIBUTES #########
     private Long id;
     private String name;
+
     public Company() {
     }
+
     /**
      * Company constructor.
      * @param pName the name of the Company.
@@ -18,19 +20,24 @@ public final class Company {
     private Company(String pName) {
         name = pName;
     }
+
     // ######### SETTERS/GETTERS #########
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     // ######### METHODS #########
     @Override
     public int hashCode() {
@@ -40,6 +47,7 @@ public final class Company {
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -64,14 +72,17 @@ public final class Company {
         }
         return true;
     }
+
     @Override
     public String toString() {
         return new StringBuilder().append("Company [id=").append(id).append(", name=").append(name).append("]")
                 .toString();
     }
+
     public static class CompanyBuilder {
         private Long id;
         private String name;
+
         /**
          * CompanyBuilder constructor.
          * @param pName the company's name
@@ -79,6 +90,7 @@ public final class Company {
         public CompanyBuilder(String pName) {
             name = pName;
         }
+
         /**
          * Set the CompanyBuilder's id.
          * @param pId the Company's Id
@@ -88,6 +100,7 @@ public final class Company {
             id = pId;
             return this;
         }
+
         /**
          * Build a company from the builder's attributes.
          * @return a Company

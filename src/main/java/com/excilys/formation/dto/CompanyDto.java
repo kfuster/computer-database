@@ -8,18 +8,23 @@ package com.excilys.formation.dto;
 public class CompanyDto {
     private Long id;
     private String name;
+
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -28,6 +33,7 @@ public class CompanyDto {
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -46,14 +52,17 @@ public class CompanyDto {
             return false;
         return true;
     }
+
     @Override
     public String toString() {
         return new StringBuilder().append("Company [id=").append(id).append(", name=").append(name).append("]")
                 .toString();
     }
+
     public static class CompanyDtoBuilder {
         private Long id;
         private String name;
+
         /**
          * CompanyDtoBuilder's constructor.
          * @param pName the company's name
@@ -61,6 +70,7 @@ public class CompanyDto {
         public CompanyDtoBuilder(String pName) {
             name = pName;
         }
+
         /**
          * Set the CompanyDtoBuilder's id.
          * @param pId the Company's Id
@@ -70,6 +80,7 @@ public class CompanyDto {
             id = pId;
             return this;
         }
+
         /**
          * Build a CompanyDto from the builder's attributes.
          * @return a CompanyDto

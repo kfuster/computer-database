@@ -35,6 +35,7 @@ public class ComputerDaoJdbc implements ComputerDao {
     private static final String DELETE_COMPUTER_BY_COMPANY = "DELETE FROM computer WHERE company_id=?";
     private static final String SELECT_JOIN = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, company.id as companyId, company.name as companyName FROM computer LEFT JOIN company ON computer.company_id=company.id";
     private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM computer LEFT JOIN company ON computer.company_id=company.id ";
+
     /**
      * Getter for the ComputerDaoJdbc instance. Initializes it if null.
      * @return the instance of ComputerDaoJdbc
@@ -46,13 +47,14 @@ public class ComputerDaoJdbc implements ComputerDao {
         }
         return computerDaoImpl;
     }
+
     @Override
     public Computer create(Computer pComputer) throws PersistenceException {
         String queryComputer = INSERT_COMPUTER;
         hikariConnectionProvider.initConnection();
         try (Connection connection = hikariConnectionProvider.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputer,
-                PreparedStatement.RETURN_GENERATED_KEYS)) {
+                        PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, pComputer.getName());
             preparedStatement.setTimestamp(2, DateConverter.fromLocalDateToTimestamp(pComputer.getIntroduced()));
             preparedStatement.setTimestamp(3, DateConverter.fromLocalDateToTimestamp(pComputer.getDiscontinued()));
@@ -72,6 +74,7 @@ public class ComputerDaoJdbc implements ComputerDao {
             throw new PersistenceException("Problème lors de la création de l'ordinateur");
         }
     }
+
     @Override
     public void update(Computer pComputer) throws PersistenceException {
         String queryComputer = UPDATE_COMPUTER;
@@ -89,6 +92,7 @@ public class ComputerDaoJdbc implements ComputerDao {
             throw new PersistenceException("Problème lors de l'update de l'ordinateur");
         }
     }
+
     @Override
     public void delete(long pID) throws PersistenceException {
         hikariConnectionProvider.initConnection();
@@ -101,6 +105,7 @@ public class ComputerDaoJdbc implements ComputerDao {
             throw new PersistenceException("Problème lors de la suppression de l'ordinateur");
         }
     }
+
     public void deleteList(String idList) throws PersistenceException {
         hikariConnectionProvider.initConnection();
         String query = DELETE_COMPUTER_LIST + " (" + idList + ");";
@@ -112,6 +117,7 @@ public class ComputerDaoJdbc implements ComputerDao {
             throw new PersistenceException("Problème lors de la suppression des ordinateurs");
         }
     }
+
     @Override
     public void deleteByCompany(Connection pConnection, long pID) throws PersistenceException {
         try (PreparedStatement preparedStatement = pConnection.prepareStatement(DELETE_COMPUTER_BY_COMPANY)) {
@@ -122,6 +128,7 @@ public class ComputerDaoJdbc implements ComputerDao {
             throw new PersistenceException("Problème lors de la suppression des ordinateur");
         }
     }
+
     @Override
     public Computer getById(long pId) throws PersistenceException {
         hikariConnectionProvider.initConnection();
@@ -138,6 +145,7 @@ public class ComputerDaoJdbc implements ComputerDao {
         }
         return computer;
     }
+
     @Override
     public Computer getByName(String pName) throws PersistenceException {
         hikariConnectionProvider.initConnection();
@@ -154,6 +162,7 @@ public class ComputerDaoJdbc implements ComputerDao {
         }
         return computer;
     }
+
     @Override
     public Page<Computer> getPage(PageFilter pPageFilter) throws PersistenceException {
         hikariConnectionProvider.initConnection();
@@ -181,11 +190,13 @@ public class ComputerDaoJdbc implements ComputerDao {
         }
         return pPage;
     }
+
     private String mapConditions(Map<String, String> pConditions) {
         String conditions = "";
         if (pConditions != null && !pConditions.isEmpty()) {
             if (pConditions.containsKey("computerName") && pConditions.containsKey("companyName")) {
-                conditions = " WHERE computer.name like '%" + pConditions.get("computerName") + "%' OR  company.name like '%" + pConditions.get("companyName") + "%'";
+                conditions = " WHERE computer.name like '%" + pConditions.get("computerName")
+                        + "%' OR  company.name like '%" + pConditions.get("companyName") + "%'";
             }
             if (pConditions.containsKey("column")) {
                 conditions += " ORDER BY " + pConditions.get("column");
@@ -196,6 +207,7 @@ public class ComputerDaoJdbc implements ComputerDao {
         }
         return conditions;
     }
+
     /**
      * Count the number of Computers in the DB.
      * @param pFilter an optional filter string
@@ -207,8 +219,7 @@ public class ComputerDaoJdbc implements ComputerDao {
             query += pFilter;
         }
         int total = 0;
-        try (Statement statement = pConnection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query)) {
+        try (Statement statement = pConnection.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
             resultSet.next();
             total = resultSet.getInt("total");
         } catch (SQLException e) {

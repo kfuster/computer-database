@@ -13,6 +13,7 @@ import com.excilys.formation.util.MenuUtil;
  */
 public class MainMenu implements Menu {
     public static Scanner scanner;
+
     /**
      * MainMenu constructor. Initialize scanner.
      */
@@ -21,6 +22,7 @@ public class MainMenu implements Menu {
             scanner = new Scanner(System.in);
         }
     }
+
     /**
      * Allows the user to chose to manage computers or companies.
      */

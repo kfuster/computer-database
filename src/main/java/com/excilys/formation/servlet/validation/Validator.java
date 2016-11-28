@@ -7,8 +7,7 @@ import java.util.regex.Pattern;
 import com.excilys.formation.dto.ComputerDto;
 
 /**
- * Validation class for servlets.
- * Used to validate datas extracted from request.
+ * Validation class for servlets. Used to validate datas extracted from request.
  * @author kfuster
  *
  */
@@ -34,10 +33,10 @@ public class Validator {
         }
         return pErrors;
     }
+
     /**
-     * Checks if a name is valid :
-     * - Contains at least 3 characters.
-     * - No more than one space between words
+     * Checks if a name is valid : - Contains at least 3 characters. - No more
+     * than one space between words
      * @param pName the name to check
      * @return a boolean
      */
@@ -46,15 +45,17 @@ public class Validator {
         Matcher matcher = pattern.matcher(pName);
         return matcher.matches();
     }
+
     /**
      * Checks if a date if valid :
      * <ul>
-     *  <li>- pDate is in the good format (yyyy-mm-dd)</li>
-     *  <li>- pDate's day <= 31 and month <= 12</li>
-     *  <li>- pDate's day isn't 31 on a 30 days month</li>
-     *  <li>- pDate's day isn't >= 30 on the february of a leap year or isn't >= 29 on a february</li>
-     *  <li>- pDate's date isn't before 01 January 1970</li>
-     *  <li>- If pBeforeDate isn't null, pDate must be after</li>
+     * <li>- pDate is in the good format (yyyy-mm-dd)</li>
+     * <li>- pDate's day <= 31 and month <= 12</li>
+     * <li>- pDate's day isn't 31 on a 30 days month</li>
+     * <li>- pDate's day isn't >= 30 on the february of a leap year or isn't >=
+     * 29 on a february</li>
+     * <li>- pDate's date isn't before 01 January 1970</li>
+     * <li>- If pBeforeDate isn't null, pDate must be after</li>
      * </ul>
      * @param pDate the date to check in string format
      * @param pBeforeDate the date used to check pDate is after, or null
@@ -74,7 +75,7 @@ public class Validator {
                     int day = Integer.parseInt(matcher.group(3));
                     if (day > 31 || month > 12) {
                         return "La date n'est pas valide";
-                    } else if (day == 31 && ( month == 4 || month == 6 || month == 9 || month == 11)) {
+                    } else if (day == 31 && (month == 4 || month == 6 || month == 9 || month == 11)) {
                         // 4,6,9,11 are 30 days months
                         return "La date n'est pas valide";
                     } else if (month == 2 && ((year % 4 == 0 && day >= 30) || day >= 29)) {

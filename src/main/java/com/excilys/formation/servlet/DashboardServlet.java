@@ -15,6 +15,7 @@ import com.excilys.formation.service.implementation.ComputerServiceImpl;
 
 public class DashboardServlet extends HttpServlet {
     private static final long serialVersionUID = -9054781130738656412L;
+
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ComputerService computerService = ComputerServiceImpl.getInstance();
         PageFilter pageFilter = RequestMapper.toPageFilter(request);
@@ -22,6 +23,7 @@ public class DashboardServlet extends HttpServlet {
         this.getServletContext().setAttribute("pageComputer", computerPage);
         this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/dashboard.jsp").forward(request, response);
     }
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ComputerService computerService = ComputerServiceImpl.getInstance();
         if (request.getParameter("selection") != null) {

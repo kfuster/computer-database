@@ -37,6 +37,7 @@ public class DtoMapper {
         }
         return computer;
     }
+
     /**
      * Converts a List of Computers to a List of ComputerDtos.
      * @param pListComputerDto
@@ -51,6 +52,7 @@ public class DtoMapper {
             return null;
         }
     }
+
     /**
      * Converts a Computer to a ComputerDto.
      * @param pComputer
@@ -76,6 +78,7 @@ public class DtoMapper {
         }
         return computerDto;
     }
+
     /**
      * Converts a List of Computers to a List of ComputerDto.
      * @param pComputers
@@ -84,12 +87,13 @@ public class DtoMapper {
     public static List<ComputerDto> fromComputerList(List<Computer> pComputers) {
         if (pComputers != null) {
             List<ComputerDto> computersDto = new ArrayList<>();
-            pComputers.forEach(computer->computersDto.add(fromComputer(computer)));
+            pComputers.forEach(computer -> computersDto.add(fromComputer(computer)));
             return computersDto;
         } else {
-        return null;
+            return null;
         }
     }
+
     /**
      * Converts a CompanyDto to a Company.
      * @param pCompanyDto
@@ -98,6 +102,7 @@ public class DtoMapper {
     public static Company toCompany(CompanyDto pCompanyDto) {
         return new Company.CompanyBuilder(pCompanyDto.getName()).id(pCompanyDto.getId()).build();
     }
+
     /**
      * Converts a List of CompanyDto to a List of Company.
      * @param pListCompanyDto
@@ -106,12 +111,13 @@ public class DtoMapper {
     public static List<Company> toCompanyList(List<CompanyDto> pListCompanyDto) {
         if (pListCompanyDto != null) {
             List<Company> companies = new ArrayList<>();
-            pListCompanyDto.forEach(company->companies.add(toCompany(company)));
+            pListCompanyDto.forEach(company -> companies.add(toCompany(company)));
             return companies;
         } else {
             return null;
         }
     }
+
     /**
      * Converts a Company to a CompanyDto.
      * @param pCompany
@@ -123,6 +129,7 @@ public class DtoMapper {
         companyDto.setName(pCompany.getName());
         return companyDto;
     }
+
     /**
      * Converts a List of Company to a List of CompanyDto.
      * @param pListCompanies
@@ -131,7 +138,7 @@ public class DtoMapper {
     public static List<CompanyDto> fromCompanyList(List<Company> pListCompanies) {
         if (pListCompanies != null) {
             List<CompanyDto> companiesDto = new ArrayList<>();
-            pListCompanies.forEach(company->companiesDto.add(fromCompany(company)));
+            pListCompanies.forEach(company -> companiesDto.add(fromCompany(company)));
             return companiesDto;
         } else {
             return null;

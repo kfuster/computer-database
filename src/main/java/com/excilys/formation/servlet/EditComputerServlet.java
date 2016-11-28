@@ -25,7 +25,8 @@ import ch.qos.logback.classic.Logger;
 public class EditComputerServlet extends HttpServlet {
     private static final long serialVersionUID = 7030753372478089174L;
     final Logger logger = (Logger) LoggerFactory.getLogger(EditComputerServlet.class);
-    public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CompanyService companyService = CompanyServiceImpl.getInstance();
         ComputerService computerService = ComputerServiceImpl.getInstance();
         String computerId = request.getParameter("id");
@@ -34,16 +35,17 @@ public class EditComputerServlet extends HttpServlet {
             List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
             this.getServletContext().setAttribute("listCompanies", listCompanies);
             this.getServletContext().setAttribute("computerDto", computerDto);
-            this.getServletContext().getRequestDispatcher( "/WEB-INF/jsp/editComputer.jsp" ).forward( request, response );    
-        } 
+            this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/editComputer.jsp").forward(request, response);
+        }
     }
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //Extract datas from the request to a ComputerDto
+        // Extract datas from the request to a ComputerDto
         ComputerDto computerDto = RequestMapper.toComputerDto(request);
         Map<String, String> errors = new HashMap<>();
-        //Check if datas are valid
+        // Check if datas are valid
         errors = Validator.validateComputerDto(computerDto, errors);
-        //If errors found, add errors to the request and go to get instead
+        // If errors found, add errors to the request and go to get instead
         if (!errors.isEmpty()) {
             request.setAttribute("errors", errors);
             request.setAttribute("computerDto", computerDto);
@@ -55,7 +57,7 @@ public class EditComputerServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Ordinateur mis à jour');");
-            out.println("location='editComputer?id="+computerDto.getId()+"';");
+            out.println("location='editComputer?id=" + computerDto.getId() + "';");
             out.println("</script>");
         } catch (ServiceException e) {
             logger.info(e.getMessage());

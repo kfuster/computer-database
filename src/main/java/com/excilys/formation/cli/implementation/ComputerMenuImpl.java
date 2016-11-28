@@ -20,6 +20,7 @@ public class ComputerMenuImpl implements ComputerMenu {
     private Scanner scanner = MainMenu.scanner;
     private PageFilter pageFilter;
     private Controller controller = new Controller();
+
     /**
      * ComputerMenuImpl constructor. Initialize ComputerService.
      */
@@ -28,6 +29,7 @@ public class ComputerMenuImpl implements ComputerMenu {
         pageFilter.setElementsByPage(10);
         pageFilter.setPageNum(1);
     }
+
     /**
      * Getter for the ComputerMenuImpl instance. Initializes it if null.
      * @return the instance of ComputerMenuImpl
@@ -38,6 +40,7 @@ public class ComputerMenuImpl implements ComputerMenu {
         }
         return computerMenu;
     }
+
     /**
      * Shows the main operations available.
      * <ul>
@@ -91,6 +94,7 @@ public class ComputerMenuImpl implements ComputerMenu {
             startMenu();
         }
     }
+
     @Override
     public void list() {
         pageFilter.setPageNum(1);
@@ -101,6 +105,7 @@ public class ComputerMenuImpl implements ComputerMenu {
             showPage();
         } while (MenuUtil.manageNavigation(pageFilter));
     }
+
     /**
      * Asks the service to populate the list of elements and show them.
      */
@@ -111,6 +116,7 @@ public class ComputerMenuImpl implements ComputerMenu {
                 .append("\nOptions :\n1 - Page Précédente\n2 - Page Suivante\n3 - Aller à la page\n4 - Quitter");
         System.out.println(stringBuilder.toString());
     }
+
     @Override
     public void info() {
         System.out.println("Entrez l'id de l'ordinateur dont vous souhaitez voir les infos (ou entrée pour annuler) :");
@@ -132,6 +138,7 @@ public class ComputerMenuImpl implements ComputerMenu {
             System.out.println("Aucun ordinateur trouvé");
         }
     }
+
     @Override
     public void create() {
         ComputerDto computerDto = new ComputerDto();
@@ -152,6 +159,7 @@ public class ComputerMenuImpl implements ComputerMenu {
         computerDto.setCompanyId(MenuUtil.waitForInt());
         controller.createComputer(computerDto);
     }
+
     @Override
     public void update() {
         System.out.println("Entrez l'id de l'ordinateur à mettre à jour (ou entrée pour annuler) :");
@@ -199,6 +207,7 @@ public class ComputerMenuImpl implements ComputerMenu {
             System.out.println("Aucun ordinateur trouvé");
         }
     }
+
     @Override
     public void delete() {
         System.out.println("Entrez l'id de l'ordinateur à supprimer (ou entrée pour annuler) : ");

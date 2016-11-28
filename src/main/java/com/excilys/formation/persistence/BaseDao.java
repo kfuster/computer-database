@@ -20,6 +20,7 @@ public interface BaseDao<T> {
     default T create(T t) throws PersistenceException {
         throw new UnsupportedOperationException("create() not implemented");
     };
+
     /**
      * Method to update an object in the DB.
      * @param t the object to update
@@ -28,6 +29,7 @@ public interface BaseDao<T> {
     default void update(T t) throws PersistenceException {
         throw new UnsupportedOperationException("update() not implemented");
     };
+
     /**
      * Method to delete an object in the DB.
      * @param idToDelete ID of the object to delete
@@ -36,6 +38,7 @@ public interface BaseDao<T> {
     default void delete(long idToDelete) throws PersistenceException {
         throw new UnsupportedOperationException("delete() not implemented");
     };
+
     /**
      * Method to get a page of elements.
      * @param pPageFilter the PageFilter containing the useful informations

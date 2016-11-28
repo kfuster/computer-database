@@ -19,12 +19,14 @@ public class ComputerServiceImpl implements ComputerService {
     final Logger logger = (Logger) LoggerFactory.getLogger(ComputerServiceImpl.class);
     private ComputerDao computerDao;
     private static ComputerService computerService;
+
     /**
      * Constructor for ComputerServiceImpl. Initializes computerDao.
      */
     private ComputerServiceImpl() {
         computerDao = ComputerDaoJdbc.getInstance();
     }
+
     /**
      * Getter for the ComputerServiceImpl instance. Initializes it if null.
      * @return the instance of ComputerServiceImpl
@@ -35,6 +37,7 @@ public class ComputerServiceImpl implements ComputerService {
         }
         return computerService;
     }
+
     @Override
     public Computer create(Computer pComputer) {
         try {
@@ -44,6 +47,7 @@ public class ComputerServiceImpl implements ComputerService {
         }
         return null;
     }
+
     @Override
     public void delete(long pId) {
         try {
@@ -52,6 +56,7 @@ public class ComputerServiceImpl implements ComputerService {
             logger.info(e.getMessage());
         }
     }
+
     @Override
     public void deleteList(String idList) {
         try {
@@ -60,6 +65,7 @@ public class ComputerServiceImpl implements ComputerService {
             logger.info(e.getMessage());
         }
     }
+
     @Override
     public Computer getById(long pId) {
         try {
@@ -69,6 +75,7 @@ public class ComputerServiceImpl implements ComputerService {
         }
         return null;
     }
+
     @Override
     public Page<Computer> getPage(PageFilter pViewDto) {
         try {
@@ -78,6 +85,7 @@ public class ComputerServiceImpl implements ComputerService {
         }
         return null;
     }
+
     @Override
     public void update(Computer pComputer) {
         try {

@@ -27,26 +27,27 @@ public class CompanyServiceImpl implements CompanyService {
     private ComputerDao computerDao;
     private static CompanyService companyService;
     private static HikariConnectionProvider hikariConnectionProvider;
+
     /**
-     * Constructor for CompanyServiceImpl.
-     * Initializes the companyDao.
+     * Constructor for CompanyServiceImpl. Initializes the companyDao.
      */
-    private CompanyServiceImpl(){
+    private CompanyServiceImpl() {
         companyDao = CompanyDaoJdbc.getInstance();
         computerDao = ComputerDaoJdbc.getInstance();
         hikariConnectionProvider = HikariConnectionProvider.getInstance();
     }
+
     /**
-     * Getter for the CompanyServiceImpl instance.
-     * Initializes it if null.
+     * Getter for the CompanyServiceImpl instance. Initializes it if null.
      * @return the instance of CompanyServiceImpl
      */
-    public static CompanyService getInstance(){
+    public static CompanyService getInstance() {
         if (companyService == null) {
             companyService = new CompanyServiceImpl();
         }
         return companyService;
     }
+
     @Override
     public Page<Company> getPage(PageFilter pPageFilter) {
         try {
@@ -56,6 +57,7 @@ public class CompanyServiceImpl implements CompanyService {
         }
         return null;
     }
+
     @Override
     public void delete(long pId) throws ServiceException {
         try {
@@ -74,6 +76,7 @@ public class CompanyServiceImpl implements CompanyService {
             throw new ServiceException("Erreur lors de la suppression de la companie");
         }
     }
+
     @Override
     public List<Company> getAll() {
         List<Company> allCompanies = null;

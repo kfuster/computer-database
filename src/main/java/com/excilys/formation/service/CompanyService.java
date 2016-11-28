@@ -17,5 +17,6 @@ public interface CompanyService extends BaseService<Company> {
      * @return the Page with the populated list
      */
     Page<Company> getPage(PageFilter pPageFilter);
+
     List<Company> getAll();
 }

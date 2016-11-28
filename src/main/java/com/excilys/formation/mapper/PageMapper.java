@@ -16,6 +16,7 @@ public class PageMapper {
         }
         return pPageCompanyDto;
     }
+
     public static Page<ComputerDto> fromComputerToComputerDto(Page<Computer> pPageComputer) {
         Page<ComputerDto> pPageComputerDto = null;
         if (pPageComputer != null) {
@@ -25,6 +26,7 @@ public class PageMapper {
         }
         return pPageComputerDto;
     }
+
     public static Page<Computer> fromComputerDtoToComputer(Page<ComputerDto> pPageComputerDto) {
         Page<Computer> pPageComputer = null;
         if (pPageComputerDto != null) {
@@ -34,6 +36,7 @@ public class PageMapper {
         }
         return pPageComputer;
     }
+
     /**
      * Copy attributes from to page to another, used when we need the same page
      * but with a different list of elements (like going from a DTO page to an

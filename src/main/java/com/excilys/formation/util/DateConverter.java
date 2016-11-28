@@ -20,6 +20,7 @@ public class DateConverter {
         }
         return null;
     }
+
     /**
      * Converts a LocalDate to a Timestamp.
      * @param pLocalDate the LocalDate to convert

@@ -12,42 +12,55 @@ public class ComputerDto {
     private String discontinued;
     private Long companyId;
     private String companyName;
+
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getIntroduced() {
         return introduced;
     }
+
     public void setIntroduced(String introduced) {
         this.introduced = introduced;
     }
+
     public String getDiscontinued() {
         return discontinued;
     }
+
     public void setDiscontinued(String discontinued) {
         this.discontinued = discontinued;
     }
+
     public long getCompanyId() {
         return companyId;
     }
+
     public void setCompanyId(long companyId) {
         this.companyId = companyId;
     }
+
     public String getCompanyName() {
         return companyName;
     }
+
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -60,6 +73,7 @@ public class ComputerDto {
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -95,6 +109,7 @@ public class ComputerDto {
             return false;
         return true;
     }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder().append("Computer : [id=").append(id).append(", name=")
@@ -111,6 +126,7 @@ public class ComputerDto {
         }
         return stringBuilder.toString();
     }
+
     public static class ComputerDtoBuilder {
         private Long id;
         private String name;
@@ -118,6 +134,7 @@ public class ComputerDto {
         private String discontinued;
         private Long companyId;
         private String companyName;
+
         /**
          * ComputerDtoBuilder's constructor.
          * @param pName the computer's name
@@ -125,6 +142,7 @@ public class ComputerDto {
         public ComputerDtoBuilder(String pName) {
             name = pName;
         }
+
         /**
          * Setter for the ComputerDtoBuilder's companyId.
          * @param pCompanyId the Company's Id
@@ -134,6 +152,7 @@ public class ComputerDto {
             companyId = pCompanyId;
             return this;
         }
+
         /**
          * Setter for the ComputerDtoBuilder's company.
          * @param pCompany the Computer's Company
@@ -143,6 +162,7 @@ public class ComputerDto {
             companyName = pCompanyName;
             return this;
         }
+
         /**
          * Setter for the ComputerDtoBuilder's id.
          * @param pId the Computer's Id
@@ -152,6 +172,7 @@ public class ComputerDto {
             id = pId;
             return this;
         }
+
         /**
          * Setter for the ComputerDtoBuilder's introduced date.
          * @param pDate the Computer's introduced date
@@ -161,6 +182,7 @@ public class ComputerDto {
             introduced = pDate;
             return this;
         }
+
         /**
          * Setter for the ComputerDtoBuilder's discontinued date.
          * @param pDate the Computer's discontinued date
@@ -170,12 +192,13 @@ public class ComputerDto {
             discontinued = pDate;
             return this;
         }
+
         /**
          * Build a ComputerDto from the ComputerDtoBuilder's attributes.
          * @return a ComputerDto
          */
         public ComputerDto build() {
-            if (name.length() < 2 ) {
+            if (name.length() < 2) {
                 throw new IllegalArgumentException("Computer name must be at least 2 characters");
             }
             ComputerDto computerDto = new ComputerDto();

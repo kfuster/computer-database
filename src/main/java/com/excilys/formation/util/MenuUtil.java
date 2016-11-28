@@ -13,6 +13,7 @@ import com.excilys.formation.model.util.PageFilter;
  */
 public class MenuUtil {
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     /**
      * Wait until the scanner has a new line and returns it.
      * @return the next line from the scanner
@@ -24,6 +25,7 @@ public class MenuUtil {
         String string = MainMenu.scanner.nextLine();
         return string;
     }
+
     /**
      * Wait until the scanner has a new int and returns it.
      * @return the next int from the scanner
@@ -34,6 +36,7 @@ public class MenuUtil {
         }
         return MainMenu.scanner.nextInt();
     }
+
     /**
      * Gets a new line from the scanner until it's empty, "null" or a valid date
      * and returns the date.
@@ -57,6 +60,7 @@ public class MenuUtil {
         }
         return dateString;
     }
+
     /**
      * Asks for a new date but with the possibility to keep the old one.
      * @param pDate the old date
@@ -83,6 +87,7 @@ public class MenuUtil {
         }
         return dateString;
     }
+
     /**
      * Manage the navigation in the list of objects.
      * @param pPageFilter the pPageFilter on which to operate
@@ -95,19 +100,17 @@ public class MenuUtil {
             System.out.println(nextOption);
             if (nextOption == 1) {
                 if (pPageFilter.getPageNum() - 1 >= 1) {
-                    pPageFilter.setPageNum(pPageFilter.getPageNum()-1);
+                    pPageFilter.setPageNum(pPageFilter.getPageNum() - 1);
                     ok = true;
-                }
-                else {
+                } else {
                     System.out.println("Vous êtes déjà sur la première page");
                     ok = false;
                 }
             } else if (nextOption == 2) {
                 if (pPageFilter.getPageNum() + 1 <= pPageFilter.getNbPage()) {
-                    pPageFilter.setPageNum(pPageFilter.getPageNum()+1);
+                    pPageFilter.setPageNum(pPageFilter.getPageNum() + 1);
                     ok = true;
-                }
-                else {
+                } else {
                     System.out.println("Vous êtes déjà sur la dernière page");
                     ok = false;
                 }
@@ -121,12 +124,11 @@ public class MenuUtil {
                 } catch (NumberFormatException e) {
                     System.out.println("Vous devez entrer un nombre");
                     return false;
-                }                
+                }
                 if (0 < newPage && newPage <= pPageFilter.getNbPage()) {
                     pPageFilter.setPageNum(newPage);
-                    ok =true;
-                }
-                else {
+                    ok = true;
+                } else {
                     System.out.println("Cette page n'existe pas");
                     ok = false;
                 }

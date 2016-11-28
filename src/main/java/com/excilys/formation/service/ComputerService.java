@@ -16,11 +16,13 @@ public interface ComputerService extends BaseService<Computer> {
      * @return the ComputerDto of the computer obtained from the DB
      */
     Computer getById(long pId);
+
     /**
      * Populate a page of Computer according to the ViewDto parameters.
      * @param pPageFilter the PageFilter containing the parameters
      * @return the Page with the populated list
      */
     Page<Computer> getPage(PageFilter pPageFilter);
+
     void deleteList(String pListId);
 }

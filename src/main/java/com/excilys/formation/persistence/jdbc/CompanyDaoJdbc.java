@@ -44,6 +44,7 @@ public class CompanyDaoJdbc implements CompanyDao {
         }
         return companyDaoImpl;
     }
+
     @Override
     public Company getById(long pId) throws PersistenceException {
         Company company = null;
@@ -59,6 +60,7 @@ public class CompanyDaoJdbc implements CompanyDao {
         }
         return company;
     }
+
     @Override
     public void delete(Connection pConnection, long pID) throws PersistenceException {
         try {
@@ -74,6 +76,7 @@ public class CompanyDaoJdbc implements CompanyDao {
             throw new PersistenceException("Problème lors de la suppression de la compagnie");
         }
     }
+
     @Override
     public Page<Company> getPage(PageFilter pPageFilter) throws PersistenceException {
         hikariConnectionProvider.initConnection();
@@ -99,6 +102,7 @@ public class CompanyDaoJdbc implements CompanyDao {
         }
         return pPage;
     }
+
     @Override
     public List<Company> getAll() throws PersistenceException {
         hikariConnectionProvider.initConnection();
@@ -113,6 +117,7 @@ public class CompanyDaoJdbc implements CompanyDao {
         }
         return allCompanies;
     }
+
     /**
      * Count the total number of companies.
      * @param pFilter an optional filter string
@@ -124,8 +129,7 @@ public class CompanyDaoJdbc implements CompanyDao {
             query += pFilter;
         }
         int total = 0;
-        try (Statement statement = pConnection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query)) {
+        try (Statement statement = pConnection.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
             if (resultSet.next()) {
                 total = resultSet.getInt("total");
             }

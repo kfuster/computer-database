@@ -1,6 +1,5 @@
 package com.excilys.formation.service.implementation;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import org.slf4j.LoggerFactory;
@@ -27,7 +26,7 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyDao companyDao;
     private ComputerDao computerDao;
     private static CompanyServiceImpl companyService;
-    private static Connection connection;
+    private static HikariConnectionProvider hikariConnectionProvider;
     /**
      * Constructor for CompanyServiceImpl.
      * Initializes the companyDao.
@@ -35,11 +34,7 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyServiceImpl(){
         companyDao = CompanyDaoJdbc.getInstance();
         computerDao = ComputerDaoJdbc.getInstance();
-        try {
-            connection = HikariConnectionProvider.getInstance().getConnection();
-        } catch (SQLException e) {
-            logger.error("Error init CompanyService : ", e);
-        }
+        hikariConnectionProvider = HikariConnectionProvider.getInstance();
     }
     /**
      * Getter for the CompanyServiceImpl instance.
@@ -55,44 +50,35 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Page<Company> getPage(PageFilter pPageFilter) {
         try {
-            return companyDao.getPage(connection, pPageFilter);
+            return companyDao.getPage(pPageFilter);
         } catch (PersistenceException e) {
             logger.info(e.getMessage());
         }
         return null;
     }
     @Override
-    public boolean delete(long pId) throws ServiceException {
+    public void delete(long pId) throws ServiceException {
         try {
-            connection.setAutoCommit(false);
-            computerDao.deleteByCompany(connection, pId);
-            companyDao.delete(connection, pId);
-            connection.commit();
-            connection.setAutoCommit(true);
-            return true;
+            hikariConnectionProvider.initConnection();
+            hikariConnectionProvider.initTransaction();
+            computerDao.deleteByCompany(hikariConnectionProvider.getConnection(), pId);
+            companyDao.delete(hikariConnectionProvider.getConnection(), pId);
+            hikariConnectionProvider.commit();
+            hikariConnectionProvider.closeConnection();
         } catch (PersistenceException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                logger.error("Error CompanyService : delete : ", e1);
-            }
+            hikariConnectionProvider.rollback();
             logger.info(e.getMessage());
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                logger.error("Error CompanyService : delete : ", e1);
-            }
+            hikariConnectionProvider.rollback();
             logger.error("Error CompanyService : delete : ", e);
             throw new ServiceException("Erreur lors de la suppression de la companie");
         }
-        return false;
     }
     @Override
     public List<Company> getAll() {
         List<Company> allCompanies = null;
         try {
-            allCompanies = companyDao.getAll(connection);
+            allCompanies = companyDao.getAll();
         } catch (PersistenceException e) {
             logger.info(e.getMessage());
         }

@@ -14,6 +14,7 @@ import com.excilys.formation.model.Company;
 import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.CompanyDao;
+import com.excilys.formation.persistence.HikariConnectionProvider;
 import ch.qos.logback.classic.Logger;
 
 /**
@@ -23,6 +24,7 @@ import ch.qos.logback.classic.Logger;
  */
 public class CompanyDaoJdbc implements CompanyDao {
     final static Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(CompanyDaoJdbc.class);
+    private static HikariConnectionProvider hikariConnectionProvider;
     private static CompanyDaoJdbc companyDaoImpl = null;
     private static final String SELECT_ALL = "SELECT * FROM company ORDER BY company.name";
     private static final String SELECT_BY_ID = "SELECT * FROM company WHERE id=?";
@@ -38,13 +40,16 @@ public class CompanyDaoJdbc implements CompanyDao {
     public static CompanyDaoJdbc getInstance() {
         if (companyDaoImpl == null) {
             companyDaoImpl = new CompanyDaoJdbc();
+            hikariConnectionProvider = HikariConnectionProvider.getInstance();
         }
         return companyDaoImpl;
     }
     @Override
-    public Company getById(Connection pConnection, long pId) throws PersistenceException {
+    public Company getById(long pId) throws PersistenceException {
         Company company = null;
-        try (PreparedStatement preparedStatement = pConnection.prepareStatement(SELECT_BY_ID);) {
+        hikariConnectionProvider.initConnection();
+        try (Connection connection = hikariConnectionProvider.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);) {
             preparedStatement.setLong(1, pId);
             ResultSet resultSet = preparedStatement.executeQuery();
             company = JdbcMapper.mapResultToCompany(resultSet);
@@ -55,21 +60,14 @@ public class CompanyDaoJdbc implements CompanyDao {
         return company;
     }
     @Override
-    public boolean delete(Connection pConnection, long pID) throws PersistenceException {
+    public void delete(Connection pConnection, long pID) throws PersistenceException {
         try {
-            int affectedRow = 0;
             try (PreparedStatement preparedStatementCompany = pConnection.prepareStatement(DELETE_COMPANY)) {
                 preparedStatementCompany.setLong(1, pID);
-                affectedRow = preparedStatementCompany.executeUpdate();
             } catch (SQLException e) {
                 pConnection.rollback();
                 logger.error("Error in CompanyDao : delete : ", e);
                 throw new PersistenceException("Problème lors de la suppression de la compagnie");
-            }
-            if (affectedRow == 1) {
-                return true;
-            } else {
-                return false;
             }
         } catch (SQLException e) {
             logger.error("Error in CompanyDao : delete : ", e);
@@ -77,12 +75,14 @@ public class CompanyDaoJdbc implements CompanyDao {
         }
     }
     @Override
-    public Page<Company> getPage(Connection pConnection, PageFilter pPageFilter) throws PersistenceException {
+    public Page<Company> getPage(PageFilter pPageFilter) throws PersistenceException {
+        hikariConnectionProvider.initConnection();
         List<Company> allCompanies = new ArrayList<>();
         String queryComputers = SELECT_PAGE;
         queryComputers += " LIMIT ? OFFSET ?";
         Page<Company> pPage = null;
-        try (PreparedStatement preparedStatement = pConnection.prepareStatement(queryComputers)) {
+        try (Connection connection = hikariConnectionProvider.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(queryComputers)) {
             preparedStatement.setInt(1, pPageFilter.getElementsByPage());
             preparedStatement.setInt(2, (pPageFilter.getPageNum() - 1) * pPageFilter.getElementsByPage());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -90,8 +90,9 @@ public class CompanyDaoJdbc implements CompanyDao {
             pPage = new Page<>(pPageFilter.getElementsByPage());
             pPage.page = pPageFilter.getPageNum();
             pPage.elems = (allCompanies);
-            pPage.setTotalElement(count(pConnection, ""));
+            pPage.setTotalElement(count(connection, ""));
             pPageFilter.setNbPage(pPage.nbPages);
+            resultSet.close();
         } catch (SQLException e) {
             logger.error("Error in CompanyDao : getPage : ", e);
             throw new PersistenceException("Problème lors de la récupération de la page de compagnies");
@@ -99,10 +100,12 @@ public class CompanyDaoJdbc implements CompanyDao {
         return pPage;
     }
     @Override
-    public List<Company> getAll(Connection pConnection) throws PersistenceException {
+    public List<Company> getAll() throws PersistenceException {
+        hikariConnectionProvider.initConnection();
         List<Company> allCompanies = new ArrayList<>();
-        try (Statement statement = pConnection.createStatement();) {
-            ResultSet resultSet = statement.executeQuery(SELECT_ALL);
+        try (Connection connection = hikariConnectionProvider.getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(SELECT_ALL)) {
             allCompanies = JdbcMapper.mapResultsToCompanyList(resultSet);
         } catch (SQLException e) {
             logger.error("Error in CompanyDao : getAll : ", e);
@@ -121,8 +124,8 @@ public class CompanyDaoJdbc implements CompanyDao {
             query += pFilter;
         }
         int total = 0;
-        try (Statement statement = pConnection.createStatement();) {
-            ResultSet resultSet = statement.executeQuery(query);
+        try (Statement statement = pConnection.createStatement();
+                ResultSet resultSet = statement.executeQuery(query)) {
             if (resultSet.next()) {
                 total = resultSet.getInt("total");
             }

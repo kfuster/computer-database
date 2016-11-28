@@ -11,14 +11,14 @@ public interface ComputerDao extends BaseDao<Computer> {
      * @return a computer or null
      * @throws PersistenceException in case of problems while getting the computer
      */
-    Computer getByName(Connection pConnection, String pName) throws PersistenceException;
+    Computer getByName(String pName) throws PersistenceException;
     /**
      * Get a computer by its id.
      * @param pId the id of the computer to get
      * @return a Computer or null
      * @throws PersistenceException in case of problems while getting the computer
      */
-    Computer getById(Connection pConnection, long pId) throws PersistenceException;
+    Computer getById(long pId) throws PersistenceException;
     /**
      * Deletes all computers from a company.
      * @param id of the company for which we want to delete computer
@@ -26,6 +26,6 @@ public interface ComputerDao extends BaseDao<Computer> {
      * @return 
      * @throws PersistenceException in case of problems while deleting the computers
      */
-    boolean deleteByCompany(Connection pConnection, long id) throws PersistenceException;
-    void deleteList(Connection pConnection, String pIdList) throws PersistenceException;
+    void deleteByCompany(Connection pConnection, long id) throws PersistenceException;
+    void deleteList(String pIdList) throws PersistenceException;
 }

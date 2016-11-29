@@ -28,6 +28,9 @@
 	<section id="main">
 		<div class="container">
 			<h1 id="homeTitle">${pageComputer.totalElements} Computers found</h1>
+			<c:if test="${deleted != null}">
+				<p style="color:red"> Ordinateur(s) supprimé(s)</p>
+			</c:if>
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
 					<form id="searchForm" action="#" method="GET" class="form-inline">
@@ -47,7 +50,7 @@
 			</div>
 		</div>
 
-		<form id="deleteForm" action="#" method="POST">
+		<form id="deleteForm" action="deleteComputer" method="POST">
 			<input type="hidden" name="selection" value="">
 		</form>
 

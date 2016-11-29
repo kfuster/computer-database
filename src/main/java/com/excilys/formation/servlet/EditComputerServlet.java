@@ -24,7 +24,6 @@ import ch.qos.logback.classic.Logger;
 public class EditComputerServlet extends HttpServlet {
     private static final long serialVersionUID = 7030753372478089174L;
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(EditComputerServlet.class);
-
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CompanyService companyService = CompanyServiceImpl.getInstance();
@@ -39,11 +38,10 @@ public class EditComputerServlet extends HttpServlet {
             ComputerDto computerDto = DtoMapper.fromComputer(computerService.getById(Long.parseLong(computerId)));
             List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
             this.getServletContext().setAttribute("listCompanies", listCompanies);
-            this.getServletContext().setAttribute("computerDto", computerDto);
+            request.setAttribute("computerDto", computerDto);
             this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/editComputer.jsp").forward(request, response);
         }
     }
-
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Extract datas from the request to a ComputerDto
@@ -57,15 +55,16 @@ public class EditComputerServlet extends HttpServlet {
             request.setAttribute("errors", errors);
             request.setAttribute("computerDto", computerDto);
             doGet(request, response);
-        }
-        ComputerService computerService = ComputerServiceImpl.getInstance();
-        try {
-            computerService.update(DtoMapper.toComputer(computerDto));
-            request.setAttribute("success", true);
-            request.setAttribute("id", String.valueOf(computerDto.getId()));
-            doGet(request, response);
-        } catch (ServiceException e) {
-            LOGGER.info(e.getMessage());
+        } else {
+            ComputerService computerService = ComputerServiceImpl.getInstance();
+            try {
+                computerService.update(DtoMapper.toComputer(computerDto));
+                request.setAttribute("success", true);
+                request.setAttribute("id", String.valueOf(computerDto.getId()));
+                doGet(request, response);
+            } catch (ServiceException e) {
+                LOGGER.info(e.getMessage());
+            }
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.excilys.formation.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +28,7 @@ public class AddComputerServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CompanyService companyService = CompanyServiceImpl.getInstance();
         List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
+        request.setAttribute("success", null);
         this.getServletContext().setAttribute("listCompanies", listCompanies);
         this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/addComputer.jsp").forward(request, response);
     }
@@ -40,6 +40,7 @@ public class AddComputerServlet extends HttpServlet {
         // Check if datas are valid
         errors = Validator.validateComputerDto(computerDto, errors);
         // If errors found, add errors to the request and go to get instead
+        request.setAttribute("success", null);
         if (!errors.isEmpty()) {
             request.setAttribute("errors", errors);
             request.setAttribute("computerDto", computerDto);
@@ -49,11 +50,8 @@ public class AddComputerServlet extends HttpServlet {
         ComputerService computerService = ComputerServiceImpl.getInstance();
         try {
             computerService.create(DtoMapper.toComputer(computerDto));
-            PrintWriter out = response.getWriter();
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Ordinateur créé');");
-            out.println("location='addComputer';");
-            out.println("</script>");
+            request.setAttribute("success", true);
+            this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/addComputer.jsp").forward(request, response);
         } catch (ServiceException e) {
             LOGGER.info(e.getMessage());
         }

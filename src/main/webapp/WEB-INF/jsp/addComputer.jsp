@@ -31,6 +31,9 @@
 			<div class="row">
 				<div class="col-xs-8 col-xs-offset-2 box">
 					<h1>Add Computer</h1>
+					<c:if test="${success}">
+						<p style="color:red"> Ordinateur ajouté</p>
+					</c:if>
 					<form id="addForm" action="addComputer" method="POST">
 						<fieldset>
 							<div class="form-group">

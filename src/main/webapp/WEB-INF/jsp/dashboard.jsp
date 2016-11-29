@@ -27,7 +27,7 @@
 
 	<section id="main">
 		<div class="container">
-			<h1 id="homeTitle">${pageComputer.totalElement} Computers found</h1>
+			<h1 id="homeTitle">${pageComputer.totalElements} Computers found</h1>
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
 					<form id="searchForm" action="#" method="GET" class="form-inline">
@@ -84,13 +84,13 @@
 	<footer class="navbar-fixed-bottom">
 		<div class="container text-center">
 			<ul class="pagination">
-				<my:link currentPage="${pageComputer.page}" numberPages="${pageComputer.nbPages}" currentLimit="${pageComputer.elemByPage}"/>
+				<my:link currentPage="${pageComputer.page}" numberPages="${pageComputer.totalPages}" currentLimit="${pageComputer.elementsByPage}"/>
 			</ul>
 
 			<div class="btn-group btn-group-sm pull-right" role="group">
-				<my:link currentPage="${pageComputer.page}" totalElement="${pageComputer.totalElement}" limit="10"/>
-				<my:link currentPage="${pageComputer.page}" totalElement="${pageComputer.totalElement}" limit="50"/>
-				<my:link currentPage="${pageComputer.page}" totalElement="${pageComputer.totalElement}" limit="100"/>
+				<my:link currentPage="${pageComputer.page}" totalElement="${pageComputer.totalElements}" limit="10"/>
+				<my:link currentPage="${pageComputer.page}" totalElement="${pageComputer.totalElements}" limit="50"/>
+				<my:link currentPage="${pageComputer.page}" totalElement="${pageComputer.totalElements}" limit="100"/>
 			</div>
 		</div>
 	</footer>

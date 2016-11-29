@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:useBean id="pageComputer" scope="application"
 		type="com.excilys.formation.pagination.Page" />
-<c:forEach items="${pageComputer.elems}" var="computer">
+<c:forEach items="${pageComputer.elements}" var="computer">
 	<tr>
 		<td class="editMode">
 			<input type="checkbox" id="computerId" name="cb" class="cb" value="${computer.id}">

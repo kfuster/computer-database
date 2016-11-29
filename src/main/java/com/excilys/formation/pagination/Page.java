@@ -9,11 +9,11 @@ import java.util.List;
  * @param <T>
  */
 public class Page<T> {
-    public int elementsByPage = 10;
-    public int page = 1;
-    public int totalElements;
-    public int totalPages;
-    public List<T> elements;
+    private int elementsByPage = 10;
+    private int page = 1;
+    private int totalElements;
+    private int totalPages;
+    private List<T> elements;
 
     public Page() {
     }

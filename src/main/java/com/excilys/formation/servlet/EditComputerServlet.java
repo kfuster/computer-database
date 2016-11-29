@@ -28,7 +28,12 @@ public class EditComputerServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CompanyService companyService = CompanyServiceImpl.getInstance();
         ComputerService computerService = ComputerServiceImpl.getInstance();
-        String computerId = request.getParameter("id");
+        String computerId = null;
+        if (request.getParameter("id") != null) {
+            computerId = request.getParameter("id");
+        } else if (request.getAttribute("id") != null) {
+            computerId = (String) request.getAttribute("id");
+        }
         if (computerId != null && !computerId.trim().isEmpty()) {
             ComputerDto computerDto = DtoMapper.fromComputer(computerService.getById(Long.parseLong(computerId)));
             List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
@@ -55,7 +60,8 @@ public class EditComputerServlet extends HttpServlet {
         try {
             computerService.update(DtoMapper.toComputer(computerDto));
             request.setAttribute("success", true);
-            this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/editComputer.jsp").forward(request, response);
+            request.setAttribute("id", String.valueOf(computerDto.getId()));
+            doGet(request, response);
         } catch (ServiceException e) {
             LOGGER.info(e.getMessage());
         }

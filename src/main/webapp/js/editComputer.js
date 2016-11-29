@@ -15,7 +15,7 @@ $.validator.addMethod("validDate", function(value, element) {
 	}
 	return true;
 }, "Entrez la date au format yyyy-mm-dd.");
-$('#addForm').validate({
+$('#editComputer').validate({
 	rules : {
 		introduced : {
 			required : false,

@@ -28,7 +28,7 @@
 					<c:if test="${success}">
 						<p style="color:red"> Ordinateur edité</p>
 					</c:if>
-					<form action="editComputer" method="POST">
+					<form id="editComputer" action="editComputer" method="POST">
 						<input type="hidden" id="computerId" name="computerId" <c:if test="${not empty computerDto.id}">value="${computerDto.id}"</c:if>/>
 						<!-- TODO: Change this value with the computer id -->
 						<fieldset>

@@ -35,7 +35,6 @@ public class Controller {
     /**
      * Asks the service to delete a Company.
      * @param pId the id of the Company to delete
-     * @return a boolean indicating if the Company was deleted
      */
     public void deleteCompany(long pId) {
         try {
@@ -65,7 +64,7 @@ public class Controller {
     /**
      * Asks the service to update a Computer. The given ComputerDto will be
      * converted to a Computer then send to the service.
-     * @param pComputerDto
+     * @param pComputerDto ComputerDto containing the informations
      */
     public void updateComputer(ComputerDto pComputerDto) {
         Computer computer = DtoMapper.toComputer(pComputerDto);
@@ -101,7 +100,6 @@ public class Controller {
     /**
      * Asks the service to delete a Computer.
      * @param pId the id of the Computer to delete
-     * @return a boolean indicating if the Computer was deleted
      */
     public void deleteComputer(long pId) {
         try {

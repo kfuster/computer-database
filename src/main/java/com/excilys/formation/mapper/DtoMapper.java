@@ -16,8 +16,8 @@ import com.excilys.formation.model.Computer.ComputerBuilder;
  */
 public class DtoMapper {
     /**
-     * Converts a Computer to a ComputerDto.
-     * @param pComputerDto
+     * Converts a ComputerDto to a Computer.
+     * @param pComputerDto the ComputerDto to convert
      * @return a Computer
      */
     public static Computer toComputer(ComputerDto pComputerDto) {
@@ -39,8 +39,8 @@ public class DtoMapper {
     }
 
     /**
-     * Converts a List of Computers to a List of ComputerDtos.
-     * @param pListComputerDto
+     * Converts a List of ComputerDtos to a List of Computer.
+     * @param pListComputerDto the List of ComputerDto to convert
      * @return a List of Computers
      */
     public static List<Computer> toComputerList(List<ComputerDto> pListComputerDto) {
@@ -55,7 +55,7 @@ public class DtoMapper {
 
     /**
      * Converts a Computer to a ComputerDto.
-     * @param pComputer
+     * @param pComputer the Computer to convert
      * @return a ComputerDto
      */
     public static ComputerDto fromComputer(Computer pComputer) {
@@ -81,7 +81,7 @@ public class DtoMapper {
 
     /**
      * Converts a List of Computers to a List of ComputerDto.
-     * @param pComputers
+     * @param pComputers the List of Computers to convert
      * @return a List of ComputerDto
      */
     public static List<ComputerDto> fromComputerList(List<Computer> pComputers) {
@@ -96,7 +96,7 @@ public class DtoMapper {
 
     /**
      * Converts a CompanyDto to a Company.
-     * @param pCompanyDto
+     * @param pCompanyDto the CompanyDto to convert
      * @return a Company
      */
     public static Company toCompany(CompanyDto pCompanyDto) {
@@ -105,7 +105,7 @@ public class DtoMapper {
 
     /**
      * Converts a List of CompanyDto to a List of Company.
-     * @param pListCompanyDto
+     * @param pListCompanyDto the List of CompanyDto to convert
      * @return a List of Company
      */
     public static List<Company> toCompanyList(List<CompanyDto> pListCompanyDto) {
@@ -120,8 +120,8 @@ public class DtoMapper {
 
     /**
      * Converts a Company to a CompanyDto.
-     * @param pCompany
-     * @return
+     * @param pCompany the Company to convert
+     * @return a CompanyDto
      */
     public static CompanyDto fromCompany(Company pCompany) {
         CompanyDto companyDto = new CompanyDto();
@@ -132,8 +132,8 @@ public class DtoMapper {
 
     /**
      * Converts a List of Company to a List of CompanyDto.
-     * @param pListCompanies
-     * @return
+     * @param pListCompanies the List of Company to convert
+     * @return a List of CompanyDto
      */
     public static List<CompanyDto> fromCompanyList(List<Company> pListCompanies) {
         if (pListCompanies != null) {

@@ -6,7 +6,17 @@ import com.excilys.formation.model.Company;
 import com.excilys.formation.model.Computer;
 import com.excilys.formation.pagination.Page;
 
+/**
+ * Change a Page type.
+ * @author kfuster
+ *
+ */
 public class PageMapper {
+    /**
+     * Converts a Page from Company to CompanyDto.
+     * @param pPageCompany the Page to convert
+     * @return a Page<CompanyDto>
+     */
     public static Page<CompanyDto> fromCompanyToCompanyDto(Page<Company> pPageCompany) {
         Page<CompanyDto> pPageCompanyDto = null;
         if (pPageCompany != null) {
@@ -17,6 +27,11 @@ public class PageMapper {
         return pPageCompanyDto;
     }
 
+    /**
+     * Converts a Page from Computer to ComputerDto.
+     * @param pPageComputer the Page to convert
+     * @return a Page<ComputerDto>
+     */
     public static Page<ComputerDto> fromComputerToComputerDto(Page<Computer> pPageComputer) {
         Page<ComputerDto> pPageComputerDto = null;
         if (pPageComputer != null) {
@@ -27,6 +42,11 @@ public class PageMapper {
         return pPageComputerDto;
     }
 
+    /**
+     * Converts a Page from ComputerDto to Computer.
+     * @param pPageComputerDto the Page to convert
+     * @return a Page<Computer>
+     */
     public static Page<Computer> fromComputerDtoToComputer(Page<ComputerDto> pPageComputerDto) {
         Page<Computer> pPageComputer = null;
         if (pPageComputerDto != null) {

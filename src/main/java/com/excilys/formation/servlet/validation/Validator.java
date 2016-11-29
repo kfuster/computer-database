@@ -35,7 +35,7 @@ public class Validator {
     }
 
     /**
-     * Checks if a name is valid : - Contains at least 3 characters. - No more
+     * Checks if a name is valid : - Contains at least 2 characters. - No more.
      * than one space between words
      * @param pName the name to check
      * @return a boolean
@@ -49,13 +49,13 @@ public class Validator {
     /**
      * Checks if a date if valid :
      * <ul>
-     * <li>- pDate is in the good format (yyyy-mm-dd)</li>
-     * <li>- pDate's day <= 31 and month <= 12</li>
-     * <li>- pDate's day isn't 31 on a 30 days month</li>
+     * <li>- pDate is in the good format (yyyy-mm-dd).</li>
+     * <li>- pDate's day <= 31 and month <= 12.</li>
+     * <li>- pDate's day isn't 31 on a 30 days month.</li>
      * <li>- pDate's day isn't >= 30 on the february of a leap year or isn't >=
-     * 29 on a february</li>
-     * <li>- pDate's date isn't before 01 January 1970</li>
-     * <li>- If pBeforeDate isn't null, pDate must be after</li>
+     * 29 on a february.</li>
+     * <li>- pDate's date isn't before 01 January 1970.</li>
+     * <li>- If pBeforeDate isn't null, pDate must be after.</li>
      * </ul>
      * @param pDate the date to check in string format
      * @param pBeforeDate the date used to check pDate is after, or null

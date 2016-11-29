@@ -35,6 +35,10 @@ public class HikariConnectionProvider {
         return connectionProvider;
     }
 
+    /**
+     * Init a connection.
+     * Get a connection from the pool and set it in the ThreadLocal.
+     */
     public void initConnection() {
         try {
             Connection connection = dataSource.getConnection();
@@ -44,6 +48,9 @@ public class HikariConnectionProvider {
         }
     }
 
+    /**
+     * Commit the connection in the ThreadLocal.
+     */
     public void commit() {
         try {
             CONNECTION.get().commit();
@@ -53,6 +60,10 @@ public class HikariConnectionProvider {
         }
     }
 
+    /**
+     * Init a transaction.
+     * Set autoCommit at false for the connection in the ThreadLocal.
+     */
     public void initTransaction() {
         try {
             CONNECTION.get().setAutoCommit(false);
@@ -61,6 +72,10 @@ public class HikariConnectionProvider {
         }
     }
 
+    /**
+     * Ends a transaction.
+     * Set autoCommit at true for the connection in the ThreadLocal.
+     */
     public void finishTransaction() {
         try {
             CONNECTION.get().setAutoCommit(true);
@@ -69,6 +84,9 @@ public class HikariConnectionProvider {
         }
     }
 
+    /**
+     * Do a rollback for the connection in the ThreadLocal.
+     */
     public void rollback() {
         try {
             CONNECTION.get().rollback();
@@ -77,6 +95,10 @@ public class HikariConnectionProvider {
         }
     }
 
+    /**
+     * Close the connection in the ThreadLocal.
+     * Once closed, invoke remove on the ThreadLocal.
+     */
     public void closeConnection() {
         try {
             CONNECTION.get().close();
@@ -86,10 +108,20 @@ public class HikariConnectionProvider {
         }
     }
 
+    /**
+     * Get the connection from the ThreadLocal.
+     * @return a Connection.
+     * @throws SQLException
+     */
     public Connection getConnection() throws SQLException {
         return CONNECTION.get();
     }
-    
+
+    /**
+     * Get a Connection from the DataSource.
+     * @return a Connection.
+     * @throws SQLException
+     */
     public Connection getConnectionDataSource() throws SQLException {
         return dataSource.getConnection();
     }

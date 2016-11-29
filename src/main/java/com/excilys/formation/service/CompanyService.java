@@ -18,5 +18,9 @@ public interface CompanyService extends BaseService<Company> {
      */
     Page<Company> getPage(PageFilter pPageFilter);
 
+    /**
+     * Get all Companies.
+     * @return the List of Companies
+     */
     List<Company> getAll();
 }

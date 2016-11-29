@@ -17,12 +17,14 @@ import com.excilys.formation.service.implementation.ComputerServiceImpl;
 public class DashboardServlet extends HttpServlet {
     private static final long serialVersionUID = -9054781130738656412L;
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ComputerService computerService = ComputerServiceImpl.getInstance();
         PageFilter pageFilter = RequestMapper.toPageFilter(request);
         HttpSession session = request.getSession(false);
+        System.out.println(session);
         this.getServletContext().setAttribute("deleted", null);
-        if(session.getAttribute("deleted") != null) {
+        if (session != null && session.getAttribute("deleted") != null) {
             this.getServletContext().setAttribute("deleted", session.getAttribute("deleted"));
             session.removeAttribute("deleted");
         }

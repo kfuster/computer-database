@@ -103,6 +103,7 @@ public class ComputerDaoJdbc implements ComputerDao {
         }
     }
 
+    @Override
     public void deleteList(String idList) throws PersistenceException {
         String query = DELETE_COMPUTER_LIST + " (" + idList + ");";
         try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
@@ -184,6 +185,11 @@ public class ComputerDaoJdbc implements ComputerDao {
         return pPage;
     }
 
+    /**
+     * Obtains the conditions from a Map as a String.
+     * @param pConditions the Map of conditions
+     * @return a String in sql format
+     */
     private String mapConditions(Map<String, String> pConditions) {
         String conditions = "";
         if (pConditions != null && !pConditions.isEmpty()) {
@@ -203,6 +209,7 @@ public class ComputerDaoJdbc implements ComputerDao {
 
     /**
      * Count the number of Computers in the DB.
+     * @param pConnection the Connection to use
      * @param pFilter an optional filter string
      * @return the number of computers in the DB
      */

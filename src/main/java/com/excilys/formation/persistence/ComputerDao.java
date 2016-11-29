@@ -26,12 +26,17 @@ public interface ComputerDao extends BaseDao<Computer> {
     /**
      * Deletes all computers from a company.
      * @param id of the company for which we want to delete computer
-     * @param connection the connection to use
-     * @return
+     * @param pConnection the connection to use
      * @throws PersistenceException in case of problems while deleting the
      *             computers
      */
     void deleteByCompany(Connection pConnection, long id) throws PersistenceException;
 
+    /**
+     * Deletes a list of Computers.
+     * @param pIdList the computers id in a String of the form "1,2,3,4"
+     * @throws PersistenceException in case of problems while deleting the
+     *             computers
+     */
     void deleteList(String pIdList) throws PersistenceException;
 }

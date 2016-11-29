@@ -25,6 +25,7 @@ public class AddComputerServlet extends HttpServlet {
     private static final long serialVersionUID = 8194132027777240150L;
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(AddComputerServlet.class);
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CompanyService companyService = CompanyServiceImpl.getInstance();
         List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
@@ -33,6 +34,7 @@ public class AddComputerServlet extends HttpServlet {
         this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/addComputer.jsp").forward(request, response);
     }
 
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Extract datas from the request to a ComputerDto
         ComputerDto computerDto = RequestMapper.toComputerDto(request);

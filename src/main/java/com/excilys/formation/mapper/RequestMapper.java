@@ -4,9 +4,14 @@ import javax.servlet.http.HttpServletRequest;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.model.util.PageFilter;
 
+/**
+ * Map to request to different objects.
+ * @author kfuster
+ *
+ */
 public class RequestMapper {
     /**
-     * Fills a computerDto from the parameters of a request
+     * Fills a computerDto from the parameters of a request.
      * @param pRequest the HttpServletRequest containing the parameters
      * @return a ComputerDto
      */
@@ -41,6 +46,11 @@ public class RequestMapper {
         return computerDto;
     }
 
+    /**
+     * Fills a PageFilter from the parameters of a request.
+     * @param pRequest the HttpServletRequest containing the parameters
+     * @return a PageFilter
+     */
     public static PageFilter toPageFilter(HttpServletRequest pRequest) {
         PageFilter pageFilter = new PageFilter();
         pageFilter.setElementsByPage(10);

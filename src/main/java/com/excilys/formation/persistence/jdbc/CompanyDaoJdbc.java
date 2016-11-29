@@ -117,6 +117,7 @@ public class CompanyDaoJdbc implements CompanyDao {
 
     /**
      * Count the total number of companies.
+     * @param pConnection the Connection to use
      * @param pFilter an optional filter string
      * @return the number of companies in the DB
      */

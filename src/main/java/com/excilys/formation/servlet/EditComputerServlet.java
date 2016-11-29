@@ -25,6 +25,7 @@ public class EditComputerServlet extends HttpServlet {
     private static final long serialVersionUID = 7030753372478089174L;
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(EditComputerServlet.class);
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CompanyService companyService = CompanyServiceImpl.getInstance();
         ComputerService computerService = ComputerServiceImpl.getInstance();
@@ -43,6 +44,7 @@ public class EditComputerServlet extends HttpServlet {
         }
     }
 
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Extract datas from the request to a ComputerDto
         ComputerDto computerDto = RequestMapper.toComputerDto(request);

@@ -10,6 +10,9 @@ public final class Company {
     private Long id;
     private String name;
 
+    /**
+     * Default constructor.
+     */
     public Company() {
     }
 

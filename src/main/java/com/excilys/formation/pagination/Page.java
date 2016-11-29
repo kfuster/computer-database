@@ -14,7 +14,9 @@ public class Page<T> {
     private int totalElements;
     private int totalPages;
     private List<T> elements;
-
+    /**
+     * Default constructor.
+     */
     public Page() {
     }
 

@@ -156,7 +156,7 @@ public class ComputerMenuImpl implements ComputerMenu {
                 "Vous pouvez entrez une date d'arrêt de production au format aaaa-mm-jj (ou appuyer sur entrée pour passer)");
         computerDto.setDiscontinued(MenuUtil.inputDate());
         System.out.println("Entrez l'id de la compagnie fabricant l'ordinateur");
-        computerDto.setCompanyId((long)MenuUtil.waitForInt());
+        computerDto.setCompanyId((long) MenuUtil.waitForInt());
         controller.createComputer(computerDto);
     }
 

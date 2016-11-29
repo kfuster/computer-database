@@ -24,5 +24,9 @@ public interface ComputerService extends BaseService<Computer> {
      */
     Page<Computer> getPage(PageFilter pPageFilter);
 
+    /**
+     * Delete a list of Computers.
+     * @param pListId the list of ids of computers to delete in a String of the form "1,2,3"
+     */
     void deleteList(String pListId);
 }

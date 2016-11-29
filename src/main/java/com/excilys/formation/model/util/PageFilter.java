@@ -9,6 +9,11 @@ public class PageFilter {
     private int pageNum;
     private Map<String, String> conditions = new HashMap<>();
 
+    /**
+     * Adds a contion in the conditions Map.
+     * @param key the condition's key
+     * @param value the condition's value
+     */
     public void addCondition(String key, String value) {
         conditions.put(key, value);
     }

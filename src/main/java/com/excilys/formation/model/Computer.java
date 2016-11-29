@@ -15,6 +15,9 @@ public final class Computer {
     private LocalDate discontinued;
     private Company company;
 
+    /**
+     * Default constructor.
+     */
     public Computer() {
     }
 

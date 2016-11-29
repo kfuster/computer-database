@@ -25,7 +25,9 @@
 				<div class="col-xs-8 col-xs-offset-2 box">
 					<div class="label label-default pull-right">id: ${computerDto.id}</div>
 					<h1>Edit Computer</h1>
-
+					<c:if test="${success}">
+						<p style="color:red"> Ordinateur edité</p>
+					</c:if>
 					<form action="editComputer" method="POST">
 						<input type="hidden" id="computerId" name="computerId" <c:if test="${not empty computerDto.id}">value="${computerDto.id}"</c:if>/>
 						<!-- TODO: Change this value with the computer id -->

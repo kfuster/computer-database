@@ -1,7 +1,6 @@
 package com.excilys.formation.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +44,7 @@ public class EditComputerServlet extends HttpServlet {
         Map<String, String> errors = new HashMap<>();
         // Check if datas are valid
         errors = Validator.validateComputerDto(computerDto, errors);
+        request.setAttribute("success", null);
         // If errors found, add errors to the request and go to get instead
         if (!errors.isEmpty()) {
             request.setAttribute("errors", errors);
@@ -54,11 +54,8 @@ public class EditComputerServlet extends HttpServlet {
         ComputerService computerService = ComputerServiceImpl.getInstance();
         try {
             computerService.update(DtoMapper.toComputer(computerDto));
-            PrintWriter out = response.getWriter();
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Ordinateur mis à jour');");
-            out.println("location='editComputer?id=" + computerDto.getId() + "';");
-            out.println("</script>");
+            request.setAttribute("success", true);
+            this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/editComputer.jsp").forward(request, response);
         } catch (ServiceException e) {
             LOGGER.info(e.getMessage());
         }

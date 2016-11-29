@@ -22,11 +22,11 @@ public final class Company {
     }
 
     // ######### SETTERS/GETTERS #########
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -96,7 +96,7 @@ public final class Company {
          * @param pId the Company's Id
          * @return the CompanyBuilder
          */
-        public CompanyBuilder id(long pId) {
+        public CompanyBuilder id(Long pId) {
             id = pId;
             return this;
         }

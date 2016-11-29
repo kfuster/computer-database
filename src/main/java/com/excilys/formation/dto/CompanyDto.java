@@ -9,11 +9,11 @@ public class CompanyDto {
     private Long id;
     private String name;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -76,7 +76,7 @@ public class CompanyDto {
          * @param pId the Company's Id
          * @return the CompanyDtoBuilder
          */
-        public CompanyDtoBuilder id(long pId) {
+        public CompanyDtoBuilder id(Long pId) {
             id = pId;
             return this;
         }

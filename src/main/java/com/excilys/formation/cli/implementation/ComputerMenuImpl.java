@@ -112,7 +112,7 @@ public class ComputerMenuImpl implements ComputerMenu {
     private void showPage() {
         StringBuilder stringBuilder = new StringBuilder();
         pageComputer.getElements().forEach(computer -> stringBuilder.append(computer.toString()).append("\n"));
-        stringBuilder.append("Page : ").append(pageComputer.page).append(" / ").append(pageComputer.totalPages)
+        stringBuilder.append("Page : ").append(pageComputer.getPage()).append(" / ").append(pageComputer.getTotalPages())
                 .append("\nOptions :\n1 - Page Précédente\n2 - Page Suivante\n3 - Aller à la page\n4 - Quitter");
         System.out.println(stringBuilder.toString());
     }
@@ -156,7 +156,7 @@ public class ComputerMenuImpl implements ComputerMenu {
                 "Vous pouvez entrez une date d'arrêt de production au format aaaa-mm-jj (ou appuyer sur entrée pour passer)");
         computerDto.setDiscontinued(MenuUtil.inputDate());
         System.out.println("Entrez l'id de la compagnie fabricant l'ordinateur");
-        computerDto.setCompanyId(MenuUtil.waitForInt());
+        computerDto.setCompanyId((long)MenuUtil.waitForInt());
         controller.createComputer(computerDto);
     }
 

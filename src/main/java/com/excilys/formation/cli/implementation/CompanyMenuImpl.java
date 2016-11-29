@@ -81,7 +81,7 @@ public class CompanyMenuImpl implements CompanyMenu {
     private void showPage() {
         StringBuilder stringBuilder = new StringBuilder();
         pageCompany.getElements().forEach(company -> stringBuilder.append(company.toString()).append("\n"));
-        stringBuilder.append("Page : ").append(pageCompany.page).append(" / ").append(pageCompany.totalPages)
+        stringBuilder.append("Page : ").append(pageCompany.getPage()).append(" / ").append(pageCompany.getTotalPages())
                 .append("\nOptions :\n1 - Page Précédente\n2 - Page Suivante\n3 - Aller à la page\n4 - Quitter");
         System.out.println(stringBuilder.toString());
     }

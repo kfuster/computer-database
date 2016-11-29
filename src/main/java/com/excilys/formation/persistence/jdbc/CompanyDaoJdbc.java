@@ -91,10 +91,10 @@ public class CompanyDaoJdbc implements CompanyDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             allCompanies = JdbcMapper.mapResultsToCompanyList(resultSet);
             pPage = new Page<>(pPageFilter.getElementsByPage());
-            pPage.page = pPageFilter.getPageNum();
-            pPage.elements = (allCompanies);
+            pPage.setPage(pPageFilter.getPageNum());
+            pPage.setElements((allCompanies));
             pPage.setTotalElements(count(connection, ""));
-            pPageFilter.setNbPage(pPage.totalPages);
+            pPageFilter.setNbPage(pPage.getTotalPages());
             resultSet.close();
         } catch (SQLException e) {
             LOGGER.error("Error in CompanyDao : getPage : ", e);

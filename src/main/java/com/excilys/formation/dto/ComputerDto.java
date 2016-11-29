@@ -13,11 +13,11 @@ public class ComputerDto {
     private Long companyId;
     private String companyName;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -45,11 +45,11 @@ public class ComputerDto {
         this.discontinued = discontinued;
     }
 
-    public long getCompanyId() {
+    public Long getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(long companyId) {
+    public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }
 
@@ -148,7 +148,7 @@ public class ComputerDto {
          * @param pCompanyId the Company's Id
          * @return the ComputerDtoBuilder
          */
-        public ComputerDtoBuilder companyId(long pCompanyId) {
+        public ComputerDtoBuilder companyId(Long pCompanyId) {
             companyId = pCompanyId;
             return this;
         }
@@ -168,7 +168,7 @@ public class ComputerDto {
          * @param pId the Computer's Id
          * @return the ComputerDtoBuilder
          */
-        public ComputerDtoBuilder id(long pId) {
+        public ComputerDtoBuilder id(Long pId) {
             id = pId;
             return this;
         }

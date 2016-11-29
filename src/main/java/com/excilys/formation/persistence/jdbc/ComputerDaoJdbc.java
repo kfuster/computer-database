@@ -180,10 +180,10 @@ public class ComputerDaoJdbc implements ComputerDao {
             preparedStatement.setInt(2, (pPageFilter.getPageNum() - 1) * pPageFilter.getElementsByPage());
             ResultSet resultSet = preparedStatement.executeQuery();
             computers = JdbcMapper.mapResultsToComputerList(resultSet);
-            pPage.page = pPageFilter.getPageNum();
-            pPage.elements = computers;
+            pPage.setPage(pPageFilter.getPageNum());
+            pPage.setElements(computers);
             pPage.setTotalElements(count(connection, conditions));
-            pPageFilter.setNbPage(pPage.totalPages);
+            pPageFilter.setNbPage(pPage.getTotalPages());
         } catch (SQLException e) {
             LOGGER.error("Error in ComputerDao : getPage : ", e);
             throw new PersistenceException("Problème lors de la récupération de la page d'ordinateurs");

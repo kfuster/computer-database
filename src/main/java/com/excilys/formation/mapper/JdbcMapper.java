@@ -91,10 +91,10 @@ public class JdbcMapper {
     private static Computer extractComputer(ResultSet pResultSet) throws SQLException {
         // Get the company from the row
         Company company = new Company.CompanyBuilder(pResultSet.getString("companyName"))
-                .id(pResultSet.getInt("companyId")).build();
+                .id(pResultSet.getLong("companyId")).build();
         // Get the computer from the row
         Computer computer = new Computer.ComputerBuilder(pResultSet.getString("name")).company(company)
-                .id(pResultSet.getInt("id"))
+                .id(pResultSet.getLong("id"))
                 .dateDisc(DateConverter.fromTimestampToLocalDate(pResultSet.getTimestamp("discontinued")))
                 .dateIntro(DateConverter.fromTimestampToLocalDate(pResultSet.getTimestamp("introduced"))).build();
         return computer;
@@ -108,7 +108,7 @@ public class JdbcMapper {
      */
     private static Company extractCompany(ResultSet pResultSet) throws SQLException {
         // Get the company from the row
-        Company company = new Company.CompanyBuilder(pResultSet.getString("name")).id(pResultSet.getInt("id")).build();
+        Company company = new Company.CompanyBuilder(pResultSet.getString("name")).id(pResultSet.getLong("id")).build();
         return company;
     }
 }

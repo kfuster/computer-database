@@ -22,7 +22,6 @@ public class DashboardServlet extends HttpServlet {
         ComputerService computerService = ComputerServiceImpl.getInstance();
         PageFilter pageFilter = RequestMapper.toPageFilter(request);
         HttpSession session = request.getSession(false);
-        System.out.println(session);
         this.getServletContext().setAttribute("deleted", null);
         if (session != null && session.getAttribute("deleted") != null) {
             this.getServletContext().setAttribute("deleted", session.getAttribute("deleted"));

@@ -48,8 +48,7 @@ public class CompanyDaoJdbc implements CompanyDao {
     @Override
     public Company getById(long pId) throws PersistenceException {
         Company company = null;
-        hikariConnectionProvider.initConnection();
-        try (Connection connection = hikariConnectionProvider.getConnection();
+        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
                 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);) {
             preparedStatement.setLong(1, pId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -79,12 +78,11 @@ public class CompanyDaoJdbc implements CompanyDao {
 
     @Override
     public Page<Company> getPage(PageFilter pPageFilter) throws PersistenceException {
-        hikariConnectionProvider.initConnection();
         List<Company> allCompanies = new ArrayList<>();
         String queryComputers = SELECT_PAGE;
         queryComputers += " LIMIT ? OFFSET ?";
         Page<Company> pPage = null;
-        try (Connection connection = hikariConnectionProvider.getConnection();
+        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputers)) {
             preparedStatement.setInt(1, pPageFilter.getElementsByPage());
             preparedStatement.setInt(2, (pPageFilter.getPageNum() - 1) * pPageFilter.getElementsByPage());
@@ -105,9 +103,8 @@ public class CompanyDaoJdbc implements CompanyDao {
 
     @Override
     public List<Company> getAll() throws PersistenceException {
-        hikariConnectionProvider.initConnection();
         List<Company> allCompanies = new ArrayList<>();
-        try (Connection connection = hikariConnectionProvider.getConnection();
+        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(SELECT_ALL)) {
             allCompanies = JdbcMapper.mapResultsToCompanyList(resultSet);

@@ -51,8 +51,7 @@ public class ComputerDaoJdbc implements ComputerDao {
     @Override
     public Computer create(Computer pComputer) throws PersistenceException {
         String queryComputer = INSERT_COMPUTER;
-        hikariConnectionProvider.initConnection();
-        try (Connection connection = hikariConnectionProvider.getConnection();
+        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputer,
                         PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, pComputer.getName());
@@ -78,8 +77,7 @@ public class ComputerDaoJdbc implements ComputerDao {
     @Override
     public void update(Computer pComputer) throws PersistenceException {
         String queryComputer = UPDATE_COMPUTER;
-        hikariConnectionProvider.initConnection();
-        try (Connection connection = hikariConnectionProvider.getConnection();
+        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputer)) {
             preparedStatement.setString(1, pComputer.getName());
             preparedStatement.setTimestamp(2, DateConverter.fromLocalDateToTimestamp(pComputer.getIntroduced()));
@@ -95,8 +93,7 @@ public class ComputerDaoJdbc implements ComputerDao {
 
     @Override
     public void delete(long pID) throws PersistenceException {
-        hikariConnectionProvider.initConnection();
-        try (Connection connection = hikariConnectionProvider.getConnection();
+        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
                 PreparedStatement preparedStatement = connection.prepareStatement(DELETE_COMPUTER)) {
             preparedStatement.setLong(1, pID);
             preparedStatement.executeUpdate();
@@ -107,9 +104,8 @@ public class ComputerDaoJdbc implements ComputerDao {
     }
 
     public void deleteList(String idList) throws PersistenceException {
-        hikariConnectionProvider.initConnection();
         String query = DELETE_COMPUTER_LIST + " (" + idList + ");";
-        try (Connection connection = hikariConnectionProvider.getConnection();
+        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -131,10 +127,9 @@ public class ComputerDaoJdbc implements ComputerDao {
 
     @Override
     public Computer getById(long pId) throws PersistenceException {
-        hikariConnectionProvider.initConnection();
         String queryComputer = SELECT_JOIN + " WHERE computer.id=?";
         Computer computer = null;
-        try (Connection connection = hikariConnectionProvider.getConnection();
+        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputer)) {
             preparedStatement.setLong(1, pId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -148,10 +143,9 @@ public class ComputerDaoJdbc implements ComputerDao {
 
     @Override
     public Computer getByName(String pName) throws PersistenceException {
-        hikariConnectionProvider.initConnection();
         String queryComputer = SELECT_JOIN + " WHERE computer.name=?";
         Computer computer = null;
-        try (Connection connection = hikariConnectionProvider.getConnection();
+        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputer)) {
             preparedStatement.setString(1, pName);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -165,7 +159,6 @@ public class ComputerDaoJdbc implements ComputerDao {
 
     @Override
     public Page<Computer> getPage(PageFilter pPageFilter) throws PersistenceException {
-        hikariConnectionProvider.initConnection();
         List<Computer> computers = new ArrayList<>();
         String queryComputers = SELECT_JOIN;
         String conditions = "";
@@ -174,7 +167,7 @@ public class ComputerDaoJdbc implements ComputerDao {
         }
         queryComputers += conditions + " LIMIT ? OFFSET ?";
         Page<Computer> pPage = new Page<>(pPageFilter.getElementsByPage());
-        try (Connection connection = hikariConnectionProvider.getConnection();
+        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputers)) {
             preparedStatement.setInt(1, pPageFilter.getElementsByPage());
             preparedStatement.setInt(2, (pPageFilter.getPageNum() - 1) * pPageFilter.getElementsByPage());

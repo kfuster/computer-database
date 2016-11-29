@@ -48,6 +48,7 @@ public class HikariConnectionProvider {
         try {
             CONNECTION.get().commit();
         } catch (SQLException e) {
+            rollback();
             LOGGER.error("Error HikariConnectionProvider : commit : ", e);
         }
     }
@@ -87,5 +88,9 @@ public class HikariConnectionProvider {
 
     public Connection getConnection() throws SQLException {
         return CONNECTION.get();
+    }
+    
+    public Connection getConnectionDataSource() throws SQLException {
+        return dataSource.getConnection();
     }
 }

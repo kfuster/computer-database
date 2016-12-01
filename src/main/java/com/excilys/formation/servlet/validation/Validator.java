@@ -41,7 +41,7 @@ public class Validator {
      * @return a boolean
      */
     private static boolean isNameValid(String pName) {
-        Pattern pattern = Pattern.compile("\\w{2,}([ ]{0,1}\\w*)*");
+        Pattern pattern = Pattern.compile("[a-zA-Z\\d-]{2,}([ ]{0,1}[a-zA-Z\\d-]*)*");
         Matcher matcher = pattern.matcher(pName);
         return matcher.matches();
     }

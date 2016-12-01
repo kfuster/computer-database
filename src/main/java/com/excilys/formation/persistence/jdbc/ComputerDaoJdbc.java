@@ -26,7 +26,7 @@ import ch.qos.logback.classic.Logger;
  */
 public class ComputerDaoJdbc implements ComputerDao {
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(ComputerDaoJdbc.class);
-    private static HikariConnectionProvider hikariConnectionProvider;
+    private static HikariConnectionProvider hikariConnectionProvider = HikariConnectionProvider.getInstance();
     private static ComputerDao computerDaoImpl = null;
     private static final String INSERT_COMPUTER = "INSERT INTO computer(name, introduced, discontinued, company_id) VALUES(?, ?, ?, ?)";
     private static final String UPDATE_COMPUTER = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
@@ -43,7 +43,6 @@ public class ComputerDaoJdbc implements ComputerDao {
     public static ComputerDao getInstance() {
         if (computerDaoImpl == null) {
             computerDaoImpl = new ComputerDaoJdbc();
-            hikariConnectionProvider = HikariConnectionProvider.getInstance();
         }
         return computerDaoImpl;
     }

@@ -36,4 +36,9 @@
 		<servlet-name>DeleteComputer-servlet</servlet-name>
 		<url-pattern>/deleteComputer</url-pattern>
 	</servlet-mapping>
+	<error-page>
+    <!-- Missing resource -->
+    <error-code>404</error-code>
+    <location>/WEB-INF/views/404.html</location>
+</error-page>
 </web-app>

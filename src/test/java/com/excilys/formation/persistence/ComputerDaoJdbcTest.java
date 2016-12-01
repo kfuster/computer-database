@@ -29,7 +29,7 @@ public class ComputerDaoJdbcTest {
     @Test
     public void testCreate() {
         computerDao = ComputerDaoJdbc.getInstance();
-        Computer computer = new Computer.ComputerBuilder("New computer").dateIntro(LocalDate.parse("1978-03-22")).dateDisc(LocalDate.parse("1989-06-14")).company(new Company.CompanyBuilder("New company").id(5).build()).build();
+        Computer computer = new Computer.ComputerBuilder("New computer").dateIntro(LocalDate.parse("1978-03-22")).dateDisc(LocalDate.parse("1989-06-14")).company(new Company.CompanyBuilder("New company").id((long) 5).build()).build();
         try {
             computer = computerDao.create(computer);
         } catch (PersistenceException e) {
@@ -41,7 +41,7 @@ public class ComputerDaoJdbcTest {
     @Test
     public void testUpdate() {
         computerDao = ComputerDaoJdbc.getInstance();
-        Computer computer = new Computer.ComputerBuilder("New computer").dateIntro(LocalDate.parse("1978-03-22")).dateDisc(LocalDate.parse("1989-06-14")).company(new Company.CompanyBuilder("New company").id(5).build()).build();
+        Computer computer = new Computer.ComputerBuilder("New computer").dateIntro(LocalDate.parse("1978-03-22")).dateDisc(LocalDate.parse("1989-06-14")).company(new Company.CompanyBuilder("New company").id((long) 5).build()).build();
         Computer testComputer = null; 
         try {
             computer = computerDao.create(computer);
@@ -57,7 +57,7 @@ public class ComputerDaoJdbcTest {
     @Test
     public void testDelete() {
         computerDao = ComputerDaoJdbc.getInstance();
-        Computer computer = new Computer.ComputerBuilder("New computer").dateIntro(LocalDate.parse("1978-03-22")).dateDisc(LocalDate.parse("1989-06-14")).company(new Company.CompanyBuilder("New company").id(5).build()).build();
+        Computer computer = new Computer.ComputerBuilder("New computer").dateIntro(LocalDate.parse("1978-03-22")).dateDisc(LocalDate.parse("1989-06-14")).company(new Company.CompanyBuilder("New company").id((long) 5).build()).build();
         Computer testComputer = null; 
         long idToDelete = 0;
         try {
@@ -107,10 +107,10 @@ public class ComputerDaoJdbcTest {
         } catch (PersistenceException e) {
             e.printStackTrace();
         }
-        assertNotNull("Get page : list not null", page.elems);
-        assertNotNull("Get page : first element not null", page.elems.get(0));
-        assertEquals("Get page : first element Company", page.elems.get(0).getClass().getSimpleName(), "Computer");
-        assertNotNull("Get page : last element not null", page.elems.get(page.elems.size()-1));
-        assertEquals("Get page : last element Company", page.elems.get(page.elems.size()-1).getClass().getSimpleName(), "Computer");
+        assertNotNull("Get page : list not null", page.getElements());
+        assertNotNull("Get page : first element not null", page.getElements().get(0));
+        assertEquals("Get page : first element Company", page.getElements().get(0).getClass().getSimpleName(), "Computer");
+        assertNotNull("Get page : last element not null", page.getElements().get(page.getElements().size()-1));
+        assertEquals("Get page : last element Company", page.getElements().get(page.getElements().size()-1).getClass().getSimpleName(), "Computer");
     }
 }

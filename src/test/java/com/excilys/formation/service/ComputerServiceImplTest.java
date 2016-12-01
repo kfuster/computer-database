@@ -28,26 +28,26 @@ public class ComputerServiceImplTest {
     public void testCreate() {
         Controller controller = new Controller();
         ComputerDto computerDto = new ComputerDto();
-        computerDto.name = "Test Service";
-        computerDto.companyId = 7;
+        computerDto.setName("Test Service");
+        computerDto.setCompanyId((long) 7);
         ComputerDto computerDtoTest = null;
         computerDto = controller.createComputer(computerDto);
-        computerDtoTest = controller.getComputerById(computerDto.id);
+        computerDtoTest = controller.getComputerById(computerDto.getId());
         assertNotNull("Create : not null", computerDtoTest);
-        assertTrue("Create : valid id", computerDtoTest.id >= 1);
-        assertEquals("Create : equals name", computerDto.name, computerDtoTest.name);
-        assertEquals("Create : equals companies id", computerDto.companyId, computerDtoTest.companyId);
+        assertTrue("Create : valid id", computerDtoTest.getId() >= 1);
+        assertEquals("Create : equals name", computerDto.getName(), computerDtoTest.getName());
+        assertEquals("Create : equals companies id", computerDto.getCompanyId(), computerDtoTest.getCompanyId());
     }
     @Test
     public void testDelete() throws ServiceException {
         Controller controller = new Controller();
         ComputerDto computerDto = new ComputerDto();
-        computerDto.name = "Test Service";
-        computerDto.companyId = 7;
+        computerDto.setName("Test Service");
+        computerDto.setCompanyId((long) 7);
         ComputerDto computerDtoTest = null;
         computerDto = controller.createComputer(computerDto);
-        controller.deleteComputer(computerDto.id);
-        computerDtoTest = controller.getComputerById(computerDto.id);
+        controller.deleteComputer(computerDto.getId());
+        computerDtoTest = controller.getComputerById(computerDto.getId());
         assertTrue("Delete ", computerDtoTest == null);
     }
     @Test
@@ -55,8 +55,8 @@ public class ComputerServiceImplTest {
         Controller controller = new Controller();
         ComputerDto computerDto = controller.getComputerById(5);
         assertNotNull("Get by id : not null", computerDto);
-        assertTrue("Get by id : good id", computerDto.id == 5);
-        assertNotNull("Get by id : name not null", computerDto.name);
+        assertTrue("Get by id : good id", computerDto.getId() == 5);
+        assertNotNull("Get by id : name not null", computerDto.getName());
     }
     @Test
     public void testGetPage() {
@@ -67,24 +67,24 @@ public class ComputerServiceImplTest {
         Page<ComputerDto> page = new Page<>(10);
         page = controller.getPageComputer(pageFilter);
         assertNotNull("Get page : page not null", page);
-        assertNotNull("Get page : list not null", page.elems);
-        assertNotNull("Get page : first element not null", page.elems.get(0));
-        assertEquals("Get page : first element Company", page.elems.get(0).getClass().getSimpleName(), "ComputerDto");
-        assertNotNull("Get page : last element not null", page.elems.get(page.elems.size()-1));
-        assertEquals("Get page : last element Company", page.elems.get(page.elems.size()-1).getClass().getSimpleName(), "ComputerDto");
+        assertNotNull("Get page : list not null", page.getElements());
+        assertNotNull("Get page : first element not null", page.getElements().get(0));
+        assertEquals("Get page : first element Company", page.getElements().get(0).getClass().getSimpleName(), "ComputerDto");
+        assertNotNull("Get page : last element not null", page.getElements().get(page.getElements().size()-1));
+        assertEquals("Get page : last element Company", page.getElements().get(page.getElements().size()-1).getClass().getSimpleName(), "ComputerDto");
     }
     @Test
     public void testUpdate() {
         Controller controller = new Controller();
         ComputerDto computerDto = new ComputerDto();
-        computerDto.name = "Test Service";
-        computerDto.companyId = 7;
+        computerDto.setName("Test Service");
+        computerDto.setCompanyId((long) 7);
         ComputerDto computerDtoTest = null;
         computerDto = controller.createComputer(computerDto);
-        computerDto.name = "New name";
+        computerDto.setName("New name");
         controller.updateComputer(computerDto);
-        computerDtoTest = controller.getComputerById(computerDto.id);
+        computerDtoTest = controller.getComputerById(computerDto.getId());
         assertNotNull("Update : not null", computerDtoTest);
-        assertEquals("Update :  good name", computerDtoTest.name, "New name");
+        assertEquals("Update :  good name", computerDtoTest.getName(), "New name");
     }
 }

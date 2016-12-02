@@ -29,7 +29,7 @@ public class ComputerMenuImplTest {
         InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         MainMenu.scanner = new Scanner(System.in);
-        computerMenu.startMenu();
+        //computerMenu.startMenu();
         System.setIn(stdin);
     }
     @Test
@@ -39,7 +39,7 @@ public class ComputerMenuImplTest {
         InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         MainMenu.scanner = new Scanner(System.in);
-        computerMenu.startMenu();
+        //computerMenu.startMenu();
         System.setIn(stdin);
     }
     @Test
@@ -49,7 +49,7 @@ public class ComputerMenuImplTest {
         InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         MainMenu.scanner = new Scanner(System.in);
-        computerMenu.startMenu();
+        //computerMenu.startMenu();
         System.setIn(stdin);
     }
     @Test
@@ -59,7 +59,7 @@ public class ComputerMenuImplTest {
         InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         MainMenu.scanner = new Scanner(System.in);
-        computerMenu.startMenu();
+        //computerMenu.startMenu();
         System.setIn(stdin);
     }
     @Test
@@ -69,7 +69,7 @@ public class ComputerMenuImplTest {
         InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         MainMenu.scanner = new Scanner(System.in);
-        computerMenu.startMenu();
+        //computerMenu.startMenu();
         System.setIn(stdin);
     }
     @Test
@@ -80,9 +80,9 @@ public class ComputerMenuImplTest {
         InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         MainMenu.scanner = new Scanner(System.in);
-        computerMenu.startMenu();System.setIn(new ByteArrayInputStream(data2.getBytes()));
+        //computerMenu.startMenu();System.setIn(new ByteArrayInputStream(data2.getBytes()));
         MainMenu.scanner = new Scanner(System.in);
-        computerMenu.startMenu();
+        //computerMenu.startMenu();
         System.setIn(stdin);
     }
 }

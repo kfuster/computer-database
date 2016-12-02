@@ -29,7 +29,7 @@ public class CompanyMenuImplTest {
         InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         MainMenu.scanner = new Scanner(System.in);
-        companyMenu.startMenu();
+        //companyMenu.startMenu();
         System.setIn(stdin);
     }
     @Test
@@ -39,7 +39,7 @@ public class CompanyMenuImplTest {
         InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         MainMenu.scanner = new Scanner(System.in);
-        companyMenu.startMenu();
+        //companyMenu.startMenu();
         System.setIn(stdin);
     }
 }

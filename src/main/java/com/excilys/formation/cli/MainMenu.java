@@ -12,15 +12,12 @@ import com.excilys.formation.util.MenuUtil;
  *
  */
 public class MainMenu implements Menu {
-    public static Scanner scanner;
+    public static Scanner scanner = new Scanner(System.in);
 
     /**
      * MainMenu constructor. Initialize scanner.
      */
     public MainMenu() {
-        if (scanner == null) {
-            scanner = new Scanner(System.in);
-        }
     }
 
     /**

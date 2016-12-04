@@ -22,28 +22,15 @@ import ch.qos.logback.classic.Logger;
  * @author kfuster
  *
  */
-public class CompanyDaoJdbc implements CompanyDao {
+public enum CompanyDaoJdbc implements CompanyDao {
+    INSTANCE;
     private static final Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(CompanyDaoJdbc.class);
-    private static HikariConnectionProvider hikariConnectionProvider;
-    private static CompanyDao companyDaoImpl = null;
+    private static HikariConnectionProvider hikariConnectionProvider = HikariConnectionProvider.INSTANCE;
     private static final String SELECT_ALL = "SELECT * FROM company ORDER BY company.name";
     private static final String SELECT_BY_ID = "SELECT * FROM company WHERE id=?";
     private static final String SELECT_PAGE = "SELECT * FROM company ";
     private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM company";
     private static final String DELETE_COMPANY = "DELETE FROM company WHERE id=?";
-
-    /**
-     * Getter for the instance of CompanyDaoJdbc. If the instance is null,
-     * initializes it.
-     * @return the instance of CompanyDaoJdbc
-     */
-    public static CompanyDao getInstance() {
-        if (companyDaoImpl == null) {
-            companyDaoImpl = new CompanyDaoJdbc();
-            hikariConnectionProvider = HikariConnectionProvider.getInstance();
-        }
-        return companyDaoImpl;
-    }
 
     @Override
     public Company getById(long pId) throws PersistenceException {

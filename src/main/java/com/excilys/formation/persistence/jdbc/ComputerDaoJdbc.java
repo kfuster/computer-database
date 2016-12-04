@@ -24,10 +24,10 @@ import ch.qos.logback.classic.Logger;
  * @author kfuster
  *
  */
-public class ComputerDaoJdbc implements ComputerDao {
+public enum ComputerDaoJdbc implements ComputerDao {
+    INSTANCE;
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(ComputerDaoJdbc.class);
-    private static HikariConnectionProvider hikariConnectionProvider = HikariConnectionProvider.getInstance();
-    private static ComputerDao computerDaoImpl = null;
+    private static HikariConnectionProvider hikariConnectionProvider = HikariConnectionProvider.INSTANCE;
     private static final String INSERT_COMPUTER = "INSERT INTO computer(name, introduced, discontinued, company_id) VALUES(?, ?, ?, ?)";
     private static final String UPDATE_COMPUTER = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
     private static final String DELETE_COMPUTER = "DELETE FROM computer WHERE id=?";
@@ -35,17 +35,6 @@ public class ComputerDaoJdbc implements ComputerDao {
     private static final String DELETE_COMPUTER_BY_COMPANY = "DELETE FROM computer WHERE company_id=?";
     private static final String SELECT_JOIN = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, company.id as companyId, company.name as companyName FROM computer LEFT JOIN company ON computer.company_id=company.id";
     private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM computer LEFT JOIN company ON computer.company_id=company.id ";
-
-    /**
-     * Getter for the ComputerDaoJdbc instance. Initializes it if null.
-     * @return the instance of ComputerDaoJdbc
-     */
-    public static ComputerDao getInstance() {
-        if (computerDaoImpl == null) {
-            computerDaoImpl = new ComputerDaoJdbc();
-        }
-        return computerDaoImpl;
-    }
 
     @Override
     public Computer create(Computer pComputer) throws PersistenceException {

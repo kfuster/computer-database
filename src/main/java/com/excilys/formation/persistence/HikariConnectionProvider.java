@@ -8,31 +8,16 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import ch.qos.logback.classic.Logger;
 
-public class HikariConnectionProvider {
-    private static HikariConnectionProvider connectionProvider;
+public enum HikariConnectionProvider {
+    INSTANCE;
     private static final Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory
             .getLogger(HikariConnectionProvider.class);
     private static final String HIKARI_PROPERTIES = "src/main/resources/hikari.properties";
     private static DataSource dataSource;
     private static final ThreadLocal<Connection> CONNECTION = new ThreadLocal<Connection>();
-
-    /**
-     * Constructor for HikariConnectionProvider. Initializes the properties.
-     */
-    private HikariConnectionProvider() {
+    static {
         HikariConfig config = new HikariConfig(HIKARI_PROPERTIES);
         dataSource = new HikariDataSource(config);
-    }
-
-    /**
-     * Getter for the HikariConnectionProvider instance. Initializes it if null.
-     * @return the instance of HikariConnectionProvider
-     */
-    public static HikariConnectionProvider getInstance() {
-        if (connectionProvider == null) {
-            connectionProvider = new HikariConnectionProvider();
-        }
-        return connectionProvider;
     }
 
     /**

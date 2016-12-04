@@ -19,7 +19,7 @@ public class DashboardServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ComputerService computerService = ComputerServiceImpl.getInstance();
+        ComputerService computerService = ComputerServiceImpl.INSTANCE;
         PageFilter pageFilter = RequestMapper.toPageFilter(request);
         HttpSession session = request.getSession(false);
         this.getServletContext().setAttribute("deleted", null);

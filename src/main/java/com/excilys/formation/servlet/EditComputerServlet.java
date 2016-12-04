@@ -26,8 +26,8 @@ public class EditComputerServlet extends HttpServlet {
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(EditComputerServlet.class);
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CompanyService companyService = CompanyServiceImpl.getInstance();
-        ComputerService computerService = ComputerServiceImpl.getInstance();
+        CompanyService companyService = CompanyServiceImpl.INSTANCE;
+        ComputerService computerService = ComputerServiceImpl.INSTANCE;
         String computerId = null;
         if (request.getParameter("id") != null) {
             computerId = request.getParameter("id");
@@ -56,7 +56,7 @@ public class EditComputerServlet extends HttpServlet {
             request.setAttribute("computerDto", computerDto);
             doGet(request, response);
         } else {
-            ComputerService computerService = ComputerServiceImpl.getInstance();
+            ComputerService computerService = ComputerServiceImpl.INSTANCE;
             try {
                 computerService.update(DtoMapper.toComputer(computerDto));
                 request.setAttribute("success", true);

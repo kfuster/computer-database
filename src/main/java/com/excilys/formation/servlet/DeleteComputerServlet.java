@@ -14,7 +14,7 @@ public class DeleteComputerServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ComputerService computerService = ComputerServiceImpl.getInstance();
+        ComputerService computerService = ComputerServiceImpl.INSTANCE;
         //We get the id list of computers to delete from the parameters
         //and ask the service to delete id
         if (request.getParameter("selection") != null) {

@@ -15,28 +15,10 @@ import ch.qos.logback.classic.Logger;
  * @author kfuster
  *
  */
-public class ComputerServiceImpl implements ComputerService {
+public enum ComputerServiceImpl implements ComputerService {
+    INSTANCE;
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(ComputerServiceImpl.class);
-    private ComputerDao computerDao;
-    private static ComputerService computerService;
-
-    /**
-     * Constructor for ComputerServiceImpl. Initializes computerDao.
-     */
-    private ComputerServiceImpl() {
-        computerDao = ComputerDaoJdbc.getInstance();
-    }
-
-    /**
-     * Getter for the ComputerServiceImpl instance. Initializes it if null.
-     * @return the instance of ComputerServiceImpl
-     */
-    public static ComputerService getInstance() {
-        if (computerService == null) {
-            computerService = new ComputerServiceImpl();
-        }
-        return computerService;
-    }
+    private ComputerDao computerDao = ComputerDaoJdbc.INSTANCE;
 
     @Override
     public Computer create(Computer pComputer) {

@@ -26,7 +26,7 @@ public class AddComputerServlet extends HttpServlet {
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(AddComputerServlet.class);
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CompanyService companyService = CompanyServiceImpl.getInstance();
+        CompanyService companyService = CompanyServiceImpl.INSTANCE;
         List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
         request.setAttribute("computerDto", null);
         request.setAttribute("success", null);
@@ -51,7 +51,7 @@ public class AddComputerServlet extends HttpServlet {
             doGet(request, response);
         } else {
             // Else create the computer
-            ComputerService computerService = ComputerServiceImpl.getInstance();
+            ComputerService computerService = ComputerServiceImpl.INSTANCE;
             try {
                 computerService.create(DtoMapper.toComputer(computerDto));
                 request.setAttribute("success", true);

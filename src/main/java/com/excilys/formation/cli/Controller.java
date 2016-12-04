@@ -17,8 +17,8 @@ import ch.qos.logback.classic.Logger;
 
 public class Controller {
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(Controller.class);
-    private CompanyService companyService = CompanyServiceImpl.getInstance();
-    private ComputerService computerService = ComputerServiceImpl.getInstance();
+    private CompanyService companyService = CompanyServiceImpl.INSTANCE;
+    private ComputerService computerService = ComputerServiceImpl.INSTANCE;
 
     /**
      * Get a Page<Company> from the service and converts it to Page<CompanyDto>.

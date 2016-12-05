@@ -20,13 +20,13 @@ public class CompanyDaoJdbcTest {
     }
     @Test
     public void testGetInstance() {
-        companyDao = CompanyDaoJdbc.getInstance();
+        companyDao = CompanyDaoJdbc.INSTANCE;
         assertNotNull("Get instance : not null", companyDao);
         assertEquals("Get instance : good class name", companyDao.getClass().getSimpleName(), "CompanyDaoJdbc");
     }
     @Test
     public void testGetById() {
-        companyDao = CompanyDaoJdbc.getInstance();
+        companyDao = CompanyDaoJdbc.INSTANCE;
         Company company = null;
         try {
              company = companyDao.getById(2);
@@ -38,7 +38,7 @@ public class CompanyDaoJdbcTest {
     }
     @Test
     public void testGetPage() {
-        companyDao = CompanyDaoJdbc.getInstance();
+        companyDao = CompanyDaoJdbc.INSTANCE;
         PageFilter pageFilter = new PageFilter();
         pageFilter.setElementsByPage(10);
         pageFilter.setPageNum(1);

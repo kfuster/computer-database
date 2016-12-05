@@ -18,13 +18,13 @@ public class CompanyServiceImplTest {
     }
     @Test
     public void testGetInstance() {
-        CompanyService companyService = CompanyServiceImpl.getInstance();
+        CompanyService companyService = CompanyServiceImpl.INSTANCE;
         assertNotNull("Get instance : not null", companyService);
         assertEquals("Get instance : good class name", companyService.getClass().getSimpleName(), "CompanyServiceImpl");
     }
     @Test
     public void testGetPage() {
-        CompanyService companyService = CompanyServiceImpl.getInstance();
+        CompanyService companyService = CompanyServiceImpl.INSTANCE;
         PageFilter pageFilter = new PageFilter();
         pageFilter.setElementsByPage(10);
         pageFilter.setPageNum(1);

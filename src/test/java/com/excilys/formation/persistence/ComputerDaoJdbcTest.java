@@ -22,13 +22,13 @@ public class ComputerDaoJdbcTest {
     }
     @Test
     public void testGetInstance() {
-        computerDao = ComputerDaoJdbc.getInstance();
+        computerDao = ComputerDaoJdbc.INSTANCE;
         assertNotNull("Get instance : not null", computerDao);
         assertEquals("Get instance : good class name", computerDao.getClass().getSimpleName(), "ComputerDaoJdbc");
     }
     @Test
     public void testCreate() {
-        computerDao = ComputerDaoJdbc.getInstance();
+        computerDao = ComputerDaoJdbc.INSTANCE;
         Computer computer = new Computer.ComputerBuilder("New computer").dateIntro(LocalDate.parse("1978-03-22")).dateDisc(LocalDate.parse("1989-06-14")).company(new Company.CompanyBuilder("New company").id((long) 5).build()).build();
         try {
             computer = computerDao.create(computer);
@@ -40,7 +40,7 @@ public class ComputerDaoJdbcTest {
     }
     @Test
     public void testUpdate() {
-        computerDao = ComputerDaoJdbc.getInstance();
+        computerDao = ComputerDaoJdbc.INSTANCE;
         Computer computer = new Computer.ComputerBuilder("New computer").dateIntro(LocalDate.parse("1978-03-22")).dateDisc(LocalDate.parse("1989-06-14")).company(new Company.CompanyBuilder("New company").id((long) 5).build()).build();
         Computer testComputer = null; 
         try {
@@ -56,7 +56,7 @@ public class ComputerDaoJdbcTest {
     }
     @Test
     public void testDelete() {
-        computerDao = ComputerDaoJdbc.getInstance();
+        computerDao = ComputerDaoJdbc.INSTANCE;
         Computer computer = new Computer.ComputerBuilder("New computer").dateIntro(LocalDate.parse("1978-03-22")).dateDisc(LocalDate.parse("1989-06-14")).company(new Company.CompanyBuilder("New company").id((long) 5).build()).build();
         Computer testComputer = null; 
         long idToDelete = 0;
@@ -72,7 +72,7 @@ public class ComputerDaoJdbcTest {
     }
     @Test
     public void testGetById() {
-        computerDao = ComputerDaoJdbc.getInstance();
+        computerDao = ComputerDaoJdbc.INSTANCE;
         Computer computer = null;
         try {
             computer = computerDao.getById(24);
@@ -85,7 +85,7 @@ public class ComputerDaoJdbcTest {
     }
     @Test
     public void testGetByName() {
-        computerDao = ComputerDaoJdbc.getInstance();
+        computerDao = ComputerDaoJdbc.INSTANCE;
         Computer computer = null;
         try {
             computer = computerDao.getByName("Macintosh Quadra");
@@ -97,7 +97,7 @@ public class ComputerDaoJdbcTest {
     }
     @Test
     public void testGetPage() {
-        computerDao = ComputerDaoJdbc.getInstance();
+        computerDao = ComputerDaoJdbc.INSTANCE;
         PageFilter pageFilter = new PageFilter();
         pageFilter.setElementsByPage(10);
         pageFilter.setPageNum(1);

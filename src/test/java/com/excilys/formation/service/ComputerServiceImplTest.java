@@ -20,7 +20,7 @@ public class ComputerServiceImplTest {
     }
     @Test
     public void testGetInstance() {
-        ComputerService computerService = ComputerServiceImpl.getInstance();
+        ComputerService computerService = ComputerServiceImpl.INSTANCE;
         assertNotNull("Get instance : not null", computerService);
         assertEquals("Get instance : good class name", computerService.getClass().getSimpleName(), "ComputerServiceImpl");
     }

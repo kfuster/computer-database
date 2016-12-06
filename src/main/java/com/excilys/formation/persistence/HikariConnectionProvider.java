@@ -12,10 +12,11 @@ public enum HikariConnectionProvider {
     INSTANCE;
     private static final Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory
             .getLogger(HikariConnectionProvider.class);
-    private static final String HIKARI_PROPERTIES = "src/main/resources/hikari.properties";
+    private static final String HIKARI_PROPERTIES;
     private static DataSource dataSource;
     private static final ThreadLocal<Connection> CONNECTION = new ThreadLocal<Connection>();
     static {
+        HIKARI_PROPERTIES = HikariConnectionProvider.class.getClassLoader().getResource("hikari.properties").getPath();
         HikariConfig config = new HikariConfig(HIKARI_PROPERTIES);
         dataSource = new HikariDataSource(config);
     }

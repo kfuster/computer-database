@@ -4,7 +4,7 @@
 
 	<groupId>com.excilys.formation</groupId>
 	<artifactId>computer-database</artifactId>
-	<version>SNAPSHOT</version>
+	<version>1.5-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>computer-database</name>
@@ -26,6 +26,7 @@
 		<checkstylePlugin.version>2.17</checkstylePlugin.version>
 		<tomcat7Plugin.version>2.2</tomcat7Plugin.version>
 		<hikariCp.version>2.5.1</hikariCp.version>
+		<spring.version>4.3.4.RELEASE</spring.version>
 		<seleniumPlugin.version>2.3</seleniumPlugin.version>
 		<cargoPlugin.version>1.6.1</cargoPlugin.version>
 		<failsafePlugin.version>2.19.1</failsafePlugin.version>
@@ -112,6 +113,11 @@
 			<version>${hikariCp.version}</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -143,7 +149,7 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<version>${tomcat7Plugin.version}</version>
 				<configuration>
-					<url>http://localhost:8081/manager/text</url>
+					<url>http://localhost:8080/manager/text</url>
 					<server>TomcatServer</server>
 					<path>/</path>
 				</configuration>
@@ -181,9 +187,9 @@
 				<configuration>
 					<!-- Container configuration -->
 					<container>
-						<type>installed</type>
-						<containerId>tomcat8x</containerId>
-						<home>${TOMCAT_HOME}</home>
+						<type>embedded</type>
+						<!-- <containerId>tomcat8x</containerId>
+						<home>${TOMCAT_HOME}</home>-->
 					</container>
 				</configuration>
 				<executions>

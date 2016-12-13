@@ -1,6 +1,7 @@
 package com.excilys.formation.cli.implementation;
 
 import java.util.Scanner;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.excilys.formation.cli.ComputerMenu;
 import com.excilys.formation.cli.Controller;
 import com.excilys.formation.cli.MainMenu;
@@ -15,30 +16,23 @@ import com.excilys.formation.util.MenuUtil;
  *
  */
 public class ComputerMenuImpl implements ComputerMenu {
-    private static ComputerMenu computerMenu;
     private Page<ComputerDto> pageComputer;
     private Scanner scanner = MainMenu.scanner;
     private PageFilter pageFilter;
-    private Controller controller = new Controller();
+    @Autowired
+    private Controller controller;
 
     /**
      * ComputerMenuImpl constructor. Initialize ComputerService.
      */
-    private ComputerMenuImpl() {
+    public ComputerMenuImpl() {
         pageFilter = new PageFilter();
         pageFilter.setElementsByPage(10);
         pageFilter.setPageNum(1);
     }
-
-    /**
-     * Getter for the ComputerMenuImpl instance. Initializes it if null.
-     * @return the instance of ComputerMenuImpl
-     */
-    public static ComputerMenu getInstance() {
-        if (computerMenu == null) {
-            computerMenu = new ComputerMenuImpl();
-        }
-        return computerMenu;
+    
+    public void setController(Controller pController) {
+        controller = pController;
     }
 
     /**

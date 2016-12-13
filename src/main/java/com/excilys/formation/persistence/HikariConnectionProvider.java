@@ -4,21 +4,26 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.sql.DataSource;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import ch.qos.logback.classic.Logger;
 
-public enum HikariConnectionProvider {
-    INSTANCE;
+public class HikariConnectionProvider {
     private static final Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory
             .getLogger(HikariConnectionProvider.class);
-    private static final String HIKARI_PROPERTIES;
-    private static DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
+    public static HikariConfig hikariConfig;
     private static final ThreadLocal<Connection> CONNECTION = new ThreadLocal<Connection>();
-    static {
-        HIKARI_PROPERTIES = HikariConnectionProvider.class.getClassLoader().getResource("hikari.properties").getPath();
-        HikariConfig config = new HikariConfig(HIKARI_PROPERTIES);
-        dataSource = new HikariDataSource(config);
+    
+    public HikariConnectionProvider() {
+    }
+    
+    public void setDataSource(DataSource pDataSource) {
+        dataSource = pDataSource;
+    }
+    public static HikariConnectionProvider getInstance() {
+        return null;
     }
 
     /**
@@ -108,7 +113,7 @@ public enum HikariConnectionProvider {
      * @return a Connection.
      * @throws SQLException
      */
-    public Connection getConnectionDataSource() throws SQLException {
-        return dataSource.getConnection();
+    public DataSource getDataSource() throws SQLException {
+        return dataSource;
     }
 }

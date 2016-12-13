@@ -9,14 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.mapper.JdbcMapper;
 import com.excilys.formation.model.Computer;
 import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.ComputerDao;
-import com.excilys.formation.persistence.HikariConnectionProvider;
 import com.excilys.formation.util.DateConverter;
+import com.zaxxer.hikari.HikariDataSource;
 import ch.qos.logback.classic.Logger;
 
 /**
@@ -24,10 +26,11 @@ import ch.qos.logback.classic.Logger;
  * @author kfuster
  *
  */
-public enum ComputerDaoJdbc implements ComputerDao {
-    INSTANCE;
+@Component
+public class ComputerDaoJdbc implements ComputerDao {
+    @Autowired
+    private HikariDataSource dataSource;
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(ComputerDaoJdbc.class);
-    private static HikariConnectionProvider hikariConnectionProvider = HikariConnectionProvider.INSTANCE;
     private static final String INSERT_COMPUTER = "INSERT INTO computer(name, introduced, discontinued, company_id) VALUES(?, ?, ?, ?)";
     private static final String UPDATE_COMPUTER = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
     private static final String DELETE_COMPUTER = "DELETE FROM computer WHERE id=?";
@@ -36,10 +39,16 @@ public enum ComputerDaoJdbc implements ComputerDao {
     private static final String SELECT_JOIN = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, company.id as companyId, company.name as companyName FROM computer LEFT JOIN company ON computer.company_id=company.id";
     private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM computer LEFT JOIN company ON computer.company_id=company.id ";
 
+    public ComputerDaoJdbc(){}
+    
+    public void setDataSource(HikariDataSource pDataSource) {
+        dataSource = pDataSource;
+    }
+    
     @Override
     public Computer create(Computer pComputer) throws PersistenceException {
         String queryComputer = INSERT_COMPUTER;
-        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
+        try (Connection connection = dataSource.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputer,
                         PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, pComputer.getName());
@@ -65,7 +74,7 @@ public enum ComputerDaoJdbc implements ComputerDao {
     @Override
     public void update(Computer pComputer) throws PersistenceException {
         String queryComputer = UPDATE_COMPUTER;
-        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
+        try (Connection connection = dataSource.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputer)) {
             preparedStatement.setString(1, pComputer.getName());
             preparedStatement.setTimestamp(2, DateConverter.fromLocalDateToTimestamp(pComputer.getIntroduced()));
@@ -81,7 +90,7 @@ public enum ComputerDaoJdbc implements ComputerDao {
 
     @Override
     public void delete(long pID) throws PersistenceException {
-        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
+        try (Connection connection = dataSource.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(DELETE_COMPUTER)) {
             preparedStatement.setLong(1, pID);
             preparedStatement.executeUpdate();
@@ -94,7 +103,7 @@ public enum ComputerDaoJdbc implements ComputerDao {
     @Override
     public void deleteList(String idList) throws PersistenceException {
         String query = DELETE_COMPUTER_LIST + " (" + idList + ");";
-        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
+        try (Connection connection = dataSource.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -118,7 +127,7 @@ public enum ComputerDaoJdbc implements ComputerDao {
     public Computer getById(long pId) throws PersistenceException {
         String queryComputer = SELECT_JOIN + " WHERE computer.id=?";
         Computer computer = null;
-        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
+        try (Connection connection = dataSource.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputer)) {
             preparedStatement.setLong(1, pId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -134,7 +143,7 @@ public enum ComputerDaoJdbc implements ComputerDao {
     public Computer getByName(String pName) throws PersistenceException {
         String queryComputer = SELECT_JOIN + " WHERE computer.name=?";
         Computer computer = null;
-        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
+        try (Connection connection = dataSource.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputer)) {
             preparedStatement.setString(1, pName);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -156,7 +165,7 @@ public enum ComputerDaoJdbc implements ComputerDao {
         }
         queryComputers += conditions + " LIMIT ? OFFSET ?";
         Page<Computer> pPage = new Page<>(pPageFilter.getElementsByPage());
-        try (Connection connection = hikariConnectionProvider.getConnectionDataSource();
+        try (Connection connection = dataSource.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputers)) {
             preparedStatement.setInt(1, pPageFilter.getElementsByPage());
             preparedStatement.setInt(2, (pPageFilter.getPageNum() - 1) * pPageFilter.getElementsByPage());

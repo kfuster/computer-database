@@ -1,12 +1,13 @@
 package com.excilys.formation.service.implementation;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.model.Computer;
 import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.ComputerDao;
-import com.excilys.formation.persistence.jdbc.ComputerDaoJdbc;
 import com.excilys.formation.service.ComputerService;
 import ch.qos.logback.classic.Logger;
 
@@ -15,10 +16,19 @@ import ch.qos.logback.classic.Logger;
  * @author kfuster
  *
  */
-public enum ComputerServiceImpl implements ComputerService {
-    INSTANCE;
+@Service
+public class ComputerServiceImpl implements ComputerService {
+   
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(ComputerServiceImpl.class);
-    private ComputerDao computerDao = ComputerDaoJdbc.INSTANCE;
+    @Autowired
+    private ComputerDao computerDao;
+    
+    public ComputerServiceImpl(){
+        
+    }
+    public void setComputerDao(ComputerDao pComputerDao) {
+        computerDao = pComputerDao;
+    }
 
     @Override
     public Computer create(Computer pComputer) {

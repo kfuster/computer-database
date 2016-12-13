@@ -2,7 +2,10 @@ package com.excilys.formation.service.implementation;
 
 import java.sql.SQLException;
 import java.util.List;
+import javax.sql.DataSource;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.exception.ServiceException;
 import com.excilys.formation.model.Company;
@@ -10,10 +13,8 @@ import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.CompanyDao;
 import com.excilys.formation.persistence.ComputerDao;
-import com.excilys.formation.persistence.HikariConnectionProvider;
-import com.excilys.formation.persistence.jdbc.CompanyDaoJdbc;
-import com.excilys.formation.persistence.jdbc.ComputerDaoJdbc;
 import com.excilys.formation.service.CompanyService;
+import com.zaxxer.hikari.HikariDataSource;
 import ch.qos.logback.classic.Logger;
 
 /**
@@ -21,12 +22,30 @@ import ch.qos.logback.classic.Logger;
  * @author kfuster
  *
  */
-public enum CompanyServiceImpl implements CompanyService {
-    INSTANCE;
+@Service
+public class CompanyServiceImpl implements CompanyService {
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(CompanyServiceImpl.class);
-    private CompanyDao companyDao = CompanyDaoJdbc.INSTANCE;
-    private ComputerDao computerDao = ComputerDaoJdbc.INSTANCE;
-    private static HikariConnectionProvider hikariConnectionProvider = HikariConnectionProvider.INSTANCE;
+    @Autowired
+    private CompanyDao companyDao;
+    @Autowired
+    private ComputerDao computerDao;
+    @Autowired
+    private DataSource dataSource;
+
+    public CompanyServiceImpl() {
+    }
+
+    public void setComputerDao(ComputerDao pComputerDao) {
+        computerDao = pComputerDao;
+    }
+
+    public void setCompanyDao(CompanyDao pCompanyDao) {
+        companyDao = pCompanyDao;
+    }
+
+    public void setDataSource(HikariDataSource pDataSource) {
+        dataSource = pDataSource;
+    }
 
     @Override
     public Page<Company> getPage(PageFilter pPageFilter) {
@@ -41,19 +60,10 @@ public enum CompanyServiceImpl implements CompanyService {
     @Override
     public void delete(long pId) throws ServiceException {
         try {
-            hikariConnectionProvider.initConnection();
-            hikariConnectionProvider.initTransaction();
-            computerDao.deleteByCompany(hikariConnectionProvider.getConnection(), pId);
-            companyDao.delete(hikariConnectionProvider.getConnection(), pId);
-            hikariConnectionProvider.commit();
-            hikariConnectionProvider.closeConnection();
-        } catch (PersistenceException e) {
-            hikariConnectionProvider.rollback();
-            LOGGER.info(e.getMessage());
-        } catch (SQLException e) {
-            hikariConnectionProvider.rollback();
-            LOGGER.error("Error CompanyService : delete : ", e);
-            throw new ServiceException("Erreur lors de la suppression de la companie");
+            computerDao.deleteByCompany(dataSource.getConnection(), pId);
+            companyDao.delete(dataSource.getConnection(), pId);
+        } catch (PersistenceException | SQLException e) {
+            LOGGER.error( "CompanyServiceImpl : delete() catched Exception",e);
         }
     }
 

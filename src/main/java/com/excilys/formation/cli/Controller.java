@@ -1,6 +1,7 @@
 package com.excilys.formation.cli;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.exception.ServiceException;
@@ -11,15 +12,26 @@ import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.service.CompanyService;
 import com.excilys.formation.service.ComputerService;
-import com.excilys.formation.service.implementation.CompanyServiceImpl;
-import com.excilys.formation.service.implementation.ComputerServiceImpl;
 import ch.qos.logback.classic.Logger;
 
+@org.springframework.stereotype.Controller
 public class Controller {
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(Controller.class);
-    private CompanyService companyService = CompanyServiceImpl.INSTANCE;
-    private ComputerService computerService = ComputerServiceImpl.INSTANCE;
+    @Autowired
+    private CompanyService companyService;
+    @Autowired
+    private ComputerService computerService;
+    
+    public Controller(){}
+    
+    public void setComputerService(ComputerService pComputerService) {
+        computerService = pComputerService;
+    }
 
+    public void setCompanyService(CompanyService pCompanyService) {
+        companyService = pCompanyService;
+    }
+    
     /**
      * Get a Page<Company> from the service and converts it to Page<CompanyDto>.
      * @param pPageFilter the PageFilter containing the parameters of the page

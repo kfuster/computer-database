@@ -1,8 +1,7 @@
 package com.excilys.formation.cli;
 
 import java.util.Scanner;
-import com.excilys.formation.cli.implementation.CompanyMenuImpl;
-import com.excilys.formation.cli.implementation.ComputerMenuImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.excilys.formation.util.MenuUtil;
 
 /**
@@ -13,11 +12,23 @@ import com.excilys.formation.util.MenuUtil;
  */
 public class MainMenu implements Menu {
     public static Scanner scanner = new Scanner(System.in);
-
+    @Autowired
+    private static ComputerMenu computerMenu;
+    @Autowired
+    private static CompanyMenu companyMenu;
+    
     /**
      * MainMenu constructor. Initialize scanner.
      */
     public MainMenu() {
+    }
+    
+    public void setComputerMenu(ComputerMenu pComputerMenu) {
+        computerMenu = pComputerMenu;
+    }
+
+    public void setCompanyMenu(CompanyMenu pCompanyMenu) {
+        companyMenu = pCompanyMenu;
     }
 
     /**
@@ -29,11 +40,11 @@ public class MainMenu implements Menu {
         boolean quit = false;
         switch (choice) {
         case 1:
-            ComputerMenuImpl.getInstance().startMenu();
+            computerMenu.startMenu();
             quit = false;
             break;
         case 2:
-            CompanyMenuImpl.getInstance().startMenu();
+            companyMenu.startMenu();
             quit = false;
             break;
         case 3:

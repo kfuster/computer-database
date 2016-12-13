@@ -1,6 +1,7 @@
 package com.excilys.formation.cli.implementation;
 
 import java.util.Scanner;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.excilys.formation.cli.CompanyMenu;
 import com.excilys.formation.cli.Controller;
 import com.excilys.formation.cli.MainMenu;
@@ -15,32 +16,25 @@ import com.excilys.formation.util.MenuUtil;
  *
  */
 public class CompanyMenuImpl implements CompanyMenu {
-    private static CompanyMenu companyMenu;
     private Page<CompanyDto> pageCompany;
     private PageFilter pageFilter;
     private Scanner scanner = MainMenu.scanner;
-    private Controller controller = new Controller();
+    @Autowired
+    private Controller controller;
 
     /**
      * CompanyMenuImpl constructor. Initialize CompanyService.
      */
-    private CompanyMenuImpl() {
+    public CompanyMenuImpl() {
         pageFilter = new PageFilter();
         pageFilter.setElementsByPage(10);
         pageFilter.setPageNum(1);
     }
 
-    /**
-     * Getter for the CompanyMenuImpl instance. Initializes it if null.
-     * @return the instance of CompanyMenuImpl
-     */
-    public static CompanyMenu getInstance() {
-        if (companyMenu == null) {
-            companyMenu = new CompanyMenuImpl();
-        }
-        return companyMenu;
+    public void setController(Controller pController) {
+        controller = pController;
     }
-
+    
     @Override
     public void startMenu() {
         System.out.println(

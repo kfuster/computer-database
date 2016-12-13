@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.excilys.formation" />
+	<context:property-placeholder location="classpath:hikari.properties" />
+	<bean id="hikariConfig" name="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="poolName" value="springHikariCP" />
+		<property name="connectionTestQuery" value="SELECT 1" />
+		<property name="dataSourceClassName" value="${dataSourceClassName}" />
+
+		<property name="dataSourceProperties">
+			<props>
+				<prop key="url">${dataSource.jdbcurl}</prop>
+				<prop key="user">${dataSource.user}</prop>
+				<prop key="password">${dataSource.password}</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<bean id="dataSource" name="dataSource" scope="singleton" class="com.zaxxer.hikari.HikariDataSource"
+		destroy-method="close">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+	
+	<bean id="computerDao" name="computerDao" scope="singleton" class="com.excilys.formation.persistence.jdbc.ComputerDaoJdbc">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<bean id="companyDao" name="companyDao" scope="singleton" class="com.excilys.formation.persistence.jdbc.CompanyDaoJdbc">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<bean id="computerService" name="computerService" scope="singleton" class="com.excilys.formation.service.implementation.ComputerServiceImpl">
+		<property name="computerDao" ref="computerDao"></property>
+	</bean>
+	
+	<bean id="companyService" name="companyService" scope="singleton" class="com.excilys.formation.service.implementation.CompanyServiceImpl">
+		<property name="companyDao" ref="companyDao"></property>
+	</bean>
+	
+	<bean id="controller" name="controller" class="com.excilys.formation.cli.Controller">
+		<property name="computerService" ref="computerService"></property>
+		<property name="companyService" ref="companyService"></property>
+	</bean>
+	
+	<bean id="computerMenu" name="computerMenu" class="com.excilys.formation.cli.implementation.ComputerMenuImpl">
+		<property name="controller" ref="controller"></property>
+	</bean>
+	<bean id="companyMenu" name="companyMenu" class="com.excilys.formation.cli.implementation.CompanyMenuImpl">
+		<property name="controller" ref="controller"></property>
+	</bean>
+	<bean id="mainMenu" name="mainMenu" class="com.excilys.formation.cli.MainMenu">
+		<property name="computerMenu" ref="computerMenu"></property>
+		<property name="companyMenu" ref="companyMenu"></property>
+	</bean>
+
+</beans>

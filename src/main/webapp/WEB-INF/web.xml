@@ -37,8 +37,19 @@
 		<url-pattern>/deleteComputer</url-pattern>
 	</servlet-mapping>
 	<error-page>
-    <!-- Missing resource -->
-    <error-code>404</error-code>
-    <location>/WEB-INF/views/404.html</location>
-</error-page>
+		<!-- Missing resource -->
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/404.html</location>
+	</error-page>
+	
+	<context-param>
+    	<param-name>contextConfigLocation</param-name>
+    	<param-value>classpath:application-context.xml</param-value>
+	</context-param>
+
+	<listener>
+	   <listener-class>
+	        org.springframework.web.context.ContextLoaderListener
+	   </listener-class>
+	</listener> 
 </web-app>

@@ -24,8 +24,8 @@ public class ComputerServiceImpl implements ComputerService {
     private ComputerDao computerDao;
     
     public ComputerServiceImpl(){
-        
     }
+    
     public void setComputerDao(ComputerDao pComputerDao) {
         computerDao = pComputerDao;
     }

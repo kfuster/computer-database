@@ -69,7 +69,7 @@ public class AddComputerServlet extends HttpServlet {
     public void init() {
         WebApplicationContext applicationContext = WebApplicationContextUtils
                 .getWebApplicationContext(getServletContext());
-        this.companyService = (CompanyService)applicationContext.getBean("companyService");
-        this.computerService = (ComputerService)applicationContext.getBean("computerService");
+        this.companyService = (CompanyService)applicationContext.getBean(CompanyService.class);
+        this.computerService = (ComputerService)applicationContext.getBean(ComputerService.class);
     }
 }

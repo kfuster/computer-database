@@ -26,7 +26,7 @@ public class EditComputerServlet extends HttpServlet {
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(EditComputerServlet.class);
     private CompanyService companyService;
     private ComputerService computerService;
-    
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String computerId = null;
@@ -43,7 +43,7 @@ public class EditComputerServlet extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/editComputer.jsp").forward(request, response);
         }
     }
-    
+
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Extract datas from the request to a ComputerDto
@@ -68,12 +68,12 @@ public class EditComputerServlet extends HttpServlet {
             }
         }
     }
-    
+
     @Override
     public void init() {
         WebApplicationContext applicationContext = WebApplicationContextUtils
                 .getWebApplicationContext(getServletContext());
-        this.companyService = (CompanyService)applicationContext.getBean("companyService");
-        this.computerService = (ComputerService)applicationContext.getBean("computerService");
+        this.companyService = (CompanyService) applicationContext.getBean(CompanyService.class);
+        this.computerService = (ComputerService) applicationContext.getBean(ComputerService.class);
     }
 }

@@ -2,15 +2,34 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans 
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context 
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<context:annotation-config />
 	<context:component-scan base-package="com.excilys.formation" />
 	<context:property-placeholder location="classpath:hikari.properties" />
+
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<!-- the transactional semantics... -->
+		<tx:attributes>
+			<tx:method name="delete"/>
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="companyServiceOperation"
+			expression="execution(* com.excilys.formation.service.CompanyService.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="companyServiceOperation" />
+	</aop:config>
+	
 	<bean id="hikariConfig" name="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="poolName" value="springHikariCP" />
 		<property name="connectionTestQuery" value="SELECT 1" />
@@ -25,43 +44,23 @@
 		</property>
 	</bean>
 
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 
-	<bean id="dataSource" name="dataSource" scope="singleton" class="com.zaxxer.hikari.HikariDataSource"
-		destroy-method="close">
+	<bean id="dataSource" name="dataSource" scope="singleton"
+		class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfig" />
 	</bean>
-	
-	<bean id="computerDao" name="computerDao" scope="singleton" class="com.excilys.formation.persistence.jdbc.ComputerDaoJdbc">
-		<property name="dataSource" ref="dataSource"></property>
-	</bean>
-	
-	<bean id="companyDao" name="companyDao" scope="singleton" class="com.excilys.formation.persistence.jdbc.CompanyDaoJdbc">
-		<property name="dataSource" ref="dataSource"></property>
-	</bean>
-	
-	<bean id="computerService" name="computerService" scope="singleton" class="com.excilys.formation.service.implementation.ComputerServiceImpl">
-		<property name="computerDao" ref="computerDao"></property>
-	</bean>
-	
-	<bean id="companyService" name="companyService" scope="singleton" class="com.excilys.formation.service.implementation.CompanyServiceImpl">
-		<property name="companyDao" ref="companyDao"></property>
-	</bean>
-	
-	<bean id="controller" name="controller" class="com.excilys.formation.cli.Controller">
-		<property name="computerService" ref="computerService"></property>
-		<property name="companyService" ref="companyService"></property>
-	</bean>
-	
-	<bean id="computerMenu" name="computerMenu" class="com.excilys.formation.cli.implementation.ComputerMenuImpl">
-		<property name="controller" ref="controller"></property>
-	</bean>
-	<bean id="companyMenu" name="companyMenu" class="com.excilys.formation.cli.implementation.CompanyMenuImpl">
-		<property name="controller" ref="controller"></property>
-	</bean>
-	<bean id="mainMenu" name="mainMenu" class="com.excilys.formation.cli.MainMenu">
-		<property name="computerMenu" ref="computerMenu"></property>
-		<property name="companyMenu" ref="companyMenu"></property>
-	</bean>
-	
 
+	<bean id="computerDao" name="computerDao" scope="singleton"
+		class="com.excilys.formation.persistence.jdbc.ComputerDaoJdbc">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<bean id="companyDao" name="companyDao" scope="singleton"
+		class="com.excilys.formation.persistence.jdbc.CompanyDaoJdbc">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
 </beans>

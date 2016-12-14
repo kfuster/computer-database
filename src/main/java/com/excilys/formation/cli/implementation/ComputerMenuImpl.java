@@ -2,6 +2,7 @@ package com.excilys.formation.cli.implementation;
 
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import com.excilys.formation.cli.ComputerMenu;
 import com.excilys.formation.cli.Controller;
 import com.excilys.formation.cli.MainMenu;
@@ -15,6 +16,7 @@ import com.excilys.formation.util.MenuUtil;
  * @author kfuster
  *
  */
+@Component
 public class ComputerMenuImpl implements ComputerMenu {
     private Page<ComputerDto> pageComputer;
     private Scanner scanner = MainMenu.scanner;

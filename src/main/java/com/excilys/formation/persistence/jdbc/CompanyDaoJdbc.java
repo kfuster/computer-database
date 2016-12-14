@@ -5,11 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.stereotype.Repository;
+
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.mapper.JdbcMapper;
 import com.excilys.formation.model.Company;
@@ -24,9 +27,8 @@ import ch.qos.logback.classic.Logger;
  * @author kfuster
  *
  */
-@Component
+@Repository
 public class CompanyDaoJdbc implements CompanyDao {
-    @Autowired
     private HikariDataSource dataSource;
     private static final Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(CompanyDaoJdbc.class);
     private static final String SELECT_ALL = "SELECT * FROM company ORDER BY company.name";
@@ -35,16 +37,17 @@ public class CompanyDaoJdbc implements CompanyDao {
     private static final String COUNT_ALL = "SELECT COUNT(*) as total FROM company";
     private static final String DELETE_COMPANY = "DELETE FROM company WHERE id=?";
 
-    public CompanyDaoJdbc(){};
-    
+    public CompanyDaoJdbc() {
+    };
+
     public void setDataSource(HikariDataSource pDataSource) {
         dataSource = pDataSource;
     }
-    
+
     @Override
     public Company getById(long pId) throws PersistenceException {
         Company company = null;
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DataSourceUtils.getConnection(dataSource);
                 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);) {
             preparedStatement.setLong(1, pId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -78,7 +81,7 @@ public class CompanyDaoJdbc implements CompanyDao {
         String queryComputers = SELECT_PAGE;
         queryComputers += " LIMIT ? OFFSET ?";
         Page<Company> pPage = null;
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DataSourceUtils.getConnection(dataSource);
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputers)) {
             preparedStatement.setInt(1, pPageFilter.getElementsByPage());
             preparedStatement.setInt(2, (pPageFilter.getPageNum() - 1) * pPageFilter.getElementsByPage());
@@ -100,7 +103,7 @@ public class CompanyDaoJdbc implements CompanyDao {
     @Override
     public List<Company> getAll() throws PersistenceException {
         List<Company> allCompanies = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DataSourceUtils.getConnection(dataSource);
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(SELECT_ALL)) {
             allCompanies = JdbcMapper.mapResultsToCompanyList(resultSet);

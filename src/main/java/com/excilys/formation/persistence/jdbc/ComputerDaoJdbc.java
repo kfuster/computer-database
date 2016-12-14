@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.stereotype.Repository;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.mapper.JdbcMapper;
 import com.excilys.formation.model.Computer;
@@ -26,9 +26,8 @@ import ch.qos.logback.classic.Logger;
  * @author kfuster
  *
  */
-@Component
+@Repository
 public class ComputerDaoJdbc implements ComputerDao {
-    @Autowired
     private HikariDataSource dataSource;
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(ComputerDaoJdbc.class);
     private static final String INSERT_COMPUTER = "INSERT INTO computer(name, introduced, discontinued, company_id) VALUES(?, ?, ?, ?)";
@@ -48,7 +47,7 @@ public class ComputerDaoJdbc implements ComputerDao {
     @Override
     public Computer create(Computer pComputer) throws PersistenceException {
         String queryComputer = INSERT_COMPUTER;
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DataSourceUtils.getConnection(dataSource);
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputer,
                         PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, pComputer.getName());
@@ -74,7 +73,7 @@ public class ComputerDaoJdbc implements ComputerDao {
     @Override
     public void update(Computer pComputer) throws PersistenceException {
         String queryComputer = UPDATE_COMPUTER;
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DataSourceUtils.getConnection(dataSource);
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputer)) {
             preparedStatement.setString(1, pComputer.getName());
             preparedStatement.setTimestamp(2, DateConverter.fromLocalDateToTimestamp(pComputer.getIntroduced()));
@@ -90,7 +89,7 @@ public class ComputerDaoJdbc implements ComputerDao {
 
     @Override
     public void delete(long pID) throws PersistenceException {
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DataSourceUtils.getConnection(dataSource);
                 PreparedStatement preparedStatement = connection.prepareStatement(DELETE_COMPUTER)) {
             preparedStatement.setLong(1, pID);
             preparedStatement.executeUpdate();
@@ -103,7 +102,7 @@ public class ComputerDaoJdbc implements ComputerDao {
     @Override
     public void deleteList(String idList) throws PersistenceException {
         String query = DELETE_COMPUTER_LIST + " (" + idList + ");";
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DataSourceUtils.getConnection(dataSource);
                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -127,7 +126,7 @@ public class ComputerDaoJdbc implements ComputerDao {
     public Computer getById(long pId) throws PersistenceException {
         String queryComputer = SELECT_JOIN + " WHERE computer.id=?";
         Computer computer = null;
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DataSourceUtils.getConnection(dataSource);
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputer)) {
             preparedStatement.setLong(1, pId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -143,7 +142,7 @@ public class ComputerDaoJdbc implements ComputerDao {
     public Computer getByName(String pName) throws PersistenceException {
         String queryComputer = SELECT_JOIN + " WHERE computer.name=?";
         Computer computer = null;
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DataSourceUtils.getConnection(dataSource);
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputer)) {
             preparedStatement.setString(1, pName);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -165,7 +164,7 @@ public class ComputerDaoJdbc implements ComputerDao {
         }
         queryComputers += conditions + " LIMIT ? OFFSET ?";
         Page<Computer> pPage = new Page<>(pPageFilter.getElementsByPage());
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DataSourceUtils.getConnection(dataSource);
                 PreparedStatement preparedStatement = connection.prepareStatement(queryComputers)) {
             preparedStatement.setInt(1, pPageFilter.getElementsByPage());
             preparedStatement.setInt(2, (pPageFilter.getPageNum() - 1) * pPageFilter.getElementsByPage());

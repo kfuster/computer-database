@@ -1,10 +1,11 @@
 package com.excilys.formation.service.implementation;
 
-import java.sql.SQLException;
+import java.sql.Connection;
 import java.util.List;
 import javax.sql.DataSource;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Service;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.exception.ServiceException;
@@ -60,9 +61,10 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void delete(long pId) throws ServiceException {
         try {
-            computerDao.deleteByCompany(dataSource.getConnection(), pId);
-            companyDao.delete(dataSource.getConnection(), pId);
-        } catch (PersistenceException | SQLException e) {
+            Connection connection = DataSourceUtils.getConnection(dataSource);
+            computerDao.deleteByCompany(connection, pId);
+            companyDao.delete(connection, pId);
+        } catch (PersistenceException e) {
             LOGGER.error( "CompanyServiceImpl : delete() catched Exception",e);
         }
     }

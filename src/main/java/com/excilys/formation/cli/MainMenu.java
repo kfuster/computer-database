@@ -1,7 +1,11 @@
 package com.excilys.formation.cli;
 
 import java.util.Scanner;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.excilys.formation.cli.implementation.CompanyMenuImpl;
+import com.excilys.formation.cli.implementation.ComputerMenuImpl;
 import com.excilys.formation.util.MenuUtil;
 
 /**
@@ -12,15 +16,16 @@ import com.excilys.formation.util.MenuUtil;
  */
 public class MainMenu implements Menu {
     public static Scanner scanner = new Scanner(System.in);
-    @Autowired
     private static ComputerMenu computerMenu;
-    @Autowired
     private static CompanyMenu companyMenu;
     
     /**
      * MainMenu constructor. Initialize scanner.
      */
     public MainMenu() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
+        computerMenu = (ComputerMenu) context.getBean(ComputerMenuImpl.class);
+        companyMenu = (CompanyMenu) context.getBean(CompanyMenuImpl.class);
     }
     
     public void setComputerMenu(ComputerMenu pComputerMenu) {

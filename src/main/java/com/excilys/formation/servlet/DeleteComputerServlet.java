@@ -32,6 +32,6 @@ public class DeleteComputerServlet extends HttpServlet {
     public void init() {
         WebApplicationContext applicationContext = WebApplicationContextUtils
                 .getWebApplicationContext(getServletContext());
-        this.computerService = (ComputerService)applicationContext.getBean("computerService");
+        this.computerService = (ComputerService)applicationContext.getBean(ComputerService.class);
     }
 }

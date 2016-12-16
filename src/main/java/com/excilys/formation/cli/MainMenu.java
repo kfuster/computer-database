@@ -18,16 +18,16 @@ public class MainMenu implements Menu {
     public static Scanner scanner = new Scanner(System.in);
     private static ComputerMenu computerMenu;
     private static CompanyMenu companyMenu;
-    
+
     /**
      * MainMenu constructor. Initialize scanner.
      */
     public MainMenu() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         computerMenu = (ComputerMenu) context.getBean(ComputerMenuImpl.class);
         companyMenu = (CompanyMenu) context.getBean(CompanyMenuImpl.class);
     }
-    
+
     public void setComputerMenu(ComputerMenu pComputerMenu) {
         computerMenu = pComputerMenu;
     }

@@ -27,11 +27,11 @@ public class DeleteComputerServlet extends HttpServlet {
         //Finally we redirect on the dashboard
         response.sendRedirect("/dashboard");
     }
-    
+
     @Override
     public void init() {
         WebApplicationContext applicationContext = WebApplicationContextUtils
                 .getWebApplicationContext(getServletContext());
-        this.computerService = (ComputerService)applicationContext.getBean(ComputerService.class);
+        this.computerService = (ComputerService) applicationContext.getBean(ComputerService.class);
     }
 }

@@ -32,11 +32,11 @@ public class DashboardServlet extends HttpServlet {
         this.getServletContext().setAttribute("pageComputer", computerPage);
         this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/dashboard.jsp").forward(request, response);
     }
-    
+
     @Override
     public void init() {
         WebApplicationContext applicationContext = WebApplicationContextUtils
                 .getWebApplicationContext(getServletContext());
-        this.computerService = (ComputerService)applicationContext.getBean(ComputerService.class);
+        this.computerService = (ComputerService) applicationContext.getBean(ComputerService.class);
     }
 }

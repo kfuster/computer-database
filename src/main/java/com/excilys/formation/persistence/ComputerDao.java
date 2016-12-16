@@ -1,6 +1,5 @@
 package com.excilys.formation.persistence;
 
-import java.sql.Connection;
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.model.Computer;
 
@@ -26,11 +25,10 @@ public interface ComputerDao extends BaseDao<Computer> {
     /**
      * Deletes all computers from a company.
      * @param id of the company for which we want to delete computer
-     * @param pConnection the connection to use
      * @throws PersistenceException in case of problems while deleting the
      *             computers
      */
-    void deleteByCompany(Connection pConnection, long id) throws PersistenceException;
+    void deleteByCompany(long id) throws PersistenceException;
 
     /**
      * Deletes a list of Computers.

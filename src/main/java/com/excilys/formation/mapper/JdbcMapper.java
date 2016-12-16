@@ -88,7 +88,7 @@ public class JdbcMapper {
      * @return a Computer
      * @throws SQLException in case of problems with operating on the ResultSet
      */
-    private static Computer extractComputer(ResultSet pResultSet) throws SQLException {
+    public static Computer extractComputer(ResultSet pResultSet) throws SQLException {
         // Get the company from the row
         Company company = new Company.CompanyBuilder(pResultSet.getString("companyName"))
                 .id(pResultSet.getLong("companyId")).build();
@@ -106,7 +106,7 @@ public class JdbcMapper {
      * @return a Company
      * @throws SQLException in case of problems with operating on the ResultSet
      */
-    private static Company extractCompany(ResultSet pResultSet) throws SQLException {
+    public static Company extractCompany(ResultSet pResultSet) throws SQLException {
         // Get the company from the row
         Company company = new Company.CompanyBuilder(pResultSet.getString("name")).id(pResultSet.getLong("id")).build();
         return company;

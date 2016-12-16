@@ -13,23 +13,6 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<context:annotation-config />
-	<context:component-scan base-package="com.excilys.formation" />
-	<context:property-placeholder location="classpath:hikari.properties" />
-
-	<tx:advice id="txAdvice" transaction-manager="txManager">
-		<!-- the transactional semantics... -->
-		<tx:attributes>
-			<tx:method name="delete"/>
-		</tx:attributes>
-	</tx:advice>
-
-	<aop:config>
-		<aop:pointcut id="companyServiceOperation"
-			expression="execution(* com.excilys.formation.service.CompanyService.*(..))" />
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="companyServiceOperation" />
-	</aop:config>
-	
 	<bean id="hikariConfig" name="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="poolName" value="springHikariCP" />
 		<property name="connectionTestQuery" value="SELECT 1" />
@@ -43,24 +26,8 @@
 			</props>
 		</property>
 	</bean>
-
-	<bean id="txManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-
 	<bean id="dataSource" name="dataSource" scope="singleton"
 		class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfig" />
-	</bean>
-
-	<bean id="computerDao" name="computerDao" scope="singleton"
-		class="com.excilys.formation.persistence.jdbc.ComputerDaoJdbc">
-		<property name="dataSource" ref="dataSource"></property>
-	</bean>
-
-	<bean id="companyDao" name="companyDao" scope="singleton"
-		class="com.excilys.formation.persistence.jdbc.CompanyDaoJdbc">
-		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 </beans>

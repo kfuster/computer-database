@@ -11,7 +11,7 @@ import com.excilys.formation.cli.MainMenu;
  */
 public class ComputerDatabase {
     public static ApplicationContext context;
-    
+
     /**
      * Launches the main menu.
      * @param args a list of arguments

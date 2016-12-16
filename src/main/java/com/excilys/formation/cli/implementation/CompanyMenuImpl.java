@@ -36,7 +36,7 @@ public class CompanyMenuImpl implements CompanyMenu {
     public void setController(Controller pController) {
         controller = pController;
     }
-    
+
     @Override
     public void startMenu() {
         System.out.println(

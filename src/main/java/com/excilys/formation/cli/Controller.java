@@ -23,9 +23,12 @@ public class Controller {
     private CompanyService companyService;
     @Autowired
     private ComputerService computerService;
-    
-    public Controller(){}
-    
+
+    /**
+     * Default constructor.
+     */
+    public Controller() { }
+
     public void setComputerService(ComputerService pComputerService) {
         computerService = pComputerService;
     }
@@ -33,7 +36,7 @@ public class Controller {
     public void setCompanyService(CompanyService pCompanyService) {
         companyService = pCompanyService;
     }
-    
+
     /**
      * Get a Page<Company> from the service and converts it to Page<CompanyDto>.
      * @param pPageFilter the PageFilter containing the parameters of the page

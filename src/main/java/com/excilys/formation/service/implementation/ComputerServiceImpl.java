@@ -18,14 +18,10 @@ import ch.qos.logback.classic.Logger;
  */
 @Service
 public class ComputerServiceImpl implements ComputerService {
-   
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(ComputerServiceImpl.class);
     @Autowired
     private ComputerDao computerDao;
-    
-    public ComputerServiceImpl(){
-    }
-    
+
     public void setComputerDao(ComputerDao pComputerDao) {
         computerDao = pComputerDao;
     }

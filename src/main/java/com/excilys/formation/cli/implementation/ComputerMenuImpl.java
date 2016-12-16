@@ -32,7 +32,7 @@ public class ComputerMenuImpl implements ComputerMenu {
         pageFilter.setElementsByPage(10);
         pageFilter.setPageNum(1);
     }
-    
+
     public void setController(Controller pController) {
         controller = pController;
     }

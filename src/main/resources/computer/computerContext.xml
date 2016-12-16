@@ -14,7 +14,7 @@
         http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<bean id="computerDao" name="computerDao" scope="singleton"
-		class="com.excilys.formation.persistence.jdbc.ComputerDaoJdbc">
+		class="com.excilys.formation.persistence.implementation.ComputerDaoJdbc">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 </beans>

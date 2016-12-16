@@ -14,7 +14,7 @@
         http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<bean id="companyDao" name="companyDao" scope="singleton"
-		class="com.excilys.formation.persistence.jdbc.CompanyDaoJdbc">
+		class="com.excilys.formation.persistence.implementation.CompanyDaoJdbc">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 </beans>

@@ -5,37 +5,22 @@
 	version="3.1">
 	<display-name>Computer database</display-name>
 	<servlet>
-		<servlet-name>Dashboard-servlet</servlet-name>
-		<servlet-class>com.excilys.formation.servlet.DashboardServlet</servlet-class>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>
+		org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+	    	<param-value>classpath:applicationContext.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
+		
 	<servlet-mapping>
-		<servlet-name>Dashboard-servlet</servlet-name>
-		<url-pattern>/dashboard</url-pattern>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	<servlet>
-		<servlet-name>AddComputer-servlet</servlet-name>
-		<servlet-class>com.excilys.formation.servlet.AddComputerServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AddComputer-servlet</servlet-name>
-		<url-pattern>/addComputer</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>EditComputer-servlet</servlet-name>
-		<servlet-class>com.excilys.formation.servlet.EditComputerServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>EditComputer-servlet</servlet-name>
-		<url-pattern>/editComputer</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>DeleteComputer-servlet</servlet-name>
-		<servlet-class>com.excilys.formation.servlet.DeleteComputerServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DeleteComputer-servlet</servlet-name>
-		<url-pattern>/deleteComputer</url-pattern>
-	</servlet-mapping>
+
 	<error-page>
 		<!-- Missing resource -->
 		<error-code>404</error-code>

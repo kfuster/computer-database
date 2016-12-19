@@ -17,8 +17,6 @@
 <%@ page import="java.util.Map"%>
 </head>
 <body>
-	<jsp:useBean id="listCompanies" scope="application"
-		type="java.util.List<CompanyDto>" />
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<a class="navbar-brand" href="dashboard"> Application - Computer

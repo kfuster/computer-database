@@ -1,7 +1,5 @@
 <%@ tag body-content="empty"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:useBean id="pageComputer" scope="application"
-		type="com.excilys.formation.pagination.Page" />
 <c:forEach items="${pageComputer.elements}" var="computer">
 	<tr>
 		<td class="editMode">

@@ -24,6 +24,7 @@
 		<servletApi.version>3.1.0</servletApi.version>
 		<jspApi.version>2.3.1</jspApi.version>
 		<jstl.version>1.2</jstl.version>
+		<javaxValidation.version>1.1.0.Final</javaxValidation.version>
 		<checkstylePlugin.version>2.17</checkstylePlugin.version>
 		<tomcat7Plugin.version>2.2</tomcat7Plugin.version>
 		<hikariCp.version>2.5.1</hikariCp.version>
@@ -182,6 +183,16 @@
 			<version>${jspApi.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>${javaxValidation.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.3.4.Final</version>
+		</dependency>
 		<!-- FIND SOLUTION, problem with taglib uri <dependency> <groupId>javax.servlet.jsp.jstl</groupId> 
 			<artifactId>javax.servlet.jsp.jstl-api</artifactId> <version>1.2.1</version> 
 			</dependency> -->
@@ -196,7 +207,6 @@
 			<version>${hikariCp.version}</version>
 			<scope>compile</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>

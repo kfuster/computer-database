@@ -11,6 +11,7 @@
 <link href="../css/font-awesome.css" rel="stylesheet" media="screen">
 <link href="../css/main.css" rel="stylesheet" media="screen">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.excilys.formation.dto.CompanyDto"%>
 <%@ page import="com.excilys.formation.dto.ComputerDto"%>
@@ -32,15 +33,13 @@
 					<c:if test="${success}">
 						<p style="color:red"> Ordinateur ajouté</p>
 					</c:if>
-					<form id="addForm" action="addComputer" method="POST">
+					<sf:form id="addForm" action="" method="POST" modelAttribute="computerDto">
 						<fieldset>
 							<div class="form-group">
-								<label for="computerName">Computer name</label> <input
-									type="text" class="form-control" id="computerName"
-									name="computerName"
-									<c:if test="${not empty computerDto.name}">value="${computerDto.name}"</c:if>
-									placeholder="Computer Name">
-									<c:if test="${not empty errors['name']}"><span style="color:red">${errors["name"]}</span></c:if>
+								Computer name
+								<sf:input class="form-control" id="name" path="name" placeholder="Computer Name"/>
+								<sf:errors path="name" cssClass="alert alert-danger" element="div" />
+								<c:if test="${not empty errors['name']}"><span style="color:red">${errors["name"]}</span></c:if>
 							</div>
 							<div class="form-group">
 								<label for="introduced">Introduced date</label> <input
@@ -69,7 +68,7 @@
 							<input type="submit" value="Add" class="btn btn-primary">
 							or <a href="dashboard" class="btn btn-default">Cancel</a>
 						</div>
-					</form>
+					</sf:form>
 				</div>
 			</div>
 		</div>

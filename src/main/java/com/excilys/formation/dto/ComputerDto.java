@@ -1,5 +1,8 @@
 package com.excilys.formation.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * DTO class for computers.
  * @author kfuster
@@ -7,6 +10,8 @@ package com.excilys.formation.dto;
  */
 public class ComputerDto {
     private Long id;
+    @NotNull
+    @Size(min=2, max=30) 
     private String name;
     private String introduced;
     private String discontinued;
@@ -68,7 +73,7 @@ public class ComputerDto {
         result = (int) (prime * result + companyId);
         result = prime * result + ((companyName == null) ? 0 : companyName.hashCode());
         result = prime * result + ((discontinued == null) ? 0 : discontinued.hashCode());
-        result = (int) (prime * result + id);
+        result = (int) (prime * result + ((id == null) ? 0 : id));
         result = prime * result + ((introduced == null) ? 0 : introduced.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;

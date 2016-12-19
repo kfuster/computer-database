@@ -15,7 +15,7 @@ $.validator.addMethod("validDate", function(value, element) {
 	}
 	return true;
 }, "Entrez la date au format yyyy-mm-dd.");
-$('#addForm').validate({
+/*$('#addForm').validate({
 	rules : {
 		introduced : {
 			required : false,
@@ -25,17 +25,17 @@ $('#addForm').validate({
 			required : false,
 			validDate : true
 		},
-		computerName : {
+		name : {
 			required : true,
 			minlength : 2
 		}
 	},
 	messages : {
-		computerName : {
+		name : {
 			required : "Entrez un nom",
 			minlength : "Le nom doit être d'au moins 2 caractères"
 		},
 		introduced : "Entrez la date au format yyyy-mm-dd.",
 		discontinued : "Entrez la date au format yyyy-mm-dd."
 	}
-});
+});*/

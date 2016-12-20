@@ -11,6 +11,7 @@
 <link href="../css/jquery-ui.min.css" rel="stylesheet" media="screen">
 <link href="../css/main.css" rel="stylesheet" media="screen">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 </head>
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
@@ -28,46 +29,40 @@
 					<c:if test="${success}">
 						<p style="color:red"> Ordinateur edité</p>
 					</c:if>
-					<form id="editComputer" action="editComputer" method="POST">
+					<sf:form id="editComputer" action="" method="POST" modelAttribute="computerDto">
 						<input type="hidden" id="computerId" name="computerId" <c:if test="${not empty computerDto.id}">value="${computerDto.id}"</c:if>/>
 						<!-- TODO: Change this value with the computer id -->
 						<fieldset>
 							<div class="form-group">
-								<label for="computerName">Computer name</label> <input
-									type="text" class="form-control" id="computerName"
-									name="computerName"
-									<c:if test="${not empty computerDto.name}">value="${computerDto.name}"</c:if>
-									placeholder="Computer Name">
-									<c:if test="${not empty errors['name']}"><span style="color:red">${errors["name"]}</span></c:if>
+								<sf:label path="name">Computer name</sf:label> 
+								<sf:input type="text" class="form-control" id="computerName" path="name" placeholder="Computer Name"/>
+								<sf:errors path="name" cssClass="alert alert-danger" element="div" />
 							</div>
 							<div class="form-group">
-								<label for="introduced">Introduced date</label> <input
-									type="date" class="form-control" id="introduced"
-									<c:if test="${not empty computerDto.introduced}">value="${computerDto.introduced}"</c:if>
-									name="introduced" placeholder="Computer Introduced">
-									<c:if test="${not empty errors['introduced']}"><span style="color:red">${errors["introduced"]}</span></c:if>
+								<sf:label path="introduced">Introduced date</sf:label> 
+								<sf:input type="date" class="form-control" id="introduced"	path="introduced" placeholder="Computer Introduced"/>
+								<sf:errors path="introduced" cssClass="alert alert-danger" element="div" />
 							</div>
 							<div class="form-group">
-								<label for="discontinued">Discontinued date</label> <input
-									type="date" class="form-control" id="discontinued"
-									<c:if test="${not empty computerDto.discontinued}">value="${computerDto.discontinued}"</c:if>
-									name="discontinued" placeholder="Computer Discontinued">
-									<c:if test="${not empty errors['discontinued']}"><span style="color:red">${errors["discontinued"]}</span></c:if>
+								<sf:label path="discontinued">Discontinued date</sf:label> 
+								<sf:input type="date" class="form-control" id="discontinued" path="discontinued" placeholder="Computer Discontinued"/>
+								<sf:errors path="discontinued" cssClass="alert alert-danger" element="div" />
 							</div>
 							<div class="form-group">
-								<label for="companyId">Company</label> <select
-									class="form-control" id="companyId" name="companyId">
+								<sf:label path="companyId">Company</sf:label> 
+								<sf:select	class="form-control" id="companyId" path="companyId">
 									<c:forEach items="${listCompanies}" var="companyDto">
-										<option <c:if test="${not empty computerDto.companyId && computerDto.companyId == companyDto.id}">selected</c:if> value="${companyDto.id}">${companyDto.name}</option>
+										<sf:option value="${companyDto.id}">${companyDto.name}</sf:option>
 									</c:forEach>
-								</select>
+								</sf:select>
+								<sf:errors path="companyId" cssClass="alert alert-danger" element="div" />
 							</div>
 						</fieldset>
 						<div class="actions pull-right">
 							<input type="submit" value="Edit" class="btn btn-primary">
 							or <a href="dashboard" class="btn btn-default">Cancel</a>
 						</div>
-					</form>
+					</sf:form>
 				</div>
 			</div>
 		</div>

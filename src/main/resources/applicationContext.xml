@@ -32,5 +32,4 @@
 	<import resource="transaction/transactionContext.xml"/>
 	<import resource="computer/computerContext.xml"/>
 	<import resource="company/companyContext.xml"/>
-
 </beans>

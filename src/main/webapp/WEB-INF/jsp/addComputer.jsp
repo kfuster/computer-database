@@ -39,29 +39,25 @@
 								Computer name
 								<sf:input class="form-control" id="name" path="name" placeholder="Computer Name"/>
 								<sf:errors path="name" cssClass="alert alert-danger" element="div" />
-								<c:if test="${not empty errors['name']}"><span style="color:red">${errors["name"]}</span></c:if>
 							</div>
 							<div class="form-group">
-								<label for="introduced">Introduced date</label> <input
-									type="date" class="form-control" id="introduced"
-									<c:if test="${not empty computerDto.introduced}">value="${computerDto.introduced}"</c:if>
-									name="introduced" placeholder="Computer Introduced">
-									<c:if test="${not empty errors['introduced']}"><span style="color:red">${errors["introduced"]}</span></c:if>
+								<sf:label path="introduced">Introduced date</sf:label> 
+								<sf:input type="date" class="form-control" id="introduced"	path="introduced" placeholder="Computer Introduced"/>
+								<sf:errors path="introduced" cssClass="alert alert-danger" element="div" />
 							</div>
 							<div class="form-group">
-								<label for="discontinued">Discontinued date</label> <input
-									type="date" class="form-control" id="discontinued"
-									<c:if test="${not empty computerDto.discontinued}">value="${computerDto.discontinued}"</c:if>
-									name="discontinued" placeholder="Computer Discontinued">
-									<c:if test="${not empty errors['discontinued']}"><span style="color:red">${errors["discontinued"]}</span></c:if>
+								<sf:label path="discontinued">Discontinued date</sf:label> 
+								<sf:input type="date" class="form-control" id="discontinued" path="discontinued" placeholder="Computer Discontinued"/>
+								<sf:errors path="discontinued" cssClass="alert alert-danger" element="div" />
 							</div>
 							<div class="form-group">
-								<label for="companyId">Company</label> <select
-									class="form-control" id="companyId" name="companyId">
+								<sf:label path="companyId">Company</sf:label> 
+								<sf:select	class="form-control" id="companyId" path="companyId">
 									<c:forEach items="${listCompanies}" var="companyDto">
-										<option value="${companyDto.id}">${companyDto.name}</option>
+										<sf:option value="${companyDto.id}">${companyDto.name}</sf:option>
 									</c:forEach>
-								</select>
+								</sf:select>
+								<sf:errors path="companyId" cssClass="alert alert-danger" element="div" />
 							</div>
 						</fieldset>
 						<div class="actions pull-right">

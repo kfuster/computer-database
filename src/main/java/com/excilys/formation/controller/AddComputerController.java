@@ -1,9 +1,6 @@
 package com.excilys.formation.controller;
 
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +21,6 @@ import com.excilys.formation.exception.ServiceException;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.service.CompanyService;
 import com.excilys.formation.service.ComputerService;
-import com.excilys.formation.servlet.validation.Validator;
 import ch.qos.logback.classic.Logger;
 
 @Controller
@@ -42,35 +38,25 @@ public class AddComputerController{
         ModelAndView model = new ModelAndView("/WEB-INF/jsp/addComputer.jsp");
         model.addObject("computerDto", new ComputerDto());
         model.addObject("success", null);
-        model.addObject("errors", null);
         model.addObject("listCompanies", listCompanies);
         return model;
     }
     
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView addComputerPost(@Valid @ModelAttribute("computerDto")ComputerDto pComputerDto, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView model = new ModelAndView("/WEB-INF/jsp/addComputer.jsp");
-        //Extract datas from the request to a ComputerDto
-        //ComputerDto computerDto = RequestMapper.toComputerDto(request);
-        //System.out.println(pComputerDto.toString());
-        System.out.println(bindingResult.hasErrors());
-        Map<String, String> errors = new HashMap<>();
-        // Check if datas are valid
-        errors = Validator.validateComputerDto(pComputerDto, errors);
-        // If errors found, add errors to the request and go to get instead
-        if (!errors.isEmpty()) {
-            model.addObject("errors", errors);
-            model.addObject("computerDto", pComputerDto);
-            model.addObject("listCompanies", DtoMapper.fromCompanyList(companyService.getAll()));
-        } else {
-            // Else create the computer
+    public ModelAndView addComputerPost(@Valid @ModelAttribute("computerDto")ComputerDto pComputerDto, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            ModelAndView model = new ModelAndView("redirect:/dashboard");
             try {
                 computerService.create(DtoMapper.toComputer(pComputerDto));
-                model.addObject("success", true);
+                model.addObject("success", true); 
             } catch (ServiceException e) {
                 LOGGER.info(e.getMessage());
             }
+            return model;
         }
+        ModelAndView model = new ModelAndView("/WEB-INF/jsp/addComputer.jsp");
+        List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
+        model.addObject("listCompanies", listCompanies);
         return model;    
     }
 }

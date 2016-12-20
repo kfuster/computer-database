@@ -1,7 +1,10 @@
 package com.excilys.formation.dto;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.excilys.formation.validation.Date;
 
 /**
  * DTO class for computers.
@@ -13,8 +16,11 @@ public class ComputerDto {
     @NotNull
     @Size(min=2, max=30) 
     private String name;
+    @Date
     private String introduced;
+    @Date
     private String discontinued;
+    @Min(0)
     private Long companyId;
     private String companyName;
 
@@ -70,7 +76,7 @@ public class ComputerDto {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = (int) (prime * result + companyId);
+        result = (int) (prime * result + ((companyId == null) ? 0 : companyId.hashCode()));
         result = prime * result + ((companyName == null) ? 0 : companyName.hashCode());
         result = prime * result + ((discontinued == null) ? 0 : discontinued.hashCode());
         result = (int) (prime * result + ((id == null) ? 0 : id));
@@ -138,7 +144,7 @@ public class ComputerDto {
         if (discontinued != null) {
             stringBuilder.append(", discontinued=").append(discontinued);
         }
-        if (companyId != 0 && companyName != null) {
+        if (companyId != null && companyName != null) {
             stringBuilder.append(", Company : [companyId=").append(companyId).append(", companyName=")
                     .append(companyName).append("]]");
         }

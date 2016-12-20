@@ -30,6 +30,9 @@ public class DashboardController{
         
         PageFilter pageFilter = RequestMapper.toPageFilter(request);
         HttpSession session = request.getSession(false);
+        if (request.getAttribute("success") != null) {
+            System.out.println("ici");
+        }
         model.addObject("deleted", null);
         if (session != null && session.getAttribute("deleted") != null) {
             model.addObject("deleted", session.getAttribute("deleted"));

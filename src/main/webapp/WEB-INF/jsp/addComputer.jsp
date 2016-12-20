@@ -12,6 +12,7 @@
 <link href="../css/main.css" rel="stylesheet" media="screen">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.excilys.formation.dto.CompanyDto"%>
 <%@ page import="com.excilys.formation.dto.ComputerDto"%>
@@ -29,29 +30,29 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-8 col-xs-offset-2 box">
-					<h1>Add Computer</h1>
+					<h1><spring:message code="label.addCompTitle" /></h1>
 					<c:if test="${success}">
 						<p style="color:red"> Ordinateur ajouté</p>
 					</c:if>
 					<sf:form id="addForm" action="" method="POST" modelAttribute="computerDto">
 						<fieldset>
 							<div class="form-group">
-								Computer name
+								<spring:message code="label.CompName" />
 								<sf:input class="form-control" id="name" path="name" placeholder="Computer Name"/>
 								<sf:errors path="name" cssClass="alert alert-danger" element="div" />
 							</div>
 							<div class="form-group">
-								<sf:label path="introduced">Introduced date</sf:label> 
+								<sf:label path="introduced"><spring:message code="label.CompIntro" /></sf:label> 
 								<sf:input type="date" class="form-control" id="introduced"	path="introduced" placeholder="Computer Introduced"/>
 								<sf:errors path="introduced" cssClass="alert alert-danger" element="div" />
 							</div>
 							<div class="form-group">
-								<sf:label path="discontinued">Discontinued date</sf:label> 
+								<sf:label path="discontinued"><spring:message code="label.CompDisco" /></sf:label> 
 								<sf:input type="date" class="form-control" id="discontinued" path="discontinued" placeholder="Computer Discontinued"/>
 								<sf:errors path="discontinued" cssClass="alert alert-danger" element="div" />
 							</div>
 							<div class="form-group">
-								<sf:label path="companyId">Company</sf:label> 
+								<sf:label path="companyId"><spring:message code="label.Company" /></sf:label> 
 								<sf:select	class="form-control" id="companyId" path="companyId">
 									<c:forEach items="${listCompanies}" var="companyDto">
 										<sf:option value="${companyDto.id}">${companyDto.name}</sf:option>

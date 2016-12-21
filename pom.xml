@@ -4,7 +4,7 @@
 
 	<groupId>com.excilys.formation</groupId>
 	<artifactId>computer-database</artifactId>
-	<version>1.5-SNAPSHOT</version>
+	<version>1.6-RELEASE</version>
 	<packaging>war</packaging>
 
 	<name>computer-database</name>

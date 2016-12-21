@@ -9,11 +9,12 @@
 <meta charset="utf-8">
 
 <!-- Bootstrap -->
-<link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="../css/font-awesome.css" rel="stylesheet" media="screen">
-<link href="../css/main.css" rel="stylesheet" media="screen">
+<link href="../resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="../resources/css/font-awesome.css" rel="stylesheet" media="screen">
+<link href="../resources/css/main.css" rel="stylesheet" media="screen">
 
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %> 
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page import="com.excilys.formation.pagination.Page"%>
 <%@ page import="com.excilys.formation.dto.ComputerDto"%>
 </head>
@@ -22,14 +23,15 @@
 		<div class="container">
 			<a class="navbar-brand" href="dashboard"> Application -
 				Computer Database </a>
+				<span style="float: right"> <img src="../resources/images/flag-en.png" onclick="$.fn.changeLanguage('en')"/>  <img src="../resources/images/flag-fr.png" onclick="$.fn.changeLanguage('fr')"/></span>
 		</div>
 	</header>
 
 	<section id="main">
 		<div class="container">
-			<h1 id="homeTitle">${pageComputer.totalElements} Computers found</h1>
+			<h1 id="homeTitle">${pageComputer.totalElements} <spring:message code="info.found"/></h1>
 			<c:if test="${deleted != null}">
-				<p style="color:red"> Ordinateur(s) supprimé(s)</p>
+				<p style="color:red"><spring:message code="message.deleted"/></p>
 			</c:if>
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
@@ -37,15 +39,14 @@
 
 						<input type="search" id="searchbox" name="search"
 						<c:if test="${not empty filter}">value="${filter}"</c:if>
-							class="form-control" placeholder="Search name" /> <input
-							type="submit" id="searchsubmit" value="Filter by name"
+							class="form-control" placeholder="<spring:message code="placeholder.search"/>" /> <input
+							type="submit" id="searchsubmit" value="<spring:message code="button.filter"/>"
 							class="btn btn-primary" />
 					</form>
 				</div>
 				<div class="pull-right">
-					<a class="btn btn-success" id="addComputer" href="addComputer">Add
-						Computer</a> <a class="btn btn-default" id="editComputer" href="#"
-						onclick="$.fn.toggleEditMode();">Edit</a>
+					<a class="btn btn-success" id="addComputer" href="addComputer"><spring:message code="addComputer.title" /></a> <a class="btn btn-default" id="editComputer" href="#"
+						onclick="$.fn.toggleEditMode();"><spring:message code="button.edit"/></a>
 				</div>
 			</div>
 		</div>
@@ -68,12 +69,12 @@
 									class="fa fa-trash-o fa-lg"></i>
 							</a>
 						</span></th>
-						<th id="computerName" onclick="$.fn.columnSort('computerName');">Computer name</th>
-						<th id="introduced" onclick="$.fn.columnSort('introduced');">Introduced date</th>
+						<th id="computerName" onclick="$.fn.columnSort('computerName');"><spring:message code="form.computerName"/></th>
+						<th id="introduced" onclick="$.fn.columnSort('introduced');"><spring:message code="form.computerIntroduced"/></th>
 						<!-- Table header for Discontinued Date -->
-						<th id="discontinued" onclick="$.fn.columnSort('discontinued');">Discontinued date</th>
+						<th id="discontinued" onclick="$.fn.columnSort('discontinued');"><spring:message code="form.computerDiscontinued"/></th>
 						<!-- Table header for Company -->
-						<th id="companyName" onclick="$.fn.columnSort('companyName');">Company</th>
+						<th id="companyName" onclick="$.fn.columnSort('companyName');"><spring:message code="form.company"/></th>
 					</tr>
 				</thead>
 				<!-- Browse attribute computers -->
@@ -97,8 +98,9 @@
 			</div>
 		</div>
 	</footer>
-	<script src="../js/jquery.min.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
-	<script src="../js/dashboard.js"></script>
+	<script src="../resources/js/jquery.min.js"></script>
+	<script src="../resources/js/bootstrap.min.js"></script>
+	<script src="/internationalization.js"></script>
+	<script src="../resources/js/dashboard.js"></script>
 </body>
 </html>

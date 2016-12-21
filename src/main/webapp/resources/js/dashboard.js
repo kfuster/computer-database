@@ -47,11 +47,11 @@ $(function() {
     $.fn.toggleEditMode = function() {
         if($(".editMode").is(":visible")) {
             $(".editMode").hide();
-            $("#editComputer").text("Edit");
+            $("#editComputer").text(messages["button.edit"]);
         }
         else {
             $(".editMode").show();
-            $("#editComputer").text("View");
+            $("#editComputer").text(messages["button.view"]);
         }
         return this;
     };
@@ -62,7 +62,7 @@ $(function() {
 // Function delete selected: Asks for confirmation to delete selected computers, then submits it to the deleteForm
 (function ( $ ) {
     $.fn.deleteSelected = function() {
-        if (confirm("Are you sure you want to delete the selected computers?")) { 
+        if (confirm(messages["confirm.delete"])) { 
             $('#deleteForm input[name=selection]').setCheckboxValues('selection','cb');
             $('#deleteForm').submit();
         }
@@ -117,6 +117,22 @@ $(function() {
 		window.location.search = search;
 	};
 }( jQuery ));
+
+(function($) {
+	$.fn.changeLanguage = function(lang) {
+		var PageURL = decodeURIComponent(window.location.search.substring(1)),
+		URLVariables = PageURL.split('&'),
+		search="";
+		for (i = 0; i < URLVariables.length; i++) {
+	        ParameterName = URLVariables[i].split('=');
+	        if (ParameterName[0]!== undefined && ParameterName[1] !== undefined && ParameterName[0] !== "locale") {
+	        	search += ParameterName[0] + "=" + ParameterName[1] +"&";
+	        }
+		}
+		search += "locale=" + lang;
+		window.location.search = search;
+	};
+})(jQuery);
 
 //Event handling
 //Onkeydown

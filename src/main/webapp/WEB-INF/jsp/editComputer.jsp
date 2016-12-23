@@ -42,12 +42,12 @@
 							</div>
 							<div class="form-group">
 								<sf:label path="introduced"><spring:message code="form.computerIntroduced" /></sf:label> 
-								<sf:input type="date" class="form-control" id="introduced"	path="introduced" placeholder="Computer Introduced"/>
+								<sf:input type="date" class="form-control" id="introduced" name="introduced" path="introduced" placeholder="Computer Introduced"/>
 								<sf:errors path="introduced" cssClass="alert alert-danger" element="div" />
 							</div>
 							<div class="form-group">
 								<sf:label path="discontinued"><spring:message code="form.computerDiscontinued" /></sf:label> 
-								<sf:input type="date" class="form-control" id="discontinued" path="discontinued" placeholder="Computer Discontinued"/>
+								<sf:input type="date" class="form-control" id="discontinued" name="discontinued" path="discontinued" placeholder="Computer Discontinued"/>
 								<sf:errors path="discontinued" cssClass="alert alert-danger" element="div" />
 							</div>
 							<div class="form-group">

@@ -23,6 +23,10 @@ public class Controller {
     private CompanyService companyService;
     @Autowired
     private ComputerService computerService;
+    @Autowired
+    private DtoMapper dtoMapper;
+    @Autowired
+    private PageMapper pageMapper;
 
     /**
      * Default constructor.
@@ -69,9 +73,9 @@ public class Controller {
      * @return a ComputerDto
      */
     public ComputerDto createComputer(ComputerDto pComputerDto) {
-        Computer computer = DtoMapper.toComputer(pComputerDto);
+        Computer computer = dtoMapper.toComputer(pComputerDto);
         try {
-            return DtoMapper.fromComputer(computerService.create(computer));
+            return dtoMapper.fromComputer(computerService.create(computer));
         } catch (ServiceException e) {
             LOGGER.info(e.getMessage());
         }
@@ -84,7 +88,7 @@ public class Controller {
      * @param pComputerDto ComputerDto containing the informations
      */
     public void updateComputer(ComputerDto pComputerDto) {
-        Computer computer = DtoMapper.toComputer(pComputerDto);
+        Computer computer = dtoMapper.toComputer(pComputerDto);
         try {
             computerService.update(computer);
         } catch (ServiceException e) {
@@ -100,7 +104,7 @@ public class Controller {
      */
     public Page<ComputerDto> getPageComputer(PageFilter pPageFilter) {
         if (pPageFilter != null) {
-            return PageMapper.fromComputerToComputerDto(computerService.getPage(pPageFilter));
+            return pageMapper.fromComputerToComputerDto(computerService.getPage(pPageFilter));
         }
         return null;
     }
@@ -111,7 +115,7 @@ public class Controller {
      * @return a ComputerDto
      */
     public ComputerDto getComputerById(long pId) {
-        return DtoMapper.fromComputer(computerService.getById(pId));
+        return dtoMapper.fromComputer(computerService.getById(pId));
     }
 
     /**

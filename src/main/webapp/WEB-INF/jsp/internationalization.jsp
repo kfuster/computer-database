@@ -4,5 +4,8 @@
 var messages = new Array();
 
 <c:forEach var="key" items="${keys}">
-	messages["<spring:message text='${key}' javaScriptEscape='true'/>"] = "<spring:message code='${key}' javaScriptEscape='true' />";
+	messages["<spring:message text='${key}' />"] = "<spring:message code='${key}'/>";
+	<c:if test="${key==\"form.date.regex\"}">
+		messages["<spring:message text='${key}' />"] = <spring:message code='${key}'/>;
+	</c:if>
 </c:forEach>

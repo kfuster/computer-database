@@ -1,8 +1,15 @@
 package com.excilys.formation.mapper;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Component;
+
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.model.Company;
@@ -14,13 +21,17 @@ import com.excilys.formation.model.Computer.ComputerBuilder;
  * @author kfuster
  *
  */
+@Component
 public class DtoMapper {
+    @Autowired
+    private MessageSource messageSource;
     /**
      * Converts a ComputerDto to a Computer.
      * @param pComputerDto the ComputerDto to convert
      * @return a Computer
      */
-    public static Computer toComputer(ComputerDto pComputerDto) {
+    public Computer toComputer(ComputerDto pComputerDto) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(messageSource.getMessage("util.date.format", null, LocaleContextHolder.getLocale()));
         Computer computer = null;
         if (pComputerDto != null) {
             Company company = new Company.CompanyBuilder(pComputerDto.getCompanyName()).id(pComputerDto.getCompanyId())
@@ -28,10 +39,10 @@ public class DtoMapper {
             ComputerBuilder builder = new Computer.ComputerBuilder(pComputerDto.getName()).id(pComputerDto.getId())
                     .company(company);
             if (pComputerDto.getIntroduced() != null && !pComputerDto.getIntroduced().isEmpty()) {
-                builder.dateIntro(LocalDate.parse(pComputerDto.getIntroduced()));
+                builder.dateIntro(LocalDate.parse(pComputerDto.getIntroduced(), formatter));
             }
             if (pComputerDto.getDiscontinued() != null && !pComputerDto.getDiscontinued().isEmpty()) {
-                builder.dateDisc(LocalDate.parse(pComputerDto.getDiscontinued())).build();
+                builder.dateDisc(LocalDate.parse(pComputerDto.getDiscontinued(), formatter)).build();
             }
             computer = builder.build();
         }
@@ -43,7 +54,7 @@ public class DtoMapper {
      * @param pListComputerDto the List of ComputerDto to convert
      * @return a List of Computers
      */
-    public static List<Computer> toComputerList(List<ComputerDto> pListComputerDto) {
+    public List<Computer> toComputerList(List<ComputerDto> pListComputerDto) {
         if (pListComputerDto != null) {
             List<Computer> computers = new ArrayList<>();
             pListComputerDto.forEach(computer -> computers.add(toComputer(computer)));
@@ -58,7 +69,8 @@ public class DtoMapper {
      * @param pComputer the Computer to convert
      * @return a ComputerDto
      */
-    public static ComputerDto fromComputer(Computer pComputer) {
+    public ComputerDto fromComputer(Computer pComputer) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(messageSource.getMessage("util.date.format", null, LocaleContextHolder.getLocale()));
         ComputerDto computerDto = null;
         if (pComputer != null) {
             computerDto = new ComputerDto();
@@ -66,11 +78,11 @@ public class DtoMapper {
             computerDto.setName(pComputer.getName());
             LocalDate dateIntro = pComputer.getIntroduced();
             if (dateIntro != null) {
-                computerDto.setIntroduced(dateIntro.toString());
+                computerDto.setIntroduced(dateIntro.format(formatter));
             }
             LocalDate dateDisc = pComputer.getDiscontinued();
             if (dateDisc != null) {
-                computerDto.setDiscontinued(dateDisc.toString());
+                computerDto.setDiscontinued(dateDisc.format(formatter));
             }
             Company company = pComputer.getCompany();
             computerDto.setCompanyId(company.getId());
@@ -84,7 +96,7 @@ public class DtoMapper {
      * @param pComputers the List of Computers to convert
      * @return a List of ComputerDto
      */
-    public static List<ComputerDto> fromComputerList(List<Computer> pComputers) {
+    public List<ComputerDto> fromComputerList(List<Computer> pComputers) {
         if (pComputers != null) {
             List<ComputerDto> computersDto = new ArrayList<>();
             pComputers.forEach(computer -> computersDto.add(fromComputer(computer)));

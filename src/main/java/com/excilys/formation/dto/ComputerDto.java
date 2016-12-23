@@ -4,21 +4,20 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.excilys.formation.validation.Date;
+import com.excilys.formation.validation.*;
 
 /**
  * DTO class for computers.
  * @author kfuster
  *
  */
+@DateAnterior
 public class ComputerDto {
     private Long id;
     @NotNull
     @Size(min=2, max=30) 
     private String name;
-    @Date
     private String introduced;
-    @Date
     private String discontinued;
     @Min(0)
     private Long companyId;

@@ -38,6 +38,10 @@ public class ComputerController{
     private CompanyService companyService;
     @Autowired
     private ComputerService computerService;
+    @Autowired
+    private DtoMapper dtoMapper;
+    @Autowired
+    private PageMapper pageMapper;
 
     @RequestMapping(path="/dashboard", method = RequestMethod.GET)
     public ModelAndView dashboard(HttpServletRequest request, HttpServletResponse response) {
@@ -54,7 +58,7 @@ public class ComputerController{
             model.addObject("deleted", session.getAttribute("deleted"));
             session.removeAttribute("deleted");
         }
-        Page<ComputerDto> computerPage = PageMapper.fromComputerToComputerDto(computerService.getPage(pageFilter));
+        Page<ComputerDto> computerPage = pageMapper.fromComputerToComputerDto(computerService.getPage(pageFilter));
 
         model.addObject("pageComputer", computerPage);
 
@@ -74,9 +78,10 @@ public class ComputerController{
     @RequestMapping(path="/addComputer", method = RequestMethod.POST)
     public ModelAndView addComputerPost(@Valid @ModelAttribute("computerDto")ComputerDto pComputerDto, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
+            
             ModelAndView model = new ModelAndView("redirect:/dashboard");
             try {
-                computerService.create(DtoMapper.toComputer(pComputerDto));
+                computerService.create(dtoMapper.toComputer(pComputerDto));
                 model.addObject("success", true); 
             } catch (ServiceException e) {
                 LOGGER.info(e.getMessage());
@@ -98,8 +103,6 @@ public class ComputerController{
             computerService.deleteList(request.getParameter("selection"));
         }
         
-        HttpSession session = request.getSession(false);
-        session.setAttribute("deleted", true);
         return model;
     }
     
@@ -113,7 +116,7 @@ public class ComputerController{
             computerId = (String) request.getAttribute("id");
         }
         if (computerId != null && !computerId.trim().isEmpty()) {
-            ComputerDto computerDto = DtoMapper.fromComputer(computerService.getById(Long.parseLong(computerId)));
+            ComputerDto computerDto = dtoMapper.fromComputer(computerService.getById(Long.parseLong(computerId)));
             List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
             model.addObject("listCompanies", listCompanies);
             model.addObject("computerDto", computerDto);
@@ -128,7 +131,7 @@ public class ComputerController{
         if (!bindingResult.hasErrors()) {
             ModelAndView model = new ModelAndView("redirect:/dashboard");
             try {
-                computerService.update(DtoMapper.toComputer(computerDto));
+                computerService.update(dtoMapper.toComputer(computerDto));
                 model.addObject("success", true);
                 model.addObject("computerDto", computerDto);
             } catch (ServiceException e) {

@@ -1,5 +1,8 @@
 package com.excilys.formation.mapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.model.Company;
@@ -11,7 +14,10 @@ import com.excilys.formation.pagination.Page;
  * @author kfuster
  *
  */
+@Component
 public class PageMapper {
+    @Autowired
+    private DtoMapper dtoMapper;
     /**
      * Converts a Page from Company to CompanyDto.
      * @param pPageCompany the Page to convert
@@ -32,12 +38,12 @@ public class PageMapper {
      * @param pPageComputer the Page to convert
      * @return a Page<ComputerDto>
      */
-    public static Page<ComputerDto> fromComputerToComputerDto(Page<Computer> pPageComputer) {
+    public Page<ComputerDto> fromComputerToComputerDto(Page<Computer> pPageComputer) {
         Page<ComputerDto> pPageComputerDto = null;
         if (pPageComputer != null) {
             pPageComputerDto = new Page<>(10);
             copyAttributes(pPageComputer, pPageComputerDto);
-            pPageComputerDto.setElements(DtoMapper.fromComputerList(pPageComputer.getElements()));
+            pPageComputerDto.setElements(dtoMapper.fromComputerList(pPageComputer.getElements()));
         }
         return pPageComputerDto;
     }
@@ -47,12 +53,12 @@ public class PageMapper {
      * @param pPageComputerDto the Page to convert
      * @return a Page<Computer>
      */
-    public static Page<Computer> fromComputerDtoToComputer(Page<ComputerDto> pPageComputerDto) {
+    public Page<Computer> fromComputerDtoToComputer(Page<ComputerDto> pPageComputerDto) {
         Page<Computer> pPageComputer = null;
         if (pPageComputerDto != null) {
             pPageComputer = new Page<>(10);
             copyAttributes(pPageComputerDto, pPageComputer);
-            pPageComputerDto.setElements(DtoMapper.fromComputerList(pPageComputer.getElements()));
+            pPageComputerDto.setElements(dtoMapper.fromComputerList(pPageComputer.getElements()));
         }
         return pPageComputer;
     }

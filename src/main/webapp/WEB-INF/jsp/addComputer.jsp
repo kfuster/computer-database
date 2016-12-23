@@ -38,6 +38,7 @@
 					</c:if>
 					<sf:form id="addForm" action="" method="POST" modelAttribute="computerDto">
 						<fieldset>
+						<sf:errors cssClass="alert alert-danger" element="div" />
 							<div class="form-group">
 								<sf:label path="name"><spring:message code="form.computerName" /></sf:label>
 								<sf:input class="form-control" id="name" path="name" placeholder="Computer Name"/>

@@ -25,5 +25,9 @@
 	<import resource="computer/computerContext.xml" />
 	<import resource="company/companyContext.xml" />
 
-	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages/messages" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
 </beans>

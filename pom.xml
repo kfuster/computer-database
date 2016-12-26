@@ -31,6 +31,7 @@
 		<tomcat7Plugin.version>2.2</tomcat7Plugin.version>
 		<hikariCp.version>2.5.1</hikariCp.version>
 		<spring.version>4.3.4.RELEASE</spring.version>
+		<queryDsl.version>4.1.4</queryDsl.version>
 		<seleniumPlugin.version>2.3</seleniumPlugin.version>
 		<cargoPlugin.version>1.6.1</cargoPlugin.version>
 		<failsafePlugin.version>2.19.1</failsafePlugin.version>
@@ -41,6 +42,8 @@
 	</properties>
 
 	<dependencies>
+
+		<!-- Test dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -96,6 +99,8 @@
 			<version>${compilerPlugin.version}</version>
 			<type>maven-plugin</type>
 		</dependency>
+
+		<!-- Spring dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -173,6 +178,8 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<!-- servlet dependencies -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -185,6 +192,8 @@
 			<version>${jspApi.version}</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- Validation dependencies -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -214,6 +223,13 @@
 			<version>${hikariCp.version}</version>
 			<scope>compile</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-jpa</artifactId>
+			<version>${queryDsl.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

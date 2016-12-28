@@ -9,7 +9,7 @@ $("#discontinued").datepicker({
 	changeMonth : true,
 	changeYear : true
 });
-
+/*
 $('#editComputer').validate({
 	rules : {
 		name : {
@@ -24,7 +24,7 @@ $('#editComputer').validate({
 		}
 	}
 });
-
+*/
 (function($) {
 	$.fn.changeLanguage = function(lang) {
 		var PageURL = decodeURIComponent(window.location.search.substring(1)), URLVariables = PageURL

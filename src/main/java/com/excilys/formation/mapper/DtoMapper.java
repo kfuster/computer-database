@@ -25,13 +25,15 @@ import com.excilys.formation.model.Computer.ComputerBuilder;
 public class DtoMapper {
     @Autowired
     private MessageSource messageSource;
+
     /**
      * Converts a ComputerDto to a Computer.
      * @param pComputerDto the ComputerDto to convert
      * @return a Computer
      */
     public Computer toComputer(ComputerDto pComputerDto) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(messageSource.getMessage("util.date.format", null, LocaleContextHolder.getLocale()));
+        DateTimeFormatter formatter = DateTimeFormatter
+                .ofPattern(messageSource.getMessage("util.date.format", null, LocaleContextHolder.getLocale()));
         Computer computer = null;
         if (pComputerDto != null) {
             Company company = new Company.CompanyBuilder(pComputerDto.getCompanyName()).id(pComputerDto.getCompanyId())
@@ -70,7 +72,8 @@ public class DtoMapper {
      * @return a ComputerDto
      */
     public ComputerDto fromComputer(Computer pComputer) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(messageSource.getMessage("util.date.format", null, LocaleContextHolder.getLocale()));
+        DateTimeFormatter formatter = DateTimeFormatter
+                .ofPattern(messageSource.getMessage("util.date.format", null, LocaleContextHolder.getLocale()));
         ComputerDto computerDto = null;
         if (pComputer != null) {
             computerDto = new ComputerDto();
@@ -84,9 +87,11 @@ public class DtoMapper {
             if (dateDisc != null) {
                 computerDto.setDiscontinued(dateDisc.format(formatter));
             }
-            Company company = pComputer.getCompany();
-            computerDto.setCompanyId(company.getId());
-            computerDto.setCompanyName(company.getName());
+            if (pComputer.getCompany() != null) {
+                Company company = pComputer.getCompany();
+                computerDto.setCompanyId(company.getId());
+                computerDto.setCompanyName(company.getName());
+            }
         }
         return computerDto;
     }

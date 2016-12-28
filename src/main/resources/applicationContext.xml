@@ -17,7 +17,8 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<context:annotation-config />
-	
+	<tx:annotation-driven />
+
 	<context:component-scan base-package="com.excilys.formation" />
 	<context:property-placeholder location="classpath:hikari.properties" />
 
@@ -29,5 +30,16 @@
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="classpath:messages/messages" />
 		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="configLocation">
+			<value>classpath:hibernate.cfg.xml</value>
+		</property>
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 </beans>

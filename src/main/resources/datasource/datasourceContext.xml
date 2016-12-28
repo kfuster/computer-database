@@ -15,9 +15,10 @@
 
 	<bean id="hikariConfig" name="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="poolName" value="springHikariCP" />
-		<property name="connectionTestQuery" value="SELECT 1" />
 		<property name="dataSourceClassName" value="${dataSourceClassName}" />
-
+		<property name="minimumIdle" value="${dataSource.minimumIdle}" />
+		<property name="idleTimeout" value="${dataSource.idleTimeout}"/>
+		<property name="maxLifetime" value="${dataSource.maxLifetime}"/>
 		<property name="dataSourceProperties">
 			<props>
 				<prop key="url">${dataSource.jdbcurl}</prop>
@@ -30,4 +31,5 @@
 		class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfig" />
 	</bean>
+	
 </beans>

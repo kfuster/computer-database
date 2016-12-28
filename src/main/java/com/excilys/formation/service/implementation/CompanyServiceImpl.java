@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.exception.ServiceException;
@@ -47,6 +48,7 @@ public class CompanyServiceImpl implements CompanyService {
         return null;
     }
 
+    @Transactional
     @Override
     public void delete(long pId) throws ServiceException {
         try {

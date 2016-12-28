@@ -1,13 +1,23 @@
 package com.excilys.formation.model;
 
+import java.io.Serializable;
+
+import javax.persistence.*;
+
 /**
  * Company entity.
  * @author kfuster
  *
  */
-public final class Company {
+@Entity
+@Table(name="company")
+public final class Company implements Serializable {
+    private static final long serialVersionUID = 2065269485702193829L;
     // ######### ATTRIBUTES #########
+    @Id
+    @GeneratedValue
     private Long id;
+    @Column
     private String name;
 
     /**

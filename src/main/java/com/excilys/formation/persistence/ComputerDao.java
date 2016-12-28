@@ -1,5 +1,7 @@
 package com.excilys.formation.persistence;
 
+import java.util.List;
+
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.model.Computer;
 
@@ -32,9 +34,9 @@ public interface ComputerDao extends BaseDao<Computer> {
 
     /**
      * Deletes a list of Computers.
-     * @param pIdList the computers id in a String of the form "1,2,3,4"
+     * @param idList the computers id in a String of the form "1,2,3,4"
      * @throws PersistenceException in case of problems while deleting the
      *             computers
      */
-    void deleteList(String pIdList) throws PersistenceException;
+    void deleteList(List<Long> idList) throws PersistenceException;
 }

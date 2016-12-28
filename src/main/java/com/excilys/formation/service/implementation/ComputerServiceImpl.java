@@ -1,5 +1,7 @@
 package com.excilys.formation.service.implementation;
 
+import java.util.List;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +48,7 @@ public class ComputerServiceImpl implements ComputerService {
     }
 
     @Override
-    public void deleteList(String idList) {
+    public void deleteList(List<Long> idList) {
         try {
             computerDao.deleteList(idList);
         } catch (PersistenceException e) {

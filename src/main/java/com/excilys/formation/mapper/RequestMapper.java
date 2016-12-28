@@ -1,5 +1,8 @@
 package com.excilys.formation.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.model.util.PageFilter;
@@ -63,7 +66,7 @@ public class RequestMapper {
         }
         pRequest.getServletContext().setAttribute("filter", null);
         if (pRequest.getParameter("search") != null) {
-            String search = pRequest.getParameter("search").replace("'", "''");
+            String search = pRequest.getParameter("search");
             pageFilter.addCondition("computerName", search);
             pageFilter.addCondition("companyName", search);
             pRequest.getServletContext().setAttribute("filter", search);
@@ -73,10 +76,10 @@ public class RequestMapper {
             String column = pRequest.getParameter("column").replace("'", "''");
             pRequest.getServletContext().setAttribute("column", column);
             if ("computerName".equals(column)) {
-                column = "computer.name";
+                column = "name";
             }
             if ("companyName".equals(column)) {
-                column = "company.name";
+                column = "name";
             }
             pageFilter.addCondition("column", column);
         }
@@ -86,5 +89,16 @@ public class RequestMapper {
             pRequest.getServletContext().setAttribute("order", order);
         }
         return pageFilter;
+    }
+    
+    public static List<Long> toListIds(String selection) {
+        List<Long> listIds = new ArrayList<>();
+        String[] ids = selection.split(",");
+        if (ids.length > 0) {
+            for (String id : ids) {
+                listIds.add(Long.parseLong(id));
+            }
+        }
+        return listIds;
     }
 }

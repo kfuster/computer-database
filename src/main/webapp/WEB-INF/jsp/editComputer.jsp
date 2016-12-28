@@ -33,21 +33,21 @@
 					</c:if>
 					<sf:form id="editComputer" action="" method="POST" modelAttribute="computerDto">
 						<input type="hidden" id="computerId" name="computerId" <c:if test="${not empty computerDto.id}">value="${computerDto.id}"</c:if>/>
-						<!-- TODO: Change this value with the computer id -->
 						<fieldset>
+						<sf:errors cssClass="alert alert-danger" element="div" />
 							<div class="form-group">
 								<sf:label path="name"><spring:message code="form.computerName" /></sf:label> 
-								<sf:input type="text" class="form-control" id="computerName" path="name" placeholder="Computer Name"/>
+								<sf:input class="form-control" id="name" path="name" placeholder="Computer Name"/>
 								<sf:errors path="name" cssClass="alert alert-danger" element="div" />
 							</div>
 							<div class="form-group">
 								<sf:label path="introduced"><spring:message code="form.computerIntroduced" /></sf:label> 
-								<sf:input type="date" class="form-control" id="introduced" name="introduced" path="introduced" placeholder="Computer Introduced"/>
+								<sf:input type="date" class="form-control" id="introduced" path="introduced" placeholder="Computer Introduced"/>
 								<sf:errors path="introduced" cssClass="alert alert-danger" element="div" />
 							</div>
 							<div class="form-group">
 								<sf:label path="discontinued"><spring:message code="form.computerDiscontinued" /></sf:label> 
-								<sf:input type="date" class="form-control" id="discontinued" name="discontinued" path="discontinued" placeholder="Computer Discontinued"/>
+								<sf:input type="date" class="form-control" id="discontinued" path="discontinued" placeholder="Computer Discontinued"/>
 								<sf:errors path="discontinued" cssClass="alert alert-danger" element="div" />
 							</div>
 							<div class="form-group">

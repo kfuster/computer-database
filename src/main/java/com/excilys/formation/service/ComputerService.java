@@ -1,5 +1,7 @@
 package com.excilys.formation.service;
 
+import java.util.List;
+
 import com.excilys.formation.model.Computer;
 import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
@@ -26,7 +28,7 @@ public interface ComputerService extends BaseService<Computer> {
 
     /**
      * Delete a list of Computers.
-     * @param pListId the list of ids of computers to delete in a String of the form "1,2,3"
+     * @param computersId the list of ids of computers to delete in a String of the form "1,2,3"
      */
-    void deleteList(String pListId);
+    void deleteList(List<Long> computersId);
 }

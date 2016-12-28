@@ -1,18 +1,37 @@
 package com.excilys.formation.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+
+import javax.persistence.*;
+
+import com.excilys.formation.converter.LocalDateConverter;
+
 
 /**
  * Computer entity.
  * @author kfuster
  *
  */
-public final class Computer {
+@Entity
+@Table(name="computer")
+public final class Computer implements Serializable {
+    private static final long serialVersionUID = -7424514145722416760L;
     // ######### ATTRIBUTES #########
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column
     private String name;
+    @Column
+    @Convert(converter = LocalDateConverter.class)
     private LocalDate introduced;
+    @Column
+    @Convert(converter = LocalDateConverter.class)
     private LocalDate discontinued;
+    
+    @ManyToOne
+    @JoinColumn(name = "company_id")
     private Company company;
 
     /**

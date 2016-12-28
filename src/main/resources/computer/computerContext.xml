@@ -15,6 +15,5 @@
 
 	<bean id="computerDao" name="computerDao" scope="singleton"
 		class="com.excilys.formation.persistence.implementation.ComputerDaoJdbc">
-		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 </beans>

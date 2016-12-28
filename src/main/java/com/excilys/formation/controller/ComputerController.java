@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
@@ -95,12 +96,13 @@ public class ComputerController{
     }
     
     @RequestMapping(path="/deleteComputer", method = RequestMethod.POST)
-    public ModelAndView deleteComputer(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView deleteComputer(@RequestParam Map<String, String> parameters) {
         ModelAndView model = new ModelAndView("redirect:/dashboard");
         //We get the id list of computers to delete from the parameters
         //and ask the service to delete id
-        if (request.getParameter("selection") != null) {
-            computerService.deleteList(request.getParameter("selection"));
+        List<Long> computersId = RequestMapper.toListIds(parameters.get("selection"));
+        if (computersId != null) {
+            computerService.deleteList(computersId);
         }
         
         return model;

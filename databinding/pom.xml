@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.excilys.formation</groupId>
+		<artifactId>computer-database</artifactId>
+		<version>1.6-SNAPSHOT</version>
+	</parent>
+    <artifactId>databinding</artifactId>
+	<packaging>jar</packaging>
+
+	<name>computer-database databinding</name>
+
+	<properties>
+		<!-- Validation dependencies -->
+		<javaxValidation.version>1.1.0.Final</javaxValidation.version>
+		<hibernateValidator.version>5.3.4.Final</hibernateValidator.version>
+		<commonsValidator.version>1.5.1</commonsValidator.version>
+		<!-- Spring dependencies -->
+		<spring.version>4.3.5.RELEASE</spring.version>
+		
+		<java.source>1.8</java.source>
+		<java.target>1.8</java.target>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.excilys.formation</groupId>
+			<artifactId>core</artifactId>
+			<version>${cdb.version}</version>
+		</dependency>
+		<!-- Validation dependencies -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>${javaxValidation.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernateValidator.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>${commonsValidator.version}</version>
+		</dependency>
+		<!-- Spring dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${compilerPlugin.version}</version>
+				<configuration>
+					<source>${java.source}</source>
+					<target>${java.target}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

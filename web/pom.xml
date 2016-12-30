@@ -1,0 +1,186 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.excilys.formation</groupId>
+        <artifactId>computer-database</artifactId>
+        <version>1.6-SNAPSHOT</version>
+    </parent>
+    <artifactId>web</artifactId>
+    <packaging>war</packaging>
+
+    <name>computer-database web</name>
+
+    <properties>
+        <!-- Test dependencies -->
+        <junit.version>4.12</junit.version>
+        <selenium.version>3.0.1</selenium.version>
+        <dbUnit.version>2.5.3</dbUnit.version>
+        <mockito.version>1.9.5</mockito.version>
+        <!-- Servlet dependencies -->
+        <servletApi.version>3.1.0</servletApi.version>
+        <jspApi.version>2.3.1</jspApi.version>
+        <jstl.version>1.2</jstl.version>
+        <!-- Spring dependencies -->
+        <spring.version>4.3.5.RELEASE</spring.version>
+
+        <tomcat7Plugin.version>2.2</tomcat7Plugin.version>
+        <seleniumPlugin.version>2.3</seleniumPlugin.version>
+        <cargoPlugin.version>1.6.1</cargoPlugin.version>
+
+        <java.source>1.8</java.source>
+        <java.target>1.8</java.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.excilys.formation</groupId>
+            <artifactId>service</artifactId>
+            <version>${cdb.version}</version>
+        </dependency>
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>${dbUnit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- servlet dependencies -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servletApi.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>${jspApi.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- FIND SOLUTION, problem with taglib uri <dependency> <groupId>javax.servlet.jsp.jstl</groupId>
+            <artifactId>javax.servlet.jsp.jstl-api</artifactId> <version>1.2.1</version>
+            </dependency> -->
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl.version}</version>
+        </dependency>
+        <!-- Spring dependencies -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compilerPlugin.version}</version>
+                <configuration>
+                    <source>${java.source}</source>
+                    <target>${java.target}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>${tomcat7Plugin.version}</version>
+                <configuration>
+                    <url>http://localhost:8080/manager/text</url>
+                    <server>TomcatServer</server>
+                    <path>/</path>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>selenium-maven-plugin</artifactId>
+                <version>${seleniumPlugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>start-selenium</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start-server</goal>
+                        </goals>
+                        <configuration>
+                            <background>true</background>
+                            <logOutput>true</logOutput>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop-selenium</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop-server</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>${cargoPlugin.version}</version>
+                <configuration>
+                    <!-- Container configuration -->
+                    <container>
+                        <type>embedded</type>
+                    </container>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>start-container</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop-container</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

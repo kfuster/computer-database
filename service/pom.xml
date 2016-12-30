@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.excilys.formation</groupId>
+		<artifactId>computer-database</artifactId>
+		<version>1.6-SNAPSHOT</version>
+	</parent>
+    <artifactId>service</artifactId>
+	<packaging>jar</packaging>
+
+	<name>computer-database service</name>
+
+	<properties>
+		<java.source>1.8</java.source>
+		<java.target>1.8</java.target>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.excilys.formation</groupId>
+			<artifactId>persistence</artifactId>
+			<version>${cdb.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.excilys.formation</groupId>
+			<artifactId>databinding</artifactId>
+			<version>${cdb.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${compilerPlugin.version}</version>
+				<configuration>
+					<source>${java.source}</source>
+					<target>${java.target}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

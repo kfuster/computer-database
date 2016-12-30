@@ -6,7 +6,7 @@
 		<artifactId>computer-database</artifactId>
 		<version>1.6-SNAPSHOT</version>
 	</parent>
-    <artifactId>core</artifactId>
+	<artifactId>core</artifactId>
 	<packaging>jar</packaging>
 
 	<name>computer-database core</name>
@@ -28,6 +28,8 @@
 		<!-- Persistence dependencies -->
 		<javaxPersistenceApi.version>2.1.1</javaxPersistenceApi.version>
 		<queryDsl.version>4.1.4</queryDsl.version>
+
+		<springSecurity.version>4.2.1.RELEASE</springSecurity.version>
 		<!-- Plugins versions -->
 		<compilerPlugin.version>3.6.0</compilerPlugin.version>
 		<checkstylePlugin.version>2.17</checkstylePlugin.version>
@@ -108,7 +110,16 @@
 			<artifactId>querydsl-jpa</artifactId>
 			<version>${queryDsl.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${springSecurity.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${springSecurity.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>

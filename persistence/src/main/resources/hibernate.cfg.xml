@@ -4,10 +4,11 @@
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
-
 	<session-factory>
+		<property name="hbm2ddl.auto">update</property>
 		<mapping class="com.excilys.formation.model.Company" />
 		<mapping class="com.excilys.formation.model.Computer" />
+		<mapping class="com.excilys.formation.model.User" />
 	</session-factory>
 
 </hibernate-configuration>

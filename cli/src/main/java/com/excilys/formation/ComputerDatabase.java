@@ -9,8 +9,6 @@ import org.springframework.context.ApplicationContext;
  * @author kfuster
  */
 public class ComputerDatabase {
-    public static ApplicationContext context;
-
     /**
      * Launches the main menu.
      *

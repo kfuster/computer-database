@@ -16,21 +16,22 @@
 
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %> 
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@ page import="com.excilys.formation.pagination.Page"%>
-<%@ page import="com.excilys.formation.dto.ComputerDto"%>
 </head>
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<a class="navbar-brand" href="dashboard"> Application -
 				Computer Database </a>
-				<span style="float: right"> <img src="../resources/images/flag-en.png" onclick="$.fn.changeLanguage('en')"/>  <img src="../resources/images/flag-fr.png" onclick="$.fn.changeLanguage('fr')"/></span>
+				<span style="float: right"> <a href="register"><spring:message code="link.register" /></a> <img src="../resources/images/flag-en.png" onclick="$.fn.changeLanguage('en')"/>  <img src="../resources/images/flag-fr.png" onclick="$.fn.changeLanguage('fr')"/></span>
 		</div>
 	</header>
 
 	<section id="main">
 		<div class="container">
 			<h1 id="homeTitle">${pageComputer.totalElements} <spring:message code="info.found"/></h1>
+			<c:if test="${param.success}">
+				<p style="color:red"><spring:message code="message.success"/></p>
+			</c:if>
 			<c:if test="${deleted != null}">
 				<p style="color:red"><spring:message code="message.deleted"/></p>
 			</c:if>
@@ -52,7 +53,7 @@
 			</div>
 		</div>
 
-		<form id="deleteForm" action="deleteComputer" method="POST">
+		<form id="deleteForm" action="deleteComputer" method="post">
 			<input type="hidden" name="selection" value="">
 		</form>
 

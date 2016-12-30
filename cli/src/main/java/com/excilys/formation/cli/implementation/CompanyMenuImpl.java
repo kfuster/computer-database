@@ -33,10 +33,6 @@ public class CompanyMenuImpl implements CompanyMenu {
         pageFilter.setPageNum(1);
     }
 
-    public void setController(Controller pController) {
-        controller = pController;
-    }
-
     @Override
     public void startMenu() {
         System.out.println(

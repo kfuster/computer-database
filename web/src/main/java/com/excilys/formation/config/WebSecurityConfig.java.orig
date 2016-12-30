@@ -1,6 +1,15 @@
 package com.excilys.formation.config;
 
+<<<<<<< ac653dd57dad75a31805b9a73add2db81db21d2a
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+import com.excilys.formation.service.implementation.UserServiceImpl;
+=======
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,10 +22,16 @@ import org.springframework.security.web.authentication.www.DigestAuthenticationE
 import org.springframework.security.web.authentication.www.DigestAuthenticationFilter;
 
 import javax.annotation.Resource;
+>>>>>>> [FEATURE] : Adds spring security with digest
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+<<<<<<< ac653dd57dad75a31805b9a73add2db81db21d2a
+    @Autowired
+    private UserServiceImpl userDetailsService;
+    
+=======
     @Resource(name = "UserService")
     private UserDetailsService userDetailsService;
 
@@ -40,15 +55,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .accessDeniedPage("/403")
                 .and()
-                .csrf()
-                .disable()
+                    .csrf()
+                        .disable()
                 .authorizeRequests()
-                .antMatchers("/dashboard", "/register", "/login", "/resources/**")
-                .permitAll()
-                .antMatchers("/editComputer", "/addComputer", "/deleteComputer")
-                .authenticated();
+                    .antMatchers("/dashboard", "/register", "/login", "/resources/**")
+                        .permitAll()
+                    .antMatchers("/editComputer", "/addComputer", "/deleteComputer")
+                        .authenticated();
     }
 
+>>>>>>> [FEATURE] : Adds spring security with digest
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);

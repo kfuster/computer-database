@@ -1,13 +1,20 @@
 package com.excilys.formation.mapper;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.excilys.formation.dto.UserDto;
+import com.excilys.formation.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Component;
 
 import com.excilys.formation.dto.CompanyDto;
@@ -26,6 +33,22 @@ public class DtoMapper {
     private static CompanyDto pCompanyDto;
     @Autowired
     private MessageSource messageSource;
+
+    public User toUser(UserDto pUserDto) {
+        User user = null;
+        if (pUserDto != null) {
+            try {
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                String data = pUserDto.getUsername() + ":Authentication via Digest:" + pUserDto.getPassword();
+                String encodedData = new String(Hex.encode(md.digest(data.getBytes())));
+                user = new User.UserBuilder().username(pUserDto.getUsername()).password(encodedData).build();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return user;
+    }
 
     /**
      * Converts a ComputerDto to a Computer.

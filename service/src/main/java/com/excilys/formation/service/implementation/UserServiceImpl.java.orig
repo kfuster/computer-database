@@ -16,13 +16,19 @@ import com.excilys.formation.service.UserService;
 
 import ch.qos.logback.classic.Logger;
 
+<<<<<<< ac653dd57dad75a31805b9a73add2db81db21d2a
+@Service
+=======
 @Service("UserService")
+>>>>>>> [FEATURE] : Adds spring security with digest
 public class UserServiceImpl implements UserService, UserDetailsService {
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private UserDao userDao;
 
     @Override
+<<<<<<< ac653dd57dad75a31805b9a73add2db81db21d2a
+=======
     public User create(User pUser){
         try {
             return userDao.create(pUser);
@@ -33,6 +39,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+>>>>>>> [FEATURE] : Adds spring security with digest
     public UserDetails loadUserByUsername(String pName) throws UsernameNotFoundException {
         User user = null;
         try {
@@ -45,5 +52,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new UsernameNotFoundException(String.format("User %s does not exist!", pName));
         }
         return user;
+    }
+
+    @Override
+    public User getById(long pId) {
+        try {
+            return userDao.getById(pId);
+        } catch (PersistenceException e) {
+            LOGGER.error( "UserServiceImpl : getById() catched PersistenceException",e);
+        }
+        return null;
+    }
+
+    @Override
+    public Page<User> getPage(PageFilter pPageFilter) {
+        try {
+            return userDao.getPage(pPageFilter);
+        } catch (PersistenceException e) {
+            LOGGER.error( "UserServiceImpl : getPage() catched PersistenceException",e);
+        }
+        return null;
     }
 }

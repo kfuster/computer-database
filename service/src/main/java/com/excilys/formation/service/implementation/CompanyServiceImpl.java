@@ -30,14 +30,6 @@ public class CompanyServiceImpl implements CompanyService {
     @Autowired
     private ComputerDao computerDao;
 
-    public void setComputerDao(ComputerDao pComputerDao) {
-        computerDao = pComputerDao;
-    }
-
-    public void setCompanyDao(CompanyDao pCompanyDao) {
-        companyDao = pCompanyDao;
-    }
-
     @Override
     public Page<Company> getPage(PageFilter pPageFilter) {
         try {

@@ -14,7 +14,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
+<<<<<<< ac653dd57dad75a31805b9a73add2db81db21d2a
+@Table(name="user")
+=======
 @Table(name = "user")
+>>>>>>> [FEATURE] : Adds spring security with digest
 public class User implements UserDetails {
     private static final long serialVersionUID = 5516692655625378444L;
     @Id
@@ -27,7 +31,11 @@ public class User implements UserDetails {
     @Transient
     Collection<? extends GrantedAuthority> authorities;
     boolean status;
+<<<<<<< ac653dd57dad75a31805b9a73add2db81db21d2a
+    
+=======
 
+>>>>>>> [FEATURE] : Adds spring security with digest
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
@@ -90,6 +98,8 @@ public class User implements UserDetails {
     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
         this.authorities = authorities;
     }
+<<<<<<< ac653dd57dad75a31805b9a73add2db81db21d2a
+=======
 
     @Override
     public boolean equals(Object o) {
@@ -173,4 +183,5 @@ public class User implements UserDetails {
             return user;
         }
     }
+>>>>>>> [FEATURE] : Adds spring security with digest
 }

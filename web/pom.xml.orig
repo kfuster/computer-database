@@ -107,6 +107,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+<<<<<<< ac653dd57dad75a31805b9a73add2db81db21d2a
+        
+=======
+
+>>>>>>> [FEATURE] : Adds spring security with digest
     </dependencies>
     <build>
         <plugins>

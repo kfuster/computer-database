@@ -25,11 +25,15 @@ import java.util.function.Supplier;
 @Repository
 public class CompanyDaoQueryDsl implements CompanyDao {
     private static QCompany qCompany = QCompany.company;
-    @Autowired
     private SessionFactory sessionFactory;
 
     private Supplier<HibernateQueryFactory> queryFactory =
             () -> new HibernateQueryFactory(sessionFactory.getCurrentSession());
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Company getById(long pId) {

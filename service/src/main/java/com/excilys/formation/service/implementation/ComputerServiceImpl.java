@@ -24,10 +24,6 @@ public class ComputerServiceImpl implements ComputerService {
     @Autowired
     private ComputerDao computerDao;
 
-    public void setComputerDao(ComputerDao pComputerDao) {
-        computerDao = pComputerDao;
-    }
-
     @Override
     public Computer create(Computer pComputer) {
         try {

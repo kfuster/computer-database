@@ -38,10 +38,6 @@ public class PageFilter {
         return conditions;
     }
 
-    public void setConditions(Map<String, String> conditions) {
-        this.conditions = conditions;
-    }
-
     public int getPageNum() {
         return pageNum;
     }

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -46,7 +47,7 @@ public class ComputerController {
 
     @RequestMapping(path = "/dashboard", method = RequestMethod.GET)
     public ModelAndView dashboard(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView model = new ModelAndView("/WEB-INF/jsp/dashboard.jsp");
+        ModelAndView model = new ModelAndView("/dashboard");
 
 
         PageFilter pageFilter = RequestMapper.toPageFilter(request);
@@ -69,7 +70,7 @@ public class ComputerController {
     @RequestMapping(path = "/addComputer", method = RequestMethod.GET)
     public ModelAndView addComputerGet(HttpServletRequest request, HttpServletResponse response) {
         List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
-        ModelAndView model = new ModelAndView("/WEB-INF/jsp/addComputer.jsp");
+        ModelAndView model = new ModelAndView("/addComputer");
         model.addObject("computerDto", new ComputerDto());
         model.addObject("success", null);
         model.addObject("listCompanies", listCompanies);
@@ -89,14 +90,20 @@ public class ComputerController {
             }
             return model;
         }
-        ModelAndView model = new ModelAndView("/WEB-INF/jsp/addComputer.jsp");
+        ModelAndView model = new ModelAndView("/addComputer");
         List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
         model.addObject("listCompanies", listCompanies);
         return model;
     }
 
+    @RequestMapping(path = "/deleteComputer", method = RequestMethod.GET)
+    public ModelAndView deleteComputerGet() {
+        ModelAndView model = new ModelAndView("redirect:/dashboard");
+        return model;
+    }
+
     @RequestMapping(path = "/deleteComputer", method = RequestMethod.POST)
-    public ModelAndView deleteComputer(@RequestParam Map<String, String> parameters) {
+    public ModelAndView deleteComputerPost(@RequestParam Map<String, String> parameters) {
         ModelAndView model = new ModelAndView("redirect:/dashboard");
         //We get the id list of computers to delete from the parameters
         //and ask the service to delete id
@@ -110,7 +117,7 @@ public class ComputerController {
 
     @RequestMapping(path = "editComputer", method = RequestMethod.GET)
     public ModelAndView editComputerGet(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView model = new ModelAndView("/WEB-INF/jsp/editComputer.jsp");
+        ModelAndView model = new ModelAndView("/editComputer");
         String computerId = null;
         if (request.getParameter("id") != null) {
             computerId = request.getParameter("id");
@@ -141,7 +148,7 @@ public class ComputerController {
             }
             return model;
         }
-        ModelAndView model = new ModelAndView("/WEB-INF/jsp/editComputer.jsp");
+        ModelAndView model = new ModelAndView("/editComputer");
         List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
         model.addObject("listCompanies", listCompanies);
         return model;
@@ -154,6 +161,6 @@ public class ComputerController {
         // Use the path to your bundle
         ResourceBundle bundle = ResourceBundle.getBundle("messages.messages", locale);
         // Call the string.jsp view
-        return new ModelAndView("/WEB-INF/jsp/internationalization.jsp", "keys", bundle.getKeys());
+        return new ModelAndView("/internationalization", "keys", bundle.getKeys());
     }
 }

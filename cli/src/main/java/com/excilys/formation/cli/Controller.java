@@ -28,14 +28,6 @@ public class Controller {
     @Autowired
     private PageMapper pageMapper;
 
-    public void setComputerService(ComputerService pComputerService) {
-        computerService = pComputerService;
-    }
-
-    public void setCompanyService(CompanyService pCompanyService) {
-        companyService = pCompanyService;
-    }
-
     /**
      * Get a Page<Company> from the service and converts it to Page<CompanyDto>.
      * @param pPageFilter the PageFilter containing the parameters of the page

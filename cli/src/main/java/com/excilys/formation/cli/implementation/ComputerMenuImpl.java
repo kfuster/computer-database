@@ -33,10 +33,6 @@ public class ComputerMenuImpl implements ComputerMenu {
         pageFilter.setPageNum(1);
     }
 
-    public void setController(Controller pController) {
-        controller = pController;
-    }
-
     /**
      * Shows the main operations available.
      * <ul>

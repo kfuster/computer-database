@@ -27,10 +27,14 @@ import java.util.function.Supplier;
 @Repository
 public class ComputerDaoQueryDsl implements ComputerDao {
     private static QComputer qComputer = QComputer.computer;
-    @Autowired
     private SessionFactory sessionFactory;
     private Supplier<HibernateQueryFactory> queryFactory = () -> new HibernateQueryFactory(
             sessionFactory.getCurrentSession());
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Computer create(Computer pComputer) {

@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import com.excilys.formation.dto.UserDto;
 import com.excilys.formation.model.User;
@@ -31,8 +33,6 @@ import com.excilys.formation.model.Computer.ComputerBuilder;
 @Component
 public class DtoMapper {
     private static CompanyDto pCompanyDto;
-    @Autowired
-    private MessageSource messageSource;
 
     public User toUser(UserDto pUserDto) {
         User user = null;
@@ -56,8 +56,9 @@ public class DtoMapper {
      * @return a Computer
      */
     public Computer toComputer(ComputerDto pComputerDto) {
+        ResourceBundle messages = ResourceBundle.getBundle("messages/messages", LocaleContextHolder.getLocale());
         DateTimeFormatter formatter = DateTimeFormatter
-                .ofPattern(messageSource.getMessage("util.date.format", null, LocaleContextHolder.getLocale()));
+                .ofPattern(messages.getString("util.date.format"));
         Computer computer = null;
         if (pComputerDto != null) {
             Company company = new Company.CompanyBuilder(pComputerDto.getCompanyName()).id(pComputerDto.getCompanyId())
@@ -96,8 +97,9 @@ public class DtoMapper {
      * @return a ComputerDto
      */
     public ComputerDto fromComputer(Computer pComputer) {
+        ResourceBundle messages = ResourceBundle.getBundle("messages/messages", LocaleContextHolder.getLocale());
         DateTimeFormatter formatter = DateTimeFormatter
-                .ofPattern(messageSource.getMessage("util.date.format", null, LocaleContextHolder.getLocale()));
+                .ofPattern(messages.getString("util.date.format"));
         ComputerDto computerDto = null;
         if (pComputer != null) {
             computerDto = new ComputerDto();

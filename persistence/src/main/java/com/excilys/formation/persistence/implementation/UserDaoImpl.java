@@ -18,7 +18,7 @@ import com.querydsl.jpa.hibernate.HibernateQuery;
 import com.querydsl.jpa.hibernate.HibernateQueryFactory;
 
 @Repository
-public class UserDaoQueryDsl implements UserDao {
+public class UserDaoImpl implements UserDao {
     private static QUser qUser = QUser.user;
     @Autowired
     private SessionFactory sessionFactory;

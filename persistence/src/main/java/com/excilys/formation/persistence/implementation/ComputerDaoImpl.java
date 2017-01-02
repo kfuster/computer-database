@@ -24,7 +24,7 @@ import java.util.function.Supplier;
  * @author kfuster
  */
 @Repository
-public class ComputerDaoQueryDsl implements ComputerDao {
+public class ComputerDaoImpl implements ComputerDao {
     private static QComputer qComputer = QComputer.computer;
     private SessionFactory sessionFactory;
     private Supplier<HibernateQueryFactory> queryFactory = () -> new HibernateQueryFactory(

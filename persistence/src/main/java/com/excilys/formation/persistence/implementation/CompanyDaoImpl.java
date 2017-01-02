@@ -22,7 +22,7 @@ import java.util.function.Supplier;
  */
 
 @Repository
-public class CompanyDaoQueryDsl implements CompanyDao {
+public class CompanyDaoImpl implements CompanyDao {
     private static QCompany qCompany = QCompany.company;
     private SessionFactory sessionFactory;
 

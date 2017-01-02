@@ -31,6 +31,7 @@ public class CompanyServiceImpl implements CompanyService {
     private ComputerDao computerDao;
 
     @Override
+    @Transactional(readOnly = true)
     public Page<Company> getPage(PageFilter pPageFilter) {
         try {
             return companyDao.getPage(pPageFilter);
@@ -52,6 +53,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Company> getAll() {
         List<Company> allCompanies = null;
         try {

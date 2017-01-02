@@ -15,6 +15,7 @@ import com.excilys.formation.persistence.UserDao;
 import com.excilys.formation.service.UserService;
 
 import ch.qos.logback.classic.Logger;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("UserService")
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private UserDao userDao;
 
     @Override
+    @Transactional
     public User create(User pUser){
         try {
             return userDao.create(pUser);
@@ -33,6 +35,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String pName) throws UsernameNotFoundException {
         User user = null;
         try {

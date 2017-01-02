@@ -21,7 +21,6 @@ import java.util.function.Supplier;
  * @author kfuster
  */
 
-@Transactional
 @Repository
 public class CompanyDaoQueryDsl implements CompanyDao {
     private static QCompany qCompany = QCompany.company;

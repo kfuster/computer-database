@@ -23,7 +23,6 @@ import java.util.function.Supplier;
  *
  * @author kfuster
  */
-@Transactional
 @Repository
 public class ComputerDaoQueryDsl implements ComputerDao {
     private static QComputer qComputer = QComputer.computer;

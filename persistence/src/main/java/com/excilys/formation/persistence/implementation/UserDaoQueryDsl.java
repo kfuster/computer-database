@@ -17,7 +17,6 @@ import com.excilys.formation.persistence.UserDao;
 import com.querydsl.jpa.hibernate.HibernateQuery;
 import com.querydsl.jpa.hibernate.HibernateQueryFactory;
 
-@Transactional
 @Repository
 public class UserDaoQueryDsl implements UserDao {
     private static QUser qUser = QUser.user;

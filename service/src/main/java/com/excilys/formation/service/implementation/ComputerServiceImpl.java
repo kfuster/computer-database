@@ -12,6 +12,7 @@ import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.ComputerDao;
 import com.excilys.formation.service.ComputerService;
 import ch.qos.logback.classic.Logger;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service class for Computers.
@@ -25,6 +26,7 @@ public class ComputerServiceImpl implements ComputerService {
     private ComputerDao computerDao;
 
     @Override
+    @Transactional
     public Computer create(Computer pComputer) {
         try {
             return computerDao.create(pComputer);
@@ -35,6 +37,7 @@ public class ComputerServiceImpl implements ComputerService {
     }
 
     @Override
+    @Transactional
     public void delete(long pId) {
         try {
             computerDao.delete(pId);
@@ -44,6 +47,7 @@ public class ComputerServiceImpl implements ComputerService {
     }
 
     @Override
+    @Transactional
     public void deleteList(List<Long> idList) {
         try {
             computerDao.deleteList(idList);
@@ -53,6 +57,7 @@ public class ComputerServiceImpl implements ComputerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Computer getById(long pId) {
         try {
             return computerDao.getById(pId);
@@ -63,6 +68,7 @@ public class ComputerServiceImpl implements ComputerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<Computer> getPage(PageFilter pViewDto) {
         try {
             return computerDao.getPage(pViewDto);
@@ -73,6 +79,7 @@ public class ComputerServiceImpl implements ComputerService {
     }
 
     @Override
+    @Transactional
     public void update(Computer pComputer) {
         try {
             computerDao.update(pComputer);

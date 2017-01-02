@@ -19,7 +19,6 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@EnableAspectJAutoProxy(proxyTargetClass = true)
 @ComponentScan(basePackages = "com.excilys.formation.*")
 @PropertySource("classpath:config.properties")
 public class SpringConfig {

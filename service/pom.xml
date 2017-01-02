@@ -11,19 +11,14 @@
 
 	<name>computer-database service</name>
 
-	<properties>
-		<java.source>1.8</java.source>
-		<java.target>1.8</java.target>
-	</properties>
-
 	<dependencies>
 		<dependency>
-			<groupId>com.excilys.formation</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>persistence</artifactId>
 			<version>${cdb.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.excilys.formation</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>databinding</artifactId>
 			<version>${cdb.version}</version>
 		</dependency>
@@ -34,11 +29,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${compilerPlugin.version}</version>
-				<configuration>
-					<source>${java.source}</source>
-					<target>${java.target}</target>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

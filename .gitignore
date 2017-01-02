@@ -2,6 +2,8 @@
 /lib/
 /WebContent
 /target
+/target/
+*.orig
 /static/
 
 # Created by https://www.gitignore.io/api/java,eclipse,maven,intellij+iml

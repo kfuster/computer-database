@@ -11,20 +11,9 @@
 
 	<name>computer-database cli</name>
 
-	<properties>
-		<!-- Test dependencies -->
-		<junit.version>4.12</junit.version>
-		<selenium.version>3.0.1</selenium.version>
-		<dbUnit.version>2.5.3</dbUnit.version>
-		<mockito.version>1.9.5</mockito.version>
-
-		<java.source>1.8</java.source>
-		<java.target>1.8</java.target>
-	</properties>
-
 	<dependencies>
 		<dependency>
-			<groupId>com.excilys.formation</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>service</artifactId>
 			<version>${cdb.version}</version>
 		</dependency>
@@ -32,25 +21,18 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>${selenium.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.dbunit</groupId>
 			<artifactId>dbunit</artifactId>
-			<version>${dbUnit.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
-			<version>${mockito.version}</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -59,11 +41,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${compilerPlugin.version}</version>
-				<configuration>
-					<source>${java.source}</source>
-					<target>${java.target}</target>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

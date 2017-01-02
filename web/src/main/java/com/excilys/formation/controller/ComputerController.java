@@ -3,6 +3,7 @@ package com.excilys.formation.controller;
 import ch.qos.logback.classic.Logger;
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.dto.ComputerDto;
+import com.excilys.formation.exception.NotFoundException;
 import com.excilys.formation.exception.ServiceException;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.mapper.PageMapper;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -48,8 +48,6 @@ public class ComputerController {
     @RequestMapping(path = "/dashboard", method = RequestMethod.GET)
     public ModelAndView dashboard(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView model = new ModelAndView("/dashboard");
-
-
         PageFilter pageFilter = RequestMapper.toPageFilter(request);
         HttpSession session = request.getSession(false);
         if (request.getAttribute("success") != null) {
@@ -61,9 +59,7 @@ public class ComputerController {
             session.removeAttribute("deleted");
         }
         Page<ComputerDto> computerPage = pageMapper.fromComputerToComputerDto(computerService.getPage(pageFilter));
-
         model.addObject("pageComputer", computerPage);
-
         return model;
     }
 
@@ -78,9 +74,9 @@ public class ComputerController {
     }
 
     @RequestMapping(path = "/addComputer", method = RequestMethod.POST)
-    public ModelAndView addComputerPost(@Valid @ModelAttribute("computerDto") ComputerDto pComputerDto, BindingResult bindingResult) {
+    public ModelAndView addComputerPost(@Valid @ModelAttribute("computerDto") ComputerDto pComputerDto,
+            BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-
             ModelAndView model = new ModelAndView("redirect:/dashboard");
             try {
                 computerService.create(dtoMapper.toComputer(pComputerDto));
@@ -105,19 +101,17 @@ public class ComputerController {
     @RequestMapping(path = "/deleteComputer", method = RequestMethod.POST)
     public ModelAndView deleteComputerPost(@RequestParam Map<String, String> parameters) {
         ModelAndView model = new ModelAndView("redirect:/dashboard");
-        //We get the id list of computers to delete from the parameters
-        //and ask the service to delete id
+        // We get the id list of computers to delete from the parameters
+        // and ask the service to delete id
         List<Long> computersId = RequestMapper.toListIds(parameters.get("selection"));
         if (computersId != null) {
             computerService.deleteList(computersId);
         }
-
         return model;
     }
 
     @RequestMapping(path = "editComputer", method = RequestMethod.GET)
     public ModelAndView editComputerGet(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView model = new ModelAndView("/editComputer");
         String computerId = null;
         if (request.getParameter("id") != null) {
             computerId = request.getParameter("id");
@@ -126,17 +120,22 @@ public class ComputerController {
         }
         if (computerId != null && !computerId.trim().isEmpty()) {
             ComputerDto computerDto = dtoMapper.fromComputer(computerService.getById(Long.parseLong(computerId)));
-            List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
-            model.addObject("listCompanies", listCompanies);
-            model.addObject("computerDto", computerDto);
-            return model;
+            if (computerDto == null || computerDto.getName() == null || computerDto.getName().isEmpty()) {
+                throw new NotFoundException();
+            } else {
+                ModelAndView model = new ModelAndView("/editComputer");
+                model.addObject("computerDto", computerDto);
+                List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
+                model.addObject("listCompanies", listCompanies);
+                return model;
+            }
         }
-
         return new ModelAndView("redirect:/dashboard");
     }
 
     @RequestMapping(path = "editComputer", method = RequestMethod.POST)
-    public ModelAndView editComputerPost(@Valid @ModelAttribute("computerDto") ComputerDto computerDto, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView editComputerPost(@Valid @ModelAttribute("computerDto") ComputerDto computerDto,
+            BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
         if (!bindingResult.hasErrors()) {
             ModelAndView model = new ModelAndView("redirect:/dashboard");
             try {

@@ -1,4 +1,3 @@
-<jsp:useBean id="pageComputer" scope="request" type="com.excilys.formation.pagination.Page"/>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -13,7 +12,7 @@
 <link href="../resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="../resources/css/font-awesome.css" rel="stylesheet" media="screen">
 <link href="../resources/css/main.css" rel="stylesheet" media="screen">
-
+<jsp:useBean id="pageComputer" scope="request" type="com.excilys.formation.pagination.Page"/>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %> 
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 </head>

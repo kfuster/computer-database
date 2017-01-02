@@ -1,5 +1,7 @@
 package com.excilys.formation.config;
 
+import javax.servlet.ServletRegistration;
+
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.FrameworkServlet;
@@ -32,5 +34,10 @@ public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServ
         serv.setThrowExceptionIfNoHandlerFound(true);
 
         return serv;
+    }
+    
+    @Override
+    public void customizeRegistration(ServletRegistration.Dynamic registration) {
+        registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
     }
 }

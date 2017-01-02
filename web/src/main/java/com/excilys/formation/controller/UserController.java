@@ -1,8 +1,6 @@
 package com.excilys.formation.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.excilys.formation.dto.CompanyDto;
-import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.dto.UserDto;
 import com.excilys.formation.exception.ServiceException;
 import com.excilys.formation.mapper.DtoMapper;
@@ -17,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.List;
-
 
 /**
  * Created by kfuster on 31/12/2016.

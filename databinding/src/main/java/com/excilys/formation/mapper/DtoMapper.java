@@ -30,6 +30,7 @@ import com.excilys.formation.model.Computer.ComputerBuilder;
  */
 @Component
 public class DtoMapper {
+    private static CompanyDto pCompanyDto;
 
     public User toUser(UserDto pUserDto) {
         User user = null;

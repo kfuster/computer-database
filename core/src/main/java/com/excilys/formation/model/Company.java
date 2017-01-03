@@ -27,7 +27,7 @@ public final class Company implements Serializable {
     /**
      * Default constructor.
      */
-    public Company() {
+    protected Company() {
     }
 
     /**

@@ -47,7 +47,7 @@ public final class Computer implements Serializable {
     /**
      * Default constructor.
      */
-    public Computer() {
+    protected Computer() {
     }
 
     /**

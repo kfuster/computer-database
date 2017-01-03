@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         DigestAuthenticationFilter filter = new DigestAuthenticationFilter();
         filter.setAuthenticationEntryPoint(authenticationEntryPoint);
-        filter.setUserDetailsService(userDetailsService());
+        filter.setUserDetailsService(userDetailsService);
         filter.setPasswordAlreadyEncoded(true);
 
         http.sessionManagement()

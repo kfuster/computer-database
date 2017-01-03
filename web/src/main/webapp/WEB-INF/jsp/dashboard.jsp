@@ -15,13 +15,14 @@
 <jsp:useBean id="pageComputer" scope="request" type="com.excilys.formation.pagination.Page"/>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %> 
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 </head>
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<a class="navbar-brand" href="dashboard"> Application -
 				Computer Database </a>
-				<span style="float: right"> <a href="register"><spring:message code="link.register" /></a> <img src="../resources/images/flag-en.png" onclick="$.fn.changeLanguage('en')"/>  <img src="../resources/images/flag-fr.png" onclick="$.fn.changeLanguage('fr')"/></span>
+				<span style="float: right"> <img src="../resources/images/flag-en.png" onclick="$.fn.changeLanguage('en')"/>  <img src="../resources/images/flag-fr.png" onclick="$.fn.changeLanguage('fr')"/></span>
 		</div>
 	</header>
 
@@ -46,8 +47,11 @@
 					</form>
 				</div>
 				<div class="pull-right">
-					<a class="btn btn-success" id="addComputer" href="addComputer"><spring:message code="addComputer.title" /></a> <a class="btn btn-default" id="editComputer" href="#"
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+    				<a class="btn btn-success" id="addComputer" href="addComputer"><spring:message code="addComputer.title" /></a> <a class="btn btn-default" id="editComputer" href="#"
 						onclick="$.fn.toggleEditMode();"><spring:message code="button.edit"/></a>
+				</sec:authorize>
+					
 				</div>
 			</div>
 		</div>

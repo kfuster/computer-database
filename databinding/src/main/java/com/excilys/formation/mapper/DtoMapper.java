@@ -12,8 +12,6 @@ import java.util.ResourceBundle;
 import com.excilys.formation.dto.UserDto;
 import com.excilys.formation.model.User;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +20,7 @@ import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.model.Company;
 import com.excilys.formation.model.Computer;
 import com.excilys.formation.model.Computer.ComputerBuilder;
+import com.excilys.formation.model.Role;
 
 /**
  * Mapper class for DTOs.
@@ -39,9 +38,11 @@ public class DtoMapper {
                 MessageDigest md = MessageDigest.getInstance("MD5");
                 String data = pUserDto.getUsername() + ":Authentication via Digest:" + pUserDto.getPassword();
                 String encodedData = new String(Hex.encode(md.digest(data.getBytes())));
-                HashSet<GrantedAuthority> authorities = new HashSet<GrantedAuthority>(1);
-                authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+                
+                HashSet<Role> authorities = new HashSet<Role>(1);
+                authorities.add(new Role("ROLE_USER"));
                 user = new User.UserBuilder().username(pUserDto.getUsername()).password(encodedData).authorities(authorities).build();
+                System.out.println(user);
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }

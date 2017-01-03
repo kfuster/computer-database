@@ -2,17 +2,18 @@ package com.excilys.formation.model;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
@@ -26,15 +27,17 @@ public class User implements UserDetails {
     private String username;
     @Column(nullable = false)
     private String password;
-    @Transient
     @Column(nullable = false)
-    @OneToMany
-    @JoinColumn(name="user_id")
-    Collection<? extends GrantedAuthority> authorities;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name="users_roles",
+            joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="role_id", referencedColumnName="id"))
+    Collection<Role> authorities;
     boolean status;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<Role> getAuthorities() {
         return authorities;
     }
 
@@ -92,7 +95,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+    public void setAuthorities(Collection<Role> authorities) {
         this.authorities = authorities;
     }
 
@@ -134,7 +137,7 @@ public class User implements UserDetails {
     }
 
     public static final class UserBuilder {
-        Collection<? extends GrantedAuthority> authorities;
+        Collection<Role> authorities;
         boolean status;
         private Long id;
         private String username;
@@ -158,7 +161,7 @@ public class User implements UserDetails {
             return this;
         }
 
-        public UserBuilder authorities(Collection<? extends GrantedAuthority> authorities) {
+        public UserBuilder authorities(Collection<Role> authorities) {
             this.authorities = authorities;
             return this;
         }
@@ -178,4 +181,11 @@ public class User implements UserDetails {
             return user;
         }
     }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", username=" + username + ", password=" + password + ", authorities=" + authorities
+                + ", status=" + status + "]";
+    }
+    
 }

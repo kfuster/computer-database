@@ -17,6 +17,7 @@
 		<module>service</module>
 		<module>cli</module>
 		<module>web</module>
+        <module>rest</module>
 	</modules>
 
 	<properties>
@@ -50,6 +51,7 @@
 		<javaxValidation.version>1.1.0.Final</javaxValidation.version>
 		<hibernateValidator.version>5.3.4.Final</hibernateValidator.version>
 		<commonsValidator.version>1.5.1</commonsValidator.version>
+		<jackson.version>2.8.5</jackson.version>
 		<!-- Plugins versions -->
 		<compilerPlugin.version>3.6.0</compilerPlugin.version>
 		<checkstylePlugin.version>2.17</checkstylePlugin.version>
@@ -131,6 +133,11 @@
 			</dependency>
 
 			<!-- Spring dependencies -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-beans</artifactId>
@@ -156,6 +163,11 @@
 				<artifactId>spring-web</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
 			<!-- Spring security dependencies -->
 			<dependency>
 				<groupId>org.springframework.security</groupId>
@@ -209,6 +221,16 @@
 				<groupId>commons-validator</groupId>
 				<artifactId>commons-validator</artifactId>
 				<version>${commonsValidator.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.dataformat</groupId>
+				<artifactId>jackson-dataformat-xml</artifactId>
+				<version>${jackson.version}</version>
 			</dependency>
 			<!-- Compiler dependency -->
 			<dependency>

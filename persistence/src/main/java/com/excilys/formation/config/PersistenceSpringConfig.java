@@ -65,7 +65,7 @@ public class PersistenceSpringConfig {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory
-                .setPackagesToScan("com.excilys.formation");
+                .setPackagesToScan("com.excilys.formation.model");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }

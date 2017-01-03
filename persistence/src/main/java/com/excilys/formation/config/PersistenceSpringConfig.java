@@ -19,9 +19,9 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = "com.excilys.formation.*")
+@ComponentScan(basePackages = "com.excilys.formation.persistence")
 @PropertySource("classpath:config.properties")
-public class SpringConfig {
+public class PersistenceSpringConfig {
 
     @Value("${hbm.hbm2ddl.auto}")
     private String hbm2ddl;

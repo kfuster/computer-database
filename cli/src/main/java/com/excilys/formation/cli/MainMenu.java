@@ -2,7 +2,7 @@ package com.excilys.formation.cli;
 
 import java.util.Scanner;
 
-import com.excilys.formation.config.SpringConfig;
+import com.excilys.formation.config.CliSpringConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -20,12 +20,13 @@ public class MainMenu implements Menu {
     public static Scanner scanner = new Scanner(System.in);
     private static ComputerMenu computerMenu;
     private static CompanyMenu companyMenu;
+    private static ApplicationContext context;
 
     /**
      * MainMenu constructor. Initialize scanner.
      */
     public MainMenu() {
-        ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+        context = new AnnotationConfigApplicationContext(CliSpringConfig.class);
         computerMenu = context.getBean(ComputerMenuImpl.class);
         companyMenu = context.getBean(CompanyMenuImpl.class);
     }

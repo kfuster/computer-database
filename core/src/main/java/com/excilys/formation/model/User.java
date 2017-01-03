@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -25,6 +27,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
     @Transient
+    @Column(nullable = false)
+    @OneToMany
+    @JoinColumn(name="user_id")
     Collection<? extends GrantedAuthority> authorities;
     boolean status;
 

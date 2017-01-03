@@ -4,9 +4,9 @@ import static ch.qos.logback.core.spi.FilterReply.ACCEPT
 def bySecond = timestamp("yyyyMMdd'T'HHmmss")
 
 appender("FILE", FileAppender) {
-  file = "logs/log-${bySecond}.txt"
+  file = "logs/log-${bySecond}.log"
   filter(LevelFilter) {
-        level = ERROR
+        level = DEBUG
         onMatch = ACCEPT
       	onMismatch = DENY
   }
@@ -26,4 +26,6 @@ appender("CONSOLE", ConsoleAppender) {
   }
 }
 
+logger("org.hibernate.type", ALL)
+logger("org.hibernate", DEBUG)
 root(INFO, ["CONSOLE", "FILE"])

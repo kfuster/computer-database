@@ -5,6 +5,7 @@
 /target/
 *.orig
 /static/
+*.log
 
 # Created by https://www.gitignore.io/api/java,eclipse,maven,intellij+iml
 

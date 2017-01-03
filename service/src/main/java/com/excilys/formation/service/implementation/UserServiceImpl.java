@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.excilys.formation.exception.PersistenceException;
 import com.excilys.formation.model.User;
-import com.excilys.formation.model.util.PageFilter;
-import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.UserDao;
 import com.excilys.formation.service.UserService;
 

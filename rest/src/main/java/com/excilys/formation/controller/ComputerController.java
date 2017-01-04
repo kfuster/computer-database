@@ -27,11 +27,12 @@ public class ComputerController {
 
     @RequestMapping(value = "/computer/{id}", method = RequestMethod.GET)
     public ResponseEntity<Serializable> computer(@PathVariable Long id) {
+        DtoMapper dtoMapper = new DtoMapper();
         Computer computer = computerService.getById(id);
         if( computer == null ) {
             return new ResponseEntity<Serializable>("No computer found for ID " + id, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Serializable>(computer, HttpStatus.OK);
+        return new ResponseEntity<Serializable>(dtoMapper.fromComputer(computer), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/computer/{limit}/{pagenum}", method = RequestMethod.GET)
@@ -52,7 +53,7 @@ public class ComputerController {
             LOGGER.error( "ComputerController : add() catched ServiceException",e);
             return new ResponseEntity<Serializable>("Error while creating computer", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<Serializable>(createdComputer, HttpStatus.OK);
+        return new ResponseEntity<Serializable>(dtoMapper.fromComputer(createdComputer), HttpStatus.OK);
     }
     
     @RequestMapping(value = "/computer/{id}", method = RequestMethod.DELETE)

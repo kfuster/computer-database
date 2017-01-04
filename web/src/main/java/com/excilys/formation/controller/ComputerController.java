@@ -46,7 +46,7 @@ public class ComputerController {
     private PageMapper pageMapper;
 
     @RequestMapping(path = "/dashboard", method = RequestMethod.GET)
-    public ModelAndView dashboard(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView dashboard(HttpServletRequest request) {
         ModelAndView model = new ModelAndView("/dashboard");
         PageFilter pageFilter = RequestMapper.toPageFilter(request);
         HttpSession session = request.getSession(false);
@@ -64,7 +64,7 @@ public class ComputerController {
     }
 
     @RequestMapping(path = "/addComputer", method = RequestMethod.GET)
-    public ModelAndView addComputerGet(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView addComputerGet(HttpServletRequest request) {
         List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
         ModelAndView model = new ModelAndView("/addComputer");
         model.addObject("computerDto", new ComputerDto());
@@ -111,7 +111,7 @@ public class ComputerController {
     }
 
     @RequestMapping(path = "editComputer", method = RequestMethod.GET)
-    public ModelAndView editComputerGet(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView editComputerGet(HttpServletRequest request) {
         String computerId = null;
         if (request.getParameter("id") != null) {
             computerId = request.getParameter("id");

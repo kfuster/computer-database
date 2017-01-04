@@ -5,6 +5,8 @@ import com.excilys.formation.validation.DateAnterior;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -13,7 +15,8 @@ import java.util.Objects;
  * @author kfuster
  */
 @DateAnterior
-public class ComputerDto {
+public class ComputerDto implements Serializable {
+    private static final long serialVersionUID = -8940655744113113836L;
     private Long id;
     @NotNull
     @Size(min = 2, max = 30)

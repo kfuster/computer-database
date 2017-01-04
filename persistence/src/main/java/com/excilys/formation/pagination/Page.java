@@ -1,5 +1,6 @@
 package com.excilys.formation.pagination;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  *
  * @param <T>
  */
-public class Page<T> {
+public class Page<T> implements Serializable {
     private int elementsByPage = 10;
     private int page = 1;
     private int totalElements;

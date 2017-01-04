@@ -6,6 +6,7 @@ import com.excilys.formation.exception.ServiceException;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.model.Computer;
 import com.excilys.formation.model.util.PageFilter;
+import com.excilys.formation.pagination.Page;
 import com.excilys.formation.service.ComputerService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,12 @@ public class ComputerController {
     }
 
     @RequestMapping(value = "/computer/{limit}/{pagenum}", method = RequestMethod.GET)
-    public List<Computer> page(@PathVariable int limit, @PathVariable int pagenum) {
+    public Page<Computer> page(@PathVariable int limit, @PathVariable int pagenum) {
         PageFilter pageFilter = new PageFilter();
         pageFilter.setElementsByPage(limit);
         pageFilter.setPageNum(pagenum);
-        return computerService.getPage(pageFilter).getElements();
+        Page<Computer> p = computerService.getPage(pageFilter);
+        return p;
     }
 
     @RequestMapping(value = "/computer", method = RequestMethod.POST)

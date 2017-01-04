@@ -16,9 +16,18 @@ import com.excilys.formation.service.CompanyService;
 import com.excilys.formation.service.ComputerService;
 import ch.qos.logback.classic.Logger;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+
 @Component
 public class Controller {
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(Controller.class);
+    private static Client client = ClientBuilder.newClient();
+    private static final String BASE_URL = "http://localhost:8080";
     @Autowired
     private CompanyService companyService;
     @Autowired
@@ -60,13 +69,8 @@ public class Controller {
      * @return a ComputerDto
      */
     public ComputerDto createComputer(ComputerDto pComputerDto) {
-        Computer computer = dtoMapper.toComputer(pComputerDto);
-        try {
-            return dtoMapper.fromComputer(computerService.create(computer));
-        } catch (ServiceException e) {
-            LOGGER.info(e.getMessage());
-        }
-        return null;
+        WebTarget target = client.target(BASE_URL).path("computer");
+        return target.request().post(Entity.entity(pComputerDto, MediaType.APPLICATION_JSON)).readEntity(ComputerDto.class);
     }
 
     /**
@@ -75,12 +79,8 @@ public class Controller {
      * @param pComputerDto ComputerDto containing the informations
      */
     public void updateComputer(ComputerDto pComputerDto) {
-        Computer computer = dtoMapper.toComputer(pComputerDto);
-        try {
-            computerService.update(computer);
-        } catch (ServiceException e) {
-            LOGGER.info(e.getMessage());
-        }
+        WebTarget target = client.target(BASE_URL).path("computer");
+        target.request().put(Entity.entity(pComputerDto, MediaType.APPLICATION_JSON));
     }
 
     /**
@@ -91,7 +91,8 @@ public class Controller {
      */
     public Page<ComputerDto> getPageComputer(PageFilter pPageFilter) {
         if (pPageFilter != null) {
-            return pageMapper.fromComputerToComputerDto(computerService.getPage(pPageFilter));
+            WebTarget target = client.target(BASE_URL).path("computer/" + pPageFilter.getElementsByPage() + "/" + pPageFilter.getPageNum());
+            return pageMapper.fromComputerToComputerDto(target.request().get().readEntity(new GenericType<Page<Computer>>(){}));
         }
         return null;
     }
@@ -102,7 +103,8 @@ public class Controller {
      * @return a ComputerDto
      */
     public ComputerDto getComputerById(long pId) {
-        return dtoMapper.fromComputer(computerService.getById(pId));
+        WebTarget target = client.target(BASE_URL).path("computer/" + pId);
+        return target.request().get().readEntity(ComputerDto.class);
     }
 
     /**
@@ -110,10 +112,7 @@ public class Controller {
      * @param pId the id of the Computer to delete
      */
     public void deleteComputer(long pId) {
-        try {
-            computerService.delete(pId);
-        } catch (ServiceException e) {
-            LOGGER.info(e.getMessage());
-        }
+        WebTarget target = client.target(BASE_URL).path("computer/" + pId);
+        target.request().delete();
     }
 }

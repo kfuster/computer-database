@@ -94,6 +94,7 @@ public class ComputerMenuImpl implements ComputerMenu {
         // While the user doesn't quit the list, continue.
         do {
             pageComputer = controller.getPageComputer(pageFilter);
+            pageFilter.setNbPage(pageComputer.getTotalPages());
             showPage();
         } while (MenuUtil.manageNavigation(pageFilter));
     }

@@ -1,6 +1,12 @@
 package com.excilys.formation.model;
 
 import com.excilys.formation.converter.LocalDateConverter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -35,9 +41,13 @@ public final class Computer implements Serializable {
     private String name;
     @Column
     @Convert(converter = LocalDateConverter.class)
+    @JsonDeserialize(using =  LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate introduced;
     @Column
     @Convert(converter = LocalDateConverter.class)
+    @JsonDeserialize(using =  LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate discontinued;
 
     @ManyToOne

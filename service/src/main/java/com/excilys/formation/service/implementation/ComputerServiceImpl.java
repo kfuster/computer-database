@@ -31,7 +31,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             return computerDao.create(pComputer);
         } catch (PersistenceException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error("ComputerServiceImpl : create() catched PersistenceException", e);
         }
         return null;
     }
@@ -42,7 +42,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             computerDao.delete(pId);
         } catch (PersistenceException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error("ComputerServiceImpl : delete() catched PersistenceException", e);
         }
     }
 
@@ -52,7 +52,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             computerDao.deleteList(idList);
         } catch (PersistenceException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error("ComputerServiceImpl : deleteList() catched PersistenceException", e);
         }
     }
 
@@ -62,7 +62,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             return computerDao.getById(pId);
         } catch (PersistenceException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error("ComputerServiceImpl : getById() catched PersistenceException", e);
         }
         return null;
     }
@@ -73,7 +73,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             return computerDao.getPage(pViewDto);
         } catch (PersistenceException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error("ComputerServiceImpl : getPage() catched PersistenceException", e);
         }
         return null;
     }
@@ -84,7 +84,7 @@ public class ComputerServiceImpl implements ComputerService {
         try {
             computerDao.update(pComputer);
         } catch (PersistenceException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error("ComputerServiceImpl : update() catched PersistenceException", e);
         }
     }
 }

@@ -36,7 +36,7 @@ public class CompanyServiceImpl implements CompanyService {
         try {
             return companyDao.getPage(pPageFilter);
         } catch (PersistenceException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error("CompanyServiceImpl : getPage() catched PersistenceException", e);
         }
         return null;
     }
@@ -59,7 +59,7 @@ public class CompanyServiceImpl implements CompanyService {
         try {
             allCompanies = companyDao.getAll();
         } catch (PersistenceException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error("CompanyServiceImpl : getAll() catched PersistenceException", e);
         }
         return allCompanies;
     }

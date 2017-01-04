@@ -136,6 +136,12 @@ public class User implements UserDetails {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", username=" + username + ", password=" + password + ", authorities=" + authorities
+                + ", status=" + status + "]";
+    }
+    
     public static final class UserBuilder {
         Collection<Role> authorities;
         boolean status;
@@ -180,12 +186,5 @@ public class User implements UserDetails {
             user.setStatus(status);
             return user;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", username=" + username + ", password=" + password + ", authorities=" + authorities
-                + ", status=" + status + "]";
-    }
-    
+    }    
 }

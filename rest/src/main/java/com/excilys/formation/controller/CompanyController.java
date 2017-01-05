@@ -1,7 +1,10 @@
 package com.excilys.formation.controller;
 
+import java.util.ResourceBundle;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -35,21 +38,22 @@ public class CompanyController {
     
     @RequestMapping(value = "/companies/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> delete(@PathVariable Long id) {
+        ResourceBundle messages = ResourceBundle.getBundle("messages/messages", LocaleContextHolder.getLocale());
         if (id <= 0) {
-            return new ResponseEntity<String>("Wrong id", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<String>(messages.getString("message.unauthorizedId"), HttpStatus.NOT_ACCEPTABLE);
         }
         
         Company company = companyService.getById(id);
         if( company == null ) {
-            return new ResponseEntity<String>("No company found for ID " + id, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(messages.getString("message.companyNotFoundId") + id, HttpStatus.NOT_FOUND);
         }
         
         try {
             companyService.delete(id);
         } catch (ServiceException e) {
             LOGGER.error( "CompanyController : delete() catched ServiceException",e);
-            return new ResponseEntity<String>("Error while deleting company", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<String>(messages.getString("error.deletingCompany"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<String>("Company deleted", HttpStatus.OK);
+        return new ResponseEntity<String>(messages.getString("error.companyDeleted"), HttpStatus.OK);
     }
 }

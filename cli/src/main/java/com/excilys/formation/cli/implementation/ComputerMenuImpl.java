@@ -213,6 +213,5 @@ public class ComputerMenuImpl implements ComputerMenu {
             return;
         }
         controller.deleteComputer(idToDelete);
-        System.out.println("Ordinateur supprimé");
     }
 }

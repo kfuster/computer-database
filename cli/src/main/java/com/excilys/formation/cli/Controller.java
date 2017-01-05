@@ -24,7 +24,7 @@ import javax.ws.rs.core.MediaType;
 public class Controller {
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(Controller.class);
     private static Client client = ClientBuilder.newClient();
-    private static final String BASE_URL = "http://localhost:8181/rest";
+    private static final String BASE_URL = "http://localhost:8181/rest/";
     @Autowired
     private PageMapper pageMapper;
 
@@ -47,7 +47,8 @@ public class Controller {
      */
     public void deleteCompany(long pId) {
         WebTarget target = client.target(BASE_URL).path("companies/" + pId);
-        target.request().delete();
+        String result = target.request().delete().readEntity(String.class);
+        System.out.println(result);
     }
 
     /**
@@ -102,6 +103,7 @@ public class Controller {
      */
     public void deleteComputer(long pId) {
         WebTarget target = client.target(BASE_URL).path("computers/" + pId);
-        target.request().delete();
+        String result = target.request().delete().readEntity(String.class);
+        System.out.println(result);
     }
 }

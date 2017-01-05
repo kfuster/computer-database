@@ -41,18 +41,25 @@ public class CompanyMenuImpl implements CompanyMenu {
         if (scanner.hasNextLine()) {
             scanner.nextLine();
         }
+        boolean quit;
         switch (choice) {
         case 1:
             list();
+            quit = false;
             break;
         case 2:
             delete();
+            quit = false;
             break;
         case 3:
+            quit = true;
             break;
         default:
-            startMenu();
+            quit = false;
             break;
+        }
+        if (!quit) {
+            startMenu();
         }
     }
 
@@ -90,6 +97,6 @@ public class CompanyMenuImpl implements CompanyMenu {
             return;
         }
         controller.deleteCompany(idToDelete);
-        System.out.println("Company supprimée");
+        //System.out.println("Company supprimée");
     }
 }

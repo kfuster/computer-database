@@ -2,12 +2,12 @@ package com.excilys.formation.cli;
 
 import java.util.Scanner;
 
-import com.excilys.formation.config.CliSpringConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.excilys.formation.cli.implementation.CompanyMenuImpl;
 import com.excilys.formation.cli.implementation.ComputerMenuImpl;
+import com.excilys.formation.config.CliSpringConfig;
 import com.excilys.formation.util.MenuUtil;
 
 /**

@@ -29,6 +29,8 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyDao companyDao;
     @Autowired
     private ComputerDao computerDao;
+    
+   
 
     @Override
     @Transactional(readOnly = true)
@@ -62,5 +64,16 @@ public class CompanyServiceImpl implements CompanyService {
             LOGGER.error("CompanyServiceImpl : getAll() catched PersistenceException", e);
         }
         return allCompanies;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Company getById(long pId) {
+        try {
+            return companyDao.getById(pId);
+        } catch (PersistenceException e) {
+            LOGGER.error( "CompanyServiceImpl : getById() catched PersistenceException",e);
+        }
+        return null;
     }
 }

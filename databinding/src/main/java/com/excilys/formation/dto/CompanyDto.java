@@ -1,5 +1,6 @@
 package com.excilys.formation.dto;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -7,7 +8,8 @@ import java.util.Objects;
  *
  * @author kfuster
  */
-public class CompanyDto {
+public class CompanyDto implements Serializable {
+    private static final long serialVersionUID = -5241544729421154790L;
     private Long id;
     private String name;
 

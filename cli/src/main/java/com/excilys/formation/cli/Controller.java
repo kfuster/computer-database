@@ -6,14 +6,11 @@ import org.springframework.stereotype.Component;
 
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.dto.ComputerDto;
-import com.excilys.formation.exception.ServiceException;
-import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.mapper.PageMapper;
 import com.excilys.formation.model.Computer;
+import com.excilys.formation.model.Company;
 import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
-import com.excilys.formation.service.CompanyService;
-import com.excilys.formation.service.ComputerService;
 import ch.qos.logback.classic.Logger;
 
 import javax.ws.rs.client.Client;
@@ -27,13 +24,7 @@ import javax.ws.rs.core.MediaType;
 public class Controller {
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(Controller.class);
     private static Client client = ClientBuilder.newClient();
-    private static final String BASE_URL = "http://localhost:8080";
-    @Autowired
-    private CompanyService companyService;
-    @Autowired
-    private ComputerService computerService;
-    @Autowired
-    private DtoMapper dtoMapper;
+    private static final String BASE_URL = "http://localhost:8181/rest";
     @Autowired
     private PageMapper pageMapper;
 
@@ -44,7 +35,8 @@ public class Controller {
      */
     public Page<CompanyDto> getPageCompany(PageFilter pPageFilter) {
         if (pPageFilter != null) {
-            return PageMapper.fromCompanyToCompanyDto(companyService.getPage(pPageFilter));
+            WebTarget target = client.target(BASE_URL).path("companies/" + pPageFilter.getElementsByPage() + "/" + pPageFilter.getPageNum());
+            return pageMapper.fromCompanyToCompanyDto(target.request().get().readEntity(new GenericType<Page<Company>>(){}));
         }
         return null;
     }
@@ -54,11 +46,8 @@ public class Controller {
      * @param pId the id of the Company to delete
      */
     public void deleteCompany(long pId) {
-        try {
-            companyService.delete(pId);
-        } catch (ServiceException e) {
-            LOGGER.info(e.getMessage());
-        }
+        WebTarget target = client.target(BASE_URL).path("companies/" + pId);
+        target.request().delete();
     }
 
     /**
@@ -69,7 +58,7 @@ public class Controller {
      * @return a ComputerDto
      */
     public ComputerDto createComputer(ComputerDto pComputerDto) {
-        WebTarget target = client.target(BASE_URL).path("computer");
+        WebTarget target = client.target(BASE_URL).path("computers");
         return target.request().post(Entity.entity(pComputerDto, MediaType.APPLICATION_JSON)).readEntity(ComputerDto.class);
     }
 
@@ -79,7 +68,7 @@ public class Controller {
      * @param pComputerDto ComputerDto containing the informations
      */
     public void updateComputer(ComputerDto pComputerDto) {
-        WebTarget target = client.target(BASE_URL).path("computer");
+        WebTarget target = client.target(BASE_URL).path("computers");
         target.request().put(Entity.entity(pComputerDto, MediaType.APPLICATION_JSON));
     }
 
@@ -91,8 +80,8 @@ public class Controller {
      */
     public Page<ComputerDto> getPageComputer(PageFilter pPageFilter) {
         if (pPageFilter != null) {
-            WebTarget target = client.target(BASE_URL).path("computer/" + pPageFilter.getElementsByPage() + "/" + pPageFilter.getPageNum());
-            return pageMapper.fromComputerToComputerDto(target.request().get().readEntity(new GenericType<Page<Computer>>(){}));
+            WebTarget target = client.target(BASE_URL).path("computers/" + pPageFilter.getElementsByPage() + "/" + pPageFilter.getPageNum());
+            return pageMapper.fromComputerToComputerDto(target.request().accept(MediaType.APPLICATION_JSON_TYPE).header("Content-type", "application/json").get().readEntity(new GenericType<Page<Computer>>(){}));
         }
         return null;
     }
@@ -103,7 +92,7 @@ public class Controller {
      * @return a ComputerDto
      */
     public ComputerDto getComputerById(long pId) {
-        WebTarget target = client.target(BASE_URL).path("computer/" + pId);
+        WebTarget target = client.target(BASE_URL).path("computers/" + pId);
         return target.request().get().readEntity(ComputerDto.class);
     }
 
@@ -112,7 +101,7 @@ public class Controller {
      * @param pId the id of the Computer to delete
      */
     public void deleteComputer(long pId) {
-        WebTarget target = client.target(BASE_URL).path("computer/" + pId);
+        WebTarget target = client.target(BASE_URL).path("computers/" + pId);
         target.request().delete();
     }
 }

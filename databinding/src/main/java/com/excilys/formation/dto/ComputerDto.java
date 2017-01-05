@@ -19,7 +19,7 @@ public class ComputerDto implements Serializable {
     private static final long serialVersionUID = -8940655744113113836L;
     private Long id;
     @NotNull
-    @Size(min = 2, max = 30)
+    @Size(min = 2, max = 40)
     private String name;
     private String introduced;
     private String discontinued;

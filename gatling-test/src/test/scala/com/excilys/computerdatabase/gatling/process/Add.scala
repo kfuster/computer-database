@@ -17,14 +17,14 @@ object Add {
   val feederAdd = csv("data/addComputer.csv").random
 
   val add = exec(http("Add: Add page")
-    .get(config.getString("application.urls.addPage")).check(status.is(200))
+    .get(config.getString("application.urls.addPage")).digestAuth("admin", "admin").check(status.is(200))
     .resources(http("Add: Add js")
       .get(config.getString("application.urls.static.js.add"))))
     .pause(3, 10)
     .feed(feederName)
     .feed(feederAdd)
     .exec(http("Add: Add post")
-      .post(config.getString("application.urls.addPost").get)
+      .post(config.getString("application.urls.addPost").get).digestAuth("admin", "admin")
       .formParam(config.getString("application.urls.form.add.name").get, "${addComputerName}")
       .formParam(config.getString("application.urls.form.add.introduced").get, "${addComputerIntroduced}")
       .formParam(config.getString("application.urls.form.add.discontinued").get, "${addComputerDiscontinued}")

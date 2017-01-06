@@ -6,6 +6,7 @@ import com.excilys.formation.model.util.PageFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Map to request to different objects.
@@ -56,27 +57,24 @@ public class RequestMapper {
      * @param pRequest the HttpServletRequest containing the parameters
      * @return a PageFilter
      */
-    public static PageFilter toPageFilter(HttpServletRequest pRequest) {
+    public static PageFilter toPageFilter(Map<String, String> parameters) {
         PageFilter pageFilter = new PageFilter();
         pageFilter.setElementsByPage(10);
         pageFilter.setPageNum(1);
-        if (pRequest.getParameter("page") != null) {
-            pageFilter.setPageNum(Integer.parseInt(pRequest.getParameter("page")));
+        if (parameters.containsKey("page")) {
+            pageFilter.setPageNum(Integer.parseInt(parameters.get("page")));
         }
-        if (pRequest.getParameter("limit") != null) {
-            pageFilter.setElementsByPage(Integer.parseInt(pRequest.getParameter("limit")));
+        if (parameters.containsKey("limit")) {
+            pageFilter.setElementsByPage(Integer.parseInt(parameters.get("limit")));
         }
-        pRequest.getServletContext().setAttribute("filter", null);
-        if (pRequest.getParameter("search") != null) {
-            String search = pRequest.getParameter("search");
+
+        if (parameters.containsKey("search")) {
+            String search = parameters.get("search");
             pageFilter.addCondition("computerName", search);
             pageFilter.addCondition("companyName", search);
-            pRequest.getServletContext().setAttribute("filter", search);
         }
-        pRequest.getServletContext().setAttribute("column", null);
-        if (pRequest.getParameter("column") != null) {
-            String column = pRequest.getParameter("column").replace("'", "''");
-            pRequest.getServletContext().setAttribute("column", column);
+        if (parameters.containsKey("column")) {
+            String column = parameters.get("column").replace("'", "''");
             if ("computerName".equals(column)) {
                 column = "name";
             }
@@ -85,10 +83,9 @@ public class RequestMapper {
             }
             pageFilter.addCondition("column", column);
         }
-        if (pRequest.getParameter("order") != null) {
-            String order = pRequest.getParameter("order").replace("'", "''");
+        if (parameters.containsKey("order")) {
+            String order = parameters.get("order").replace("'", "''");
             pageFilter.addCondition("order", order);
-            pRequest.getServletContext().setAttribute("order", order);
         }
         return pageFilter;
     }

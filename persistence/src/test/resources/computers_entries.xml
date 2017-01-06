@@ -1,0 +1,9 @@
+<dataset>
+	<company id="1" name="Company test 1"/>
+	<company id="2" name="Company test 2"/>
+	<computer id="1" name="Test Computer 1" introduced="1991-02-02"
+		discontinued="1994-05-05" company_id="1" />
+	<computer id="2" name="Test Computer 2" introduced="1991-02-02"
+		discontinued="1994-05-05" company_id="2" />
+	
+</dataset>

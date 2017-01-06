@@ -28,4 +28,6 @@ appender("CONSOLE", ConsoleAppender) {
 
 logger("org.hibernate.type", ALL)
 logger("org.hibernate", DEBUG)
+logger("org.springframework", ALL)
+logger("com.zaxxer.hikari", ALL)
 root(INFO, ["CONSOLE", "FILE"])

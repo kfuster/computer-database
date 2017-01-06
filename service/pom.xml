@@ -6,7 +6,7 @@
 		<artifactId>computer-database</artifactId>
 		<version>1.7-SNAPSHOT</version>
 	</parent>
-    <artifactId>service</artifactId>
+	<artifactId>service</artifactId>
 	<packaging>jar</packaging>
 
 	<name>computer-database service</name>
@@ -21,6 +21,16 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>databinding</artifactId>
 			<version>${cdb.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>20.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>4.3.5.RELEASE</version>
 		</dependency>
 	</dependencies>
 

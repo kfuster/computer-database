@@ -95,24 +95,13 @@ public class ComputerDaoImpl implements ComputerDao {
         HibernateQuery<Computer> query = queryFactory.get().selectFrom(qComputer)
                 .leftJoin(qComputer.company, QCompany.company);
         Map<String, String> conditions = pPageFilter.getConditions();
-        PathBuilder<Computer> computer = new PathBuilder<>(Computer.class, "computer");
+        PathBuilder<Computer> computerPath = new PathBuilder<>(Computer.class, "computer");
+        
         if (conditions != null && !conditions.isEmpty()) {
-            if (conditions.containsKey("computerName") && conditions.containsKey("companyName")) {
-                query = query.where(qComputer.name.like("%" + conditions.get("computerName") + "%").or(qComputer.company.name.like("%" + conditions.get("companyName") + "%")));
-            }
-            if (conditions.containsKey("column")) {
-                if (conditions.containsKey("order")) {
-                    if ("DESC".equals(conditions.get("order"))) {
-                        query = query.orderBy(computer.getString(conditions.get("column")).desc());
-                    } else {
-                        query = query.orderBy(computer.getString(conditions.get("column")).asc());
-                    }
-                } else {
-                    query = query.orderBy(computer.getString(conditions.get("column")).asc());
-                }
-            }
+            query = addConditions(query, conditions);
         }
-        int total = (int) query.fetchCount();
+        
+        int total = getCount(query);
         query = query.limit(pPageFilter.getElementsByPage())
                 .offset((pPageFilter.getPageNum() - 1) * pPageFilter.getElementsByPage());
         computers = query.fetch();
@@ -121,5 +110,30 @@ public class ComputerDaoImpl implements ComputerDao {
         pPage.setTotalElements(total);
         pPageFilter.setNbPage(pPage.getTotalPages());
         return pPage;
+    }
+    
+    public int getCount(HibernateQuery<Computer> query) {
+        return (int) query.fetchCount();
+    }
+    public HibernateQuery<Computer> addConditions(HibernateQuery<Computer> query, Map<String, String> conditions) {
+        if (conditions != null && !conditions.isEmpty()) {
+            PathBuilder<Computer> computerPath = new PathBuilder<>(Computer.class, "computer");
+            if (conditions.containsKey("computerName") && conditions.containsKey("companyName")) {
+                query = query.where(qComputer.name.like(conditions.get("computerName") + "%").or(qComputer.company.name.like(conditions.get("companyName") + "%")));
+            }
+            if (conditions.containsKey("column")) {
+                if (conditions.containsKey("order")) {
+                    if ("DESC".equals(conditions.get("order"))) {
+                        query = query.orderBy(computerPath.getString(conditions.get("column")).desc());
+                    } else {
+                        query = query.orderBy(computerPath.getString(conditions.get("column")).asc());
+                    }
+                } else {
+                    query = query.orderBy(computerPath.getString(conditions.get("column")).asc());
+                }
+            }
+        }
+        return query;
+        
     }
 }

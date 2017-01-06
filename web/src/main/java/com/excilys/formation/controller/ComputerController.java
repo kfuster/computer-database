@@ -24,8 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
@@ -46,25 +44,19 @@ public class ComputerController {
     private PageMapper pageMapper;
 
     @RequestMapping(path = "/dashboard", method = RequestMethod.GET)
-    public ModelAndView dashboard(HttpServletRequest request) {
+    public ModelAndView dashboard(@RequestParam Map<String, String> parameters) {
         ModelAndView model = new ModelAndView("/dashboard");
-        PageFilter pageFilter = RequestMapper.toPageFilter(request);
-        HttpSession session = request.getSession(false);
-        if (request.getAttribute("success") != null) {
-            System.out.println("ici");
-        }
+        PageFilter pageFilter = RequestMapper.toPageFilter(parameters);
         model.addObject("deleted", null);
-        if (session != null && session.getAttribute("deleted") != null) {
-            model.addObject("deleted", session.getAttribute("deleted"));
-            session.removeAttribute("deleted");
-        }
         Page<ComputerDto> computerPage = pageMapper.fromComputerToComputerDto(computerService.getPage(pageFilter));
+        model.addObject("order", parameters.get("order"));
+        model.addObject("column", parameters.get("column"));
         model.addObject("pageComputer", computerPage);
         return model;
     }
 
     @RequestMapping(path = "/addComputer", method = RequestMethod.GET)
-    public ModelAndView addComputerGet(HttpServletRequest request) {
+    public ModelAndView addComputerGet() {
         List<CompanyDto> listCompanies = DtoMapper.fromCompanyList(companyService.getAll());
         ModelAndView model = new ModelAndView("/addComputer");
         model.addObject("computerDto", new ComputerDto());
@@ -110,16 +102,10 @@ public class ComputerController {
         return model;
     }
 
-    @RequestMapping(path = "editComputer", method = RequestMethod.GET)
-    public ModelAndView editComputerGet(HttpServletRequest request) {
-        String computerId = null;
-        if (request.getParameter("id") != null) {
-            computerId = request.getParameter("id");
-        } else if (request.getAttribute("id") != null) {
-            computerId = (String) request.getAttribute("id");
-        }
-        if (computerId != null && !computerId.trim().isEmpty()) {
-            ComputerDto computerDto = dtoMapper.fromComputer(computerService.getById(Long.parseLong(computerId)));
+    @RequestMapping(path = "editComputer", params = {"id"}, method = RequestMethod.GET)
+    public ModelAndView editComputerGet(@RequestParam(value = "id") Long id) {
+        if (id != null) {
+            ComputerDto computerDto = dtoMapper.fromComputer(computerService.getById(id));
             if (computerDto == null || computerDto.getName() == null || computerDto.getName().isEmpty()) {
                 throw new NotFoundException();
             } else {
@@ -135,7 +121,7 @@ public class ComputerController {
 
     @RequestMapping(path = "editComputer", method = RequestMethod.POST)
     public ModelAndView editComputerPost(@Valid @ModelAttribute("computerDto") ComputerDto computerDto,
-            BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
+            BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             ModelAndView model = new ModelAndView("redirect:/dashboard");
             try {

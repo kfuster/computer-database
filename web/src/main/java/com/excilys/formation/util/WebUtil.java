@@ -1,9 +1,7 @@
-package com.excilys.formation.mapper;
+package com.excilys.formation.util;
 
-import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.model.util.PageFilter;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,48 +11,12 @@ import java.util.Map;
  *
  * @author kfuster
  */
-public class RequestMapper {
-    /**
-     * Fills a computerDto from the parameters of a request.
-     *
-     * @param pRequest the HttpServletRequest containing the parameters
-     * @return a ComputerDto
-     */
-    public static ComputerDto toComputerDto(HttpServletRequest pRequest) {
-        ComputerDto computerDto = new ComputerDto();
-        String id = "";
-        if (pRequest.getParameter("computerId") != null) {
-            id = pRequest.getParameter("computerId").trim();
-        }
-        String name = pRequest.getParameter("computerName").trim();
-        String introduced = pRequest.getParameter("introduced").trim();
-        String discontinued = pRequest.getParameter("discontinued").trim();
-        String companyId = pRequest.getParameter("companyId").trim();
-        if (!id.isEmpty()) {
-            computerDto.setId(Long.parseLong(id));
-        }
-        if (!name.isEmpty()) {
-            computerDto.setName(name);
-        }
-        if (!introduced.isEmpty()) {
-            computerDto.setIntroduced(introduced);
-        }
-        if (!discontinued.isEmpty()) {
-            computerDto.setDiscontinued(discontinued);
-        }
-        if (!companyId.isEmpty()) {
-            long idCompany = Long.parseLong(companyId);
-            if (idCompany != 0) {
-                computerDto.setCompanyId(idCompany);
-            }
-        }
-        return computerDto;
-    }
+public class WebUtil {
 
     /**
      * Fills a PageFilter from the parameters of a request.
      *
-     * @param pRequest the HttpServletRequest containing the parameters
+     * @param parameters a map containing the parameters
      * @return a PageFilter
      */
     public static PageFilter toPageFilter(Map<String, String> parameters) {
@@ -101,7 +63,7 @@ public class RequestMapper {
         String[] ids = selection.split(",");
         if (ids.length > 0) {
             for (String id : ids) {
-                listIds.add(Long.parseLong(id));
+                listIds.add(Long.parseLong(id.trim()));
             }
         }
         return listIds;

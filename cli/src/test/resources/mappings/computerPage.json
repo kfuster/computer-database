@@ -1,0 +1,149 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/rest/computers/10/1"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "elementsByPage": 10,
+      "page": 1,
+      "totalElements": 504,
+      "totalPages": 51,
+      "elements": [
+        {
+          "id": 54,
+          "name": "Commodore 128",
+          "introduced": null,
+          "discontinued": null,
+          "company": {
+            "id": 6,
+            "name": "Commodore International"
+          }
+        },
+        {
+          "id": 55,
+          "name": "Apple I",
+          "introduced": [
+            1976,
+            4,
+            1
+          ],
+          "discontinued": [
+            1977,
+            10,
+            1
+          ],
+          "company": {
+            "id": 1,
+            "name": "Apple Inc."
+          }
+        },
+        {
+          "id": 56,
+          "name": "KIM-1",
+          "introduced": [
+            1975,
+            1,
+            1
+          ],
+          "discontinued": null,
+          "company": {
+            "id": 7,
+            "name": "MOS Technology"
+          }
+        },
+        {
+          "id": 57,
+          "name": "Altair 8800",
+          "introduced": [
+            1974,
+            12,
+            19
+          ],
+          "discontinued": null,
+          "company": {
+            "id": 8,
+            "name": "Micro Instrumentation and Telemetry Systems"
+          }
+        },
+        {
+          "id": 60,
+          "name": "VAX",
+          "introduced": [
+            1977,
+            10,
+            25
+          ],
+          "discontinued": null,
+          "company": {
+            "id": 10,
+            "name": "Digital Equipment Corporation"
+          }
+        },
+        {
+          "id": 62,
+          "name": "VAX 11/750",
+          "introduced": [
+            1980,
+            10,
+            1
+          ],
+          "discontinued": null,
+          "company": {
+            "id": 10,
+            "name": "Digital Equipment Corporation"
+          }
+        },
+        {
+          "id": 65,
+          "name": "Whirlwind",
+          "introduced": null,
+          "discontinued": null,
+          "company": {
+            "id": 11,
+            "name": "Lincoln Laboratory"
+          }
+        },
+        {
+          "id": 68,
+          "name": "Macintosh Classic",
+          "introduced": null,
+          "discontinued": null,
+          "company": null
+        },
+        {
+          "id": 69,
+          "name": "Macintosh Classic II",
+          "introduced": [
+            1991,
+            1,
+            1
+          ],
+          "discontinued": null,
+          "company": {
+            "id": 1,
+            "name": "Apple Inc."
+          }
+        },
+        {
+          "id": 70,
+          "name": "Amigae",
+          "introduced": [
+            1985,
+            1,
+            1
+          ],
+          "discontinued": null,
+          "company": {
+            "id": 14,
+            "name": "Amiga Corporation"
+          }
+        }
+      ]
+    }
+  }
+}

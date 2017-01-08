@@ -1,26 +1,18 @@
 package com.excilys.formation.mapper;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.ResourceBundle;
-
-import com.excilys.formation.dto.UserDto;
-import com.excilys.formation.model.User;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.crypto.codec.Hex;
-import org.springframework.stereotype.Component;
-
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.model.Company;
 import com.excilys.formation.model.Computer;
 import com.excilys.formation.model.Computer.ComputerBuilder;
-import com.excilys.formation.model.Role;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Mapper class for DTOs.
@@ -30,26 +22,6 @@ import com.excilys.formation.model.Role;
 @Component
 public class DtoMapper {
     private static CompanyDto pCompanyDto;
-
-    public User toUser(UserDto pUserDto) {
-        User user = null;
-        if (pUserDto != null) {
-            try {
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                String data = pUserDto.getUsername() + ":Authentication via Digest:" + pUserDto.getPassword();
-                String encodedData = new String(Hex.encode(md.digest(data.getBytes())));
-                
-                HashSet<Role> authorities = new HashSet<Role>(1);
-                authorities.add(new Role("ROLE_USER"));
-                user = new User.UserBuilder().username(pUserDto.getUsername()).password(encodedData).authorities(authorities).build();
-                System.out.println(user);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-
-        }
-        return user;
-    }
 
     /**
      * Converts a ComputerDto to a Computer.
@@ -146,21 +118,6 @@ public class DtoMapper {
     public static Company toCompany(CompanyDto pCompanyDto) {
         DtoMapper.pCompanyDto = pCompanyDto;
         return new Company.CompanyBuilder(pCompanyDto.getName()).id(pCompanyDto.getId()).build();
-    }
-
-    /**
-     * Converts a List of CompanyDto to a List of Company.
-     * @param pListCompanyDto the List of CompanyDto to convert
-     * @return a List of Company
-     */
-    public static List<Company> toCompanyList(List<CompanyDto> pListCompanyDto) {
-        if (pListCompanyDto != null) {
-            List<Company> companies = new ArrayList<>();
-            pListCompanyDto.forEach(company -> companies.add(toCompany(company)));
-            return companies;
-        } else {
-            return null;
-        }
     }
 
     /**

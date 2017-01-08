@@ -1,6 +1,8 @@
 import ch.qos.logback.classic.filter.LevelFilter
-import static ch.qos.logback.core.spi.FilterReply.DENY
+
 import static ch.qos.logback.core.spi.FilterReply.ACCEPT
+import static ch.qos.logback.core.spi.FilterReply.DENY
+
 def bySecond = timestamp("yyyyMMdd'T'HHmmss")
 
 appender("FILE", FileAppender) {

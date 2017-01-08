@@ -1,10 +1,11 @@
 package com.excilys.formation.util;
 
+import com.excilys.formation.cli.MainMenu;
+import com.excilys.formation.model.util.PageFilter;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import com.excilys.formation.cli.MainMenu;
-import com.excilys.formation.model.util.PageFilter;
 
 /**
  * A Util class for menus.

@@ -73,6 +73,23 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>${failsafePlugin.version}</version>
+				<configuration>
+					<reportsDirectory>target/surefire-reports</reportsDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>integration-test</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
 			</plugin>

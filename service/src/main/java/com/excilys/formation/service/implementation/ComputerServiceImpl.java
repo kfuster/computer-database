@@ -1,18 +1,17 @@
 package com.excilys.formation.service.implementation;
 
-import java.util.List;
-
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.excilys.formation.exception.PersistenceException;
+import ch.qos.logback.classic.Logger;
 import com.excilys.formation.model.Computer;
 import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.persistence.ComputerDao;
 import com.excilys.formation.service.ComputerService;
-import ch.qos.logback.classic.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Service class for Computers.
@@ -28,63 +27,36 @@ public class ComputerServiceImpl implements ComputerService {
     @Override
     @Transactional
     public Computer create(Computer pComputer) {
-        try {
-            return computerDao.create(pComputer);
-        } catch (PersistenceException e) {
-            LOGGER.error("ComputerServiceImpl : create() catched PersistenceException", e);
-        }
-        return null;
+        return computerDao.create(pComputer);
     }
 
     @Override
     @Transactional
     public void delete(long pId) {
-        try {
-            computerDao.delete(pId);
-        } catch (PersistenceException e) {
-            LOGGER.error("ComputerServiceImpl : delete() catched PersistenceException", e);
-        }
+        computerDao.delete(pId);
     }
 
     @Override
     @Transactional
     public void deleteList(List<Long> idList) {
-        try {
-            computerDao.deleteList(idList);
-        } catch (PersistenceException e) {
-            LOGGER.error("ComputerServiceImpl : deleteList() catched PersistenceException", e);
-        }
+        computerDao.deleteList(idList);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Computer getById(long pId) {
-        try {
-            return computerDao.getById(pId);
-        } catch (PersistenceException e) {
-            LOGGER.error("ComputerServiceImpl : getById() catched PersistenceException", e);
-        }
-        return null;
+        return computerDao.getById(pId);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<Computer> getPage(PageFilter pViewDto) {
-        try {
-            return computerDao.getPage(pViewDto);
-        } catch (PersistenceException e) {
-            LOGGER.error("ComputerServiceImpl : getPage() catched PersistenceException", e);
-        }
-        return null;
+        return computerDao.getPage(pViewDto);
     }
 
     @Override
     @Transactional
     public void update(Computer pComputer) {
-        try {
-            computerDao.update(pComputer);
-        } catch (PersistenceException e) {
-            LOGGER.error("ComputerServiceImpl : update() catched PersistenceException", e);
-        }
+        computerDao.update(pComputer);
     }
 }

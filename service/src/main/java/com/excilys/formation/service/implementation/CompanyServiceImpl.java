@@ -1,7 +1,12 @@
 package com.excilys.formation.service.implementation;
 
-import java.util.List;
-
+import ch.qos.logback.classic.Logger;
+import com.excilys.formation.model.Company;
+import com.excilys.formation.model.util.PageFilter;
+import com.excilys.formation.pagination.Page;
+import com.excilys.formation.persistence.CompanyDao;
+import com.excilys.formation.persistence.ComputerDao;
+import com.excilys.formation.service.CompanyService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -9,15 +14,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.excilys.formation.exception.PersistenceException;
-import com.excilys.formation.exception.ServiceException;
-import com.excilys.formation.model.Company;
-import com.excilys.formation.model.util.PageFilter;
-import com.excilys.formation.pagination.Page;
-import com.excilys.formation.persistence.CompanyDao;
-import com.excilys.formation.persistence.ComputerDao;
-import com.excilys.formation.service.CompanyService;
-import ch.qos.logback.classic.Logger;
+import java.util.List;
 
 /**
  * Manages Company services.
@@ -37,24 +34,15 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     @Transactional(readOnly = true)
     public Page<Company> getPage(PageFilter pPageFilter) {
-        try {
-            return companyDao.getPage(pPageFilter);
-        } catch (PersistenceException e) {
-            LOGGER.error("CompanyServiceImpl : getPage() catched PersistenceException", e);
-        }
-        return null;
+        return companyDao.getPage(pPageFilter);
     }
 
     @Transactional
     @Override
     @CacheEvict(value="cacheCompanies", allEntries=true)
-    public void delete(long pId) throws ServiceException {
-        try {
-            computerDao.deleteByCompany(pId);
-            companyDao.delete(pId);
-        } catch (PersistenceException e) {
-            LOGGER.error("CompanyServiceImpl : delete() catched PersistenceException", e);
-        }
+    public void delete(long pId) {
+        computerDao.deleteByCompany(pId);
+        companyDao.delete(pId);
     }
 
     @Override
@@ -62,22 +50,13 @@ public class CompanyServiceImpl implements CompanyService {
     @Cacheable("cacheCompanies")
     public List<Company> getAll() {
         List<Company> allCompanies = null;
-        try {
-            allCompanies = companyDao.getAll();
-        } catch (PersistenceException e) {
-            LOGGER.error("CompanyServiceImpl : getAll() catched PersistenceException", e);
-        }
+        allCompanies = companyDao.getAll();
         return allCompanies;
     }
 
     @Override
     @Transactional(readOnly = true)
     public Company getById(long pId) {
-        try {
-            return companyDao.getById(pId);
-        } catch (PersistenceException e) {
-            LOGGER.error( "CompanyServiceImpl : getById() catched PersistenceException",e);
-        }
-        return null;
+        return companyDao.getById(pId);
     }
 }

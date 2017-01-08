@@ -1,7 +1,10 @@
 package com.excilys.formation.config;
 
-import java.util.Properties;
-
+import com.github.springtestdbunit.bean.DatabaseConfigBean;
+import com.github.springtestdbunit.bean.DatabaseDataSourceConnectionFactoryBean;
+import com.zaxxer.hikari.HikariDataSource;
+import org.dbunit.ext.mysql.MySqlDataTypeFactory;
+import org.dbunit.ext.mysql.MySqlMetadataHandler;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +18,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.zaxxer.hikari.HikariDataSource;
+import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
@@ -81,6 +84,21 @@ public class PersistenceSpringTestConfig {
         return dataSource;
     }
 
+    @Bean(name="dbUnitDatabaseConfig")
+    public DatabaseConfigBean databaseConfigBean() {
+        DatabaseConfigBean databaseConfigBean = new DatabaseConfigBean();
+        databaseConfigBean.setDatatypeFactory(new MySqlDataTypeFactory());
+        databaseConfigBean.setMetadataHandler(new MySqlMetadataHandler());
+        return databaseConfigBean;
+    }
+
+    @Bean(name="dbUnitDatabaseConnection")
+    public DatabaseDataSourceConnectionFactoryBean dataSourceDbUnit() {
+        DatabaseDataSourceConnectionFactoryBean databaseDataSourceConnectionFactoryBean = new DatabaseDataSourceConnectionFactoryBean(dataSource());
+        databaseDataSourceConnectionFactoryBean.setSchema("computertest");
+        databaseDataSourceConnectionFactoryBean.setDatabaseConfig(databaseConfigBean());
+        return databaseDataSourceConnectionFactoryBean;
+    }
     private Properties hibernateProperties() {
         return new Properties() {
             {

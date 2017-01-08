@@ -4,14 +4,13 @@ import ch.qos.logback.classic.Logger;
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.exception.NotFoundException;
-import com.excilys.formation.exception.ServiceException;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.mapper.PageMapper;
-import com.excilys.formation.mapper.RequestMapper;
 import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.service.CompanyService;
 import com.excilys.formation.service.ComputerService;
+import com.excilys.formation.util.WebUtil;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,7 +45,7 @@ public class ComputerController {
     @RequestMapping(path = "/dashboard", method = RequestMethod.GET)
     public ModelAndView dashboard(@RequestParam Map<String, String> parameters) {
         ModelAndView model = new ModelAndView("/dashboard");
-        PageFilter pageFilter = RequestMapper.toPageFilter(parameters);
+        PageFilter pageFilter = WebUtil.toPageFilter(parameters);
         model.addObject("deleted", null);
         Page<ComputerDto> computerPage = pageMapper.fromComputerToComputerDto(computerService.getPage(pageFilter));
         model.addObject("order", parameters.get("order"));
@@ -73,8 +72,8 @@ public class ComputerController {
             try {
                 computerService.create(dtoMapper.toComputer(pComputerDto));
                 model.addObject("success", true);
-            } catch (ServiceException e) {
-                LOGGER.info(e.getMessage());
+            } catch (Exception e) {
+                LOGGER.error(e.getMessage());
             }
             return model;
         }
@@ -95,7 +94,7 @@ public class ComputerController {
         ModelAndView model = new ModelAndView("redirect:/dashboard");
         // We get the id list of computers to delete from the parameters
         // and ask the service to delete id
-        List<Long> computersId = RequestMapper.toListIds(parameters.get("selection"));
+        List<Long> computersId = WebUtil.toListIds(parameters.get("selection"));
         if (computersId != null) {
             computerService.deleteList(computersId);
         }
@@ -128,8 +127,8 @@ public class ComputerController {
                 computerService.update(dtoMapper.toComputer(computerDto));
                 model.addObject("success", true);
                 model.addObject("computerDto", computerDto);
-            } catch (ServiceException e) {
-                LOGGER.info(e.getMessage());
+            } catch (Exception e) {
+                LOGGER.error(e.getMessage());
             }
             return model;
         }

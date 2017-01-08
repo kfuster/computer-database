@@ -13,26 +13,24 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@ page import="java.util.List"%>
-<%@ page import="com.excilys.formation.dto.CompanyDto"%>
-<%@ page import="com.excilys.formation.dto.ComputerDto"%>
-<%@ page import="java.util.Map"%>
 </head>
 <body>
-	<header class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<a class="navbar-brand" href="dashboard"> Application - Computer
-				Database </a>
-				<span style="float: right"> <img src="../resources/images/flag-en.png" onclick="$.fn.changeLanguage('en')"/>  <img src="../resources/images/flag-fr.png" onclick="$.fn.changeLanguage('fr')"/></span>
-		</div>
-		
-	</header>
+<header class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="dashboard"> Application - Computer
+            Database </a>
+        <span style="float: right"> <img src="../resources/images/flag-en.png"
+                                         onclick="$.fn.changeLanguage('en')"/>  <img
+                src="../resources/images/flag-fr.png" onclick="$.fn.changeLanguage('fr')"/></span>
+    </div>
 
-	<section id="main">
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-8 col-xs-offset-2 box">
-					<h1><spring:message code="addComputer.title" /></h1>
+</header>
+
+<section id="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2 box">
+                <h1><spring:message code="addComputer.title" /></h1>
 					<c:if test="${success}">
 						<p style="color:red"><spring:message code="message.added" /></p>
 					</c:if>

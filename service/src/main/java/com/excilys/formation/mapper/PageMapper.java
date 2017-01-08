@@ -1,13 +1,12 @@
 package com.excilys.formation.mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.model.Company;
 import com.excilys.formation.model.Computer;
 import com.excilys.formation.pagination.Page;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Change a Page type.
@@ -24,6 +23,7 @@ public class PageMapper {
      * @return a Page<CompanyDto>
      */
     public static Page<CompanyDto> fromCompanyToCompanyDto(Page<Company> pPageCompany) {
+        System.out.println(pPageCompany);
         Page<CompanyDto> pPageCompanyDto = null;
         if (pPageCompany != null) {
             pPageCompanyDto = new Page<>(10);
@@ -46,21 +46,6 @@ public class PageMapper {
             pPageComputerDto.setElements(dtoMapper.fromComputerList(pPageComputer.getElements()));
         }
         return pPageComputerDto;
-    }
-
-    /**
-     * Converts a Page from ComputerDto to Computer.
-     * @param pPageComputerDto the Page to convert
-     * @return a Page<Computer>
-     */
-    public Page<Computer> fromComputerDtoToComputer(Page<ComputerDto> pPageComputerDto) {
-        Page<Computer> pPageComputer = null;
-        if (pPageComputerDto != null) {
-            pPageComputer = new Page<>(10);
-            copyAttributes(pPageComputerDto, pPageComputer);
-            pPageComputerDto.setElements(dtoMapper.fromComputerList(pPageComputer.getElements()));
-        }
-        return pPageComputer;
     }
 
     /**

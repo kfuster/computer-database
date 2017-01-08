@@ -1,19 +1,17 @@
 package com.excilys.formation.mapper;
 
-import static org.junit.Assert.*;
+import com.excilys.formation.dto.CompanyDto;
+import com.excilys.formation.dto.ComputerDto;
+import com.excilys.formation.model.Company;
+import com.excilys.formation.model.Computer;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import com.excilys.formation.dto.CompanyDto;
-import com.excilys.formation.dto.ComputerDto;
-import com.excilys.formation.model.Company;
-import com.excilys.formation.model.Computer;
+import static org.junit.Assert.*;
 
 public class DtoMapperTest {
     private Computer computer;
@@ -23,13 +21,16 @@ public class DtoMapperTest {
     private Company company;
     private CompanyDto companyDto;
     private List<Computer> computers;
+    private List<Company> companies;
     private List<ComputerDto> computersDto;
     
     @Before
     public void setUp() throws Exception {
         computers = new ArrayList<>();
         computersDto = new ArrayList<>();
+        companies = new ArrayList<>();
         company = new Company.CompanyBuilder("company").id((long) 2).build();
+        Company companyTwo =new Company.CompanyBuilder("company 2").id((long) 7).build();
         companyDto = new CompanyDto.CompanyDtoBuilder("companyDto").id((long)3).build();
         computer = new Computer.ComputerBuilder("computer").id((long)1).dateDisc(LocalDate.parse("1991-04-02")).dateIntro(LocalDate.parse("1990-02-02")).company(company).build();
         computer_two = new Computer.ComputerBuilder("computer").id((long)2).dateDisc(LocalDate.parse("1991-04-02")).dateIntro(LocalDate.parse("1990-02-02")).company(company).build();
@@ -39,6 +40,8 @@ public class DtoMapperTest {
         computers.add(computer_two);
         computersDto.add(computerDto);
         computersDto.add(computerDto_two);
+        companies.add(company);
+        companies.add(companyTwo);
     }
 
     @Test
@@ -55,7 +58,7 @@ public class DtoMapperTest {
     }
 
     @Test
-    public void testFromComputerDtoListToComputerList_ShouldReturnComputerList() {
+    public void fromComputerDtoListToComputerList_ShouldReturnComputerList() {
         List<Computer> computers = new DtoMapper().toComputerList(computersDto);
         List<Computer> computersNull = new DtoMapper().toComputerList(null);
         assertNotNull(computer);
@@ -65,14 +68,14 @@ public class DtoMapperTest {
     }
 
     @Test
-    public void testFromComputerToComputerDto_ShouldReturnComputerDto() {
+    public void fromComputerToComputerDto_ShouldReturnComputerDto() {
         ComputerDto computerDto = new DtoMapper().fromComputer(computer);
         assertNotNull(computerDto);
         assertEquals(computerDto.getName(), computer.getName());
     }
 
     @Test
-    public void testFromComputerListToComputerDtoList_ShouldReturnComputerDtoList() {
+    public void fromComputerListToComputerDtoList_ShouldReturnComputerDtoList() {
         List<ComputerDto> computersDto = new DtoMapper().fromComputerList(computers);
         List<ComputerDto> computersDtoNull = new DtoMapper().fromComputerList(null);
         assertNotNull(computersDto);
@@ -82,22 +85,27 @@ public class DtoMapperTest {
     }
 
     @Test
-    public void testToCompany() {
-        //fail("Not yet implemented");
+    public void fromCompanyDtoToCompany_ShouldReturnCompany() {
+        Company company = new DtoMapper().toCompany(companyDto);
+        assertNotNull(company);
+        assertEquals(company.getId(), companyDto.getId());
+        assertEquals(company.getName(), companyDto.getName());
     }
 
     @Test
-    public void testToCompanyList() {
-        //fail("Not yet implemented");
+    public void fromCompanyToCompanyDto_ShouldReturnCOmpanyDto() {
+        CompanyDto companyDto = new DtoMapper().fromCompany(company);
+        assertNotNull(companyDto);
+        assertEquals(companyDto.getName(), company.getName());
     }
 
     @Test
-    public void testFromCompany() {
-        //fail("Not yet implemented");
-    }
-
-    @Test
-    public void testFromCompanyList() {
-        //fail("Not yet implemented");
+    public void fromCompanyListToCompanyDtoList_ShouldReturnCompanyDtoList() {
+        List<CompanyDto> companiesDto = new DtoMapper().fromCompanyList(companies);
+        List<CompanyDto> companiesDtoNull = new DtoMapper().fromCompanyList(null);
+        assertNotNull(companiesDto);
+        assertEquals(companiesDto.size(), 2);
+        assertTrue(companiesDto.get(1).getId() == 7);
+        assertNull(companiesDtoNull);
     }
 }

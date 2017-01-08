@@ -1,10 +1,10 @@
 package com.excilys.formation.service;
 
-import java.util.List;
-
 import com.excilys.formation.model.Computer;
 import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
+
+import java.util.List;
 
 /**
  * Interface for ComputerServices.

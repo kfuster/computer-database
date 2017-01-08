@@ -1,17 +1,16 @@
 package com.excilys.formation.cli;
 
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
+import ch.qos.logback.classic.Logger;
 import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.dto.ComputerDto;
 import com.excilys.formation.mapper.PageMapper;
-import com.excilys.formation.model.Computer;
 import com.excilys.formation.model.Company;
+import com.excilys.formation.model.Computer;
 import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
-import ch.qos.logback.classic.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -27,6 +26,10 @@ public class Controller {
     private static final String BASE_URL = "http://localhost:8181/rest/";
     @Autowired
     private PageMapper pageMapper;
+
+    public void setClient(Client pClient) {
+        client = pClient;
+    }
 
     /**
      * Get a Page<Company> from the service and converts it to Page<CompanyDto>.

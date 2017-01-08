@@ -1,0 +1,60 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/rest/companies/10/1"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "elementsByPage": 10,
+      "page": 1,
+      "totalElements": 42,
+      "totalPages": 5,
+      "elements": [
+        {
+          "id": 1,
+          "name": "Apple Inc."
+        },
+        {
+          "id": 2,
+          "name": "Thinking Machines"
+        },
+        {
+          "id": 3,
+          "name": "RCA"
+        },
+        {
+          "id": 4,
+          "name": "Netronics"
+        },
+        {
+          "id": 5,
+          "name": "Tandy Corporation"
+        },
+        {
+          "id": 6,
+          "name": "Commodore International"
+        },
+        {
+          "id": 7,
+          "name": "MOS Technology"
+        },
+        {
+          "id": 8,
+          "name": "Micro Instrumentation and Telemetry Systems"
+        },
+        {
+          "id": 9,
+          "name": "IMS Associates, Inc."
+        },
+        {
+          "id": 10,
+          "name": "Digital Equipment Corporation"
+        }
+      ]
+    }
+  }
+}

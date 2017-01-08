@@ -1,0 +1,12 @@
+<dataset>
+	<company id='1' name="Company test 1"/>
+	<company id='2' name="Company test 2"/>
+	<computer id="1" name="Test Computer 1" introduced="1991-02-02"
+		discontinued="1994-05-05" company_id="1" />
+	<computer id="2" name="Test Computer 2" introduced="1991-02-02"
+		discontinued="1994-05-05" company_id="2" />
+
+	<role id="1" role="ROLE_USER"/>
+	<user id="1" username="user test" password="pass test" status="false"/>
+	<users_roles user_id="1" role_id="1"/>
+</dataset>

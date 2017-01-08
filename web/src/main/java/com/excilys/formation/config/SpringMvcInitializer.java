@@ -1,11 +1,11 @@
 package com.excilys.formation.config;
 
-import javax.servlet.ServletRegistration;
-
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.FrameworkServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.ServletRegistration;
 
 /**
  * Created by Ookami on 31/12/2016.

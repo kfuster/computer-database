@@ -1,8 +1,5 @@
 package com.excilys.formation.cli.implementation;
 
-import java.util.Scanner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import com.excilys.formation.cli.CompanyMenu;
 import com.excilys.formation.cli.Controller;
 import com.excilys.formation.cli.MainMenu;
@@ -10,6 +7,10 @@ import com.excilys.formation.dto.CompanyDto;
 import com.excilys.formation.model.util.PageFilter;
 import com.excilys.formation.pagination.Page;
 import com.excilys.formation.util.MenuUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.Scanner;
 
 /**
  * Manages the menus and operations for companies.

@@ -1,7 +1,10 @@
 package com.excilys.formation.controller;
 
-import java.util.ResourceBundle;
-
+import ch.qos.logback.classic.Logger;
+import com.excilys.formation.model.Company;
+import com.excilys.formation.model.util.PageFilter;
+import com.excilys.formation.pagination.Page;
+import com.excilys.formation.service.CompanyService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -13,13 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.excilys.formation.exception.ServiceException;
-import com.excilys.formation.model.Company;
-import com.excilys.formation.model.util.PageFilter;
-import com.excilys.formation.pagination.Page;
-import com.excilys.formation.service.CompanyService;
-
-import ch.qos.logback.classic.Logger;
+import java.util.ResourceBundle;
 
 @RestController
 @RequestMapping(value = "/rest")
@@ -47,13 +44,8 @@ public class CompanyController {
         if( company == null ) {
             return new ResponseEntity<String>(messages.getString("message.companyNotFoundId") + id, HttpStatus.NOT_FOUND);
         }
-        
-        try {
-            companyService.delete(id);
-        } catch (ServiceException e) {
-            LOGGER.error( "CompanyController : delete() catched ServiceException",e);
-            return new ResponseEntity<String>(messages.getString("error.deletingCompany"), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
+        companyService.delete(id);
         return new ResponseEntity<String>(messages.getString("error.companyDeleted"), HttpStatus.OK);
     }
 }

@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
@@ -18,7 +20,6 @@ public class DashboardIT {
 
     @Before
     public void setUp() throws Exception {
-        //System.setProperty("webdriver.gecko.driver","C:\\Program Files\\Selenium\\geckodriver.exe");
         driver = new FirefoxDriver();
         baseUrl = "http://localhost:8181";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -29,23 +30,27 @@ public class DashboardIT {
         driver.get(baseUrl + "/dashboard");
         driver.findElement(By.linkText("»")).click();
         driver.findElement(By.linkText("4")).click();
-        driver.findElement(By.xpath("(//a[contains(text(),'...')])[2]")).click();
-        driver.findElement(By.linkText("59")).click();
+        driver.findElement(By.linkText("58")).click();
+        WebElement text = (new WebDriverWait(driver, 10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.linkText("«")));
         driver.findElement(By.linkText("«")).click();
         driver.findElement(By.linkText("1")).click();
-        driver.findElement(By.linkText("59")).click();
+        driver.findElement(By.linkText("58")).click();
+        WebElement waitButton2 = (new WebDriverWait(driver, 10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//button[@type='button'])[2]")));
         driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
+        WebElement waitButton3 = (new WebDriverWait(driver, 10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//button[@type='button'])[3]")));
         driver.findElement(By.xpath("(//button[@type='button'])[3]")).click();
         driver.findElement(By.cssSelector("button.btn.btn-default")).click();
-        driver.findElement(By.id("searchbox")).clear();
+        WebElement waitSearchbox = (new WebDriverWait(driver, 10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.id("searchbox")));
         driver.findElement(By.id("searchbox")).sendKeys("mac");
         driver.findElement(By.id("searchsubmit")).click();
         driver.findElement(By.linkText("2")).click();
-        driver.findElement(By.linkText("10")).click();
         driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
         driver.findElement(By.xpath("(//button[@type='button'])[3]")).click();
         driver.findElement(By.cssSelector("button.btn.btn-default")).click();
-        driver.findElement(By.id("addComputer")).click();
     }
 
     @After

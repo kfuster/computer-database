@@ -5,7 +5,7 @@
 
 	<groupId>com.excilys.formation</groupId>
 	<artifactId>computer-database</artifactId>
-	<version>1.8-RELEASE</version>
+	<version>1.8-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>computer-database</name>
@@ -435,6 +435,40 @@
 					</configuration>
 				</plugin>
 				<plugin>
+					<groupId>org.codehaus.cargo</groupId>
+					<artifactId>cargo-maven2-plugin</artifactId>
+					<version>${cargoPlugin.version}</version>
+					<configuration>
+						<!-- Container configuration -->
+						<container>
+							<containerId>tomcat7x</containerId>
+							<type>embedded</type>
+						</container>
+						<configuration>
+							<properties>
+								<cargo.servlet.port>8181</cargo.servlet.port>
+							</properties>
+						</configuration>
+					</configuration>
+					<!-- TODO search why blank pages when using cargo, suspect problem with spring configuration being java -->
+					<!-- <executions>
+						<execution>
+							<id>start-container</id>
+							<phase>pre-integration-test</phase>
+							<goals>
+								<goal>start</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>stop-container</id>
+							<phase>post-integration-test</phase>
+							<goals>
+								<goal>stop</goal>
+							</goals>
+						</execution>
+					</executions> -->
+				</plugin>
+				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>selenium-maven-plugin</artifactId>
 					<version>${seleniumPlugin.version}</version>
@@ -459,39 +493,7 @@
 						</execution>
 					</executions>
 				</plugin>
-				<plugin>
-					<groupId>org.codehaus.cargo</groupId>
-					<artifactId>cargo-maven2-plugin</artifactId>
-					<version>${cargoPlugin.version}</version>
-					<configuration>
-						<!-- Container configuration -->
-						<container>
-							<containerId>tomcat7x</containerId>
-							<type>embedded</type>
-						</container>
-						<configuration>
-							<properties>
-								<cargo.servlet.port>8181</cargo.servlet.port>
-							</properties>
-						</configuration>
-					</configuration>
-					<executions>
-						<execution>
-							<id>start-container</id>
-							<phase>pre-integration-test</phase>
-							<goals>
-								<goal>start</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>stop-container</id>
-							<phase>post-integration-test</phase>
-							<goals>
-								<goal>stop</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
+				
 			</plugins>
 		</pluginManagement>
 	</build>

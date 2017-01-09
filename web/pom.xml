@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.excilys.formation</groupId>
 		<artifactId>computer-database</artifactId>
-		<version>1.8-RELEASE</version>
+		<version>1.8-SNAPSHOT</version>
 	</parent>
 	<artifactId>web</artifactId>
 	<packaging>war</packaging>
@@ -94,12 +94,12 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>selenium-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
 				<groupId>org.codehaus.cargo</groupId>
 				<artifactId>cargo-maven2-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>selenium-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>

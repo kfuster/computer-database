@@ -18,7 +18,6 @@ public class AddComputerIT {
 
     @Before
     public void setUp() throws Exception {
-        //System.setProperty("webdriver.gecko.driver","C:\\Program Files\\Selenium\\geckodriver.exe");
         driver = new FirefoxDriver();
         baseUrl = "http://localhost:8181";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);

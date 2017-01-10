@@ -10,7 +10,7 @@ public class RestInitializer extends AbstractAnnotationConfigDispatcherServletIn
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] { RestSpringConfig.class, ServiceSpringConfig.class, DataBindingSpringConfig.class, PersistenceSpringConfig.class};
+        return new Class[] {RestSpringConfig.class, ServiceSpringConfig.class, DataBindingSpringConfig.class, PersistenceSpringConfig.class};
     }
 
     @Override
@@ -20,7 +20,6 @@ public class RestInitializer extends AbstractAnnotationConfigDispatcherServletIn
 
     @Override
     protected String[] getServletMappings() {
-        return new String[] { "/" };
+        return new String[] {"/" };
     }
-
 }

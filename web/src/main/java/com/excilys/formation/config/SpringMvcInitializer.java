@@ -15,7 +15,7 @@ public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServ
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] { PersistenceSpringConfig.class, ServiceSpringConfig.class, WebSpringConfig.class, DataBindingSpringConfig.class, WebSecurityConfig.class};
+        return new Class[] {PersistenceSpringConfig.class, ServiceSpringConfig.class, WebSpringConfig.class, DataBindingSpringConfig.class, WebSecurityConfig.class};
     }
 
     @Override
@@ -25,7 +25,7 @@ public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServ
 
     @Override
     protected String[] getServletMappings() {
-        return new String[] { "/" };
+        return new String[] {"/" };
     }
 
     @Override
@@ -36,7 +36,7 @@ public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServ
 
         return serv;
     }
-    
+
     @Override
     public void customizeRegistration(ServletRegistration.Dynamic registration) {
         registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");

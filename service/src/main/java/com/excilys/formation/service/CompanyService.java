@@ -23,9 +23,10 @@ public interface CompanyService extends BaseService<Company> {
      * @return the List of Companies
      */
     List<Company> getAll();
-    
+
     /**
      * Get a Company by it's id.
+     * @param id the Company's id
      * @return a Company or null
      */
     Company getById(long id);

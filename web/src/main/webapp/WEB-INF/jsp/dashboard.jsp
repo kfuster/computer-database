@@ -114,7 +114,14 @@
 
 	<footer class="navbar-fixed-bottom">
 		<div class="container text-center">
-			<ul class="pagination">
+		<ul class="pagination">
+			<div style="float: left;margin-right:5px;">
+				<form action="#" method="GET">
+					Page : <input type="number" style="width: 100px;" min="1" max="${pageComputer.totalPages}" value="${pageComputer.page}" name="page" />
+					<input type="hidden" value="${pageComputer.elementsByPage}" name="limit"/>
+				</form>
+			</div>
+			
 				<my:link currentPage="${pageComputer.page}"
 					numberPages="${pageComputer.totalPages}"
 					currentLimit="${pageComputer.elementsByPage}" />
@@ -123,7 +130,8 @@
 			<div class="btn-group btn-group-sm pull-right" role="group">
 				<div style="float: left">
 					<form action="#" method="GET">
-						<input type="number" style="width:100px;" min="1" name="limit" />
+						<input type="number" style="width: 100px;" min="1" name="limit" value="${pageComputer.elementsByPage}" />
+						<input type="hidden" value="${pageComputer.page}" name="page"/>
 					</form>
 				</div>
 				<my:link currentPage="${pageComputer.page}"

@@ -39,7 +39,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     @Transactional
-    @CacheEvict(value="cacheCompanies", allEntries=true)
+    @CacheEvict(value = "cacheCompanies", allEntries = true)
     public void delete(long id) {
         computerDao.deleteByCompany(id);
         companyDao.delete(id);

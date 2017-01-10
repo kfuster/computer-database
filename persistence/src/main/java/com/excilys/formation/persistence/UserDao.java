@@ -5,7 +5,7 @@ import com.excilys.formation.model.User;
 /**
  * Interface representing the DAO of a User.
  */
-public interface UserDao extends BaseDao<User>{
+public interface UserDao extends BaseDao<User> {
 
     /**
      * Get a user by its name.

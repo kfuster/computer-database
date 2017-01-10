@@ -134,26 +134,23 @@ public class ComputerDaoImpl implements ComputerDao {
             if (conditions.containsKey("column")) {
                 if (conditions.containsKey("order")) {
                     if ("DESC".equals(conditions.get("order"))) {
-                        if("computer".equals(conditions.get("table"))) {
+                        if ("computer".equals(conditions.get("table"))) {
                             query = query.orderBy(computerPath.getString(conditions.get("column")).desc());
-                        }
-                        else if("company".equals(conditions.get("table"))) {
+                        } else if ("company".equals(conditions.get("table"))) {
                             query = query.orderBy(companyPath.getString(conditions.get("column")).desc());
                         }
                     } else {
-                        if("computer".equals(conditions.get("table"))) {
+                        if ("computer".equals(conditions.get("table"))) {
                             query = query.orderBy(computerPath.getString(conditions.get("column")).asc());
-                        }
-                        else if("company".equals(conditions.get("table"))) {
+                        } else if ("company".equals(conditions.get("table"))) {
                             query = query.orderBy(companyPath.getString(conditions.get("column")).asc());
                         }
                     }
                 } else {
-                    if("computer".equals(conditions.get("table"))) {
+                    if ("computer".equals(conditions.get("table"))) {
                         query = query.orderBy(computerPath.getString(conditions.get("column")).asc());
-                    }
-                    else if("company".equals(conditions.get("table"))) {
-                        query = query.orderBy(companyPath.getString(conditions.get("column")).asc());    
+                    } else if ("company".equals(conditions.get("table"))) {
+                        query = query.orderBy(companyPath.getString(conditions.get("column")).asc());
                     }
                 }
             }

@@ -39,7 +39,7 @@ public class Controller {
     public Page<CompanyDto> getPageCompany(PageFilter pPageFilter) {
         if (pPageFilter != null) {
             WebTarget target = client.target(BASE_URL).path("companies/" + pPageFilter.getElementsByPage() + "/" + pPageFilter.getPageNum());
-            return pageMapper.fromCompanyToCompanyDto(target.request().get().readEntity(new GenericType<Page<Company>>(){}));
+            return pageMapper.fromCompanyToCompanyDto(target.request().get().readEntity(new GenericType<Page<Company>>() { }));
         }
         return null;
     }
@@ -85,7 +85,7 @@ public class Controller {
     public Page<ComputerDto> getPageComputer(PageFilter pPageFilter) {
         if (pPageFilter != null) {
             WebTarget target = client.target(BASE_URL).path("computers/" + pPageFilter.getElementsByPage() + "/" + pPageFilter.getPageNum());
-            return pageMapper.fromComputerToComputerDto(target.request().accept(MediaType.APPLICATION_JSON_TYPE).header("Content-type", "application/json").get().readEntity(new GenericType<Page<Computer>>(){}));
+            return pageMapper.fromComputerToComputerDto(target.request().accept(MediaType.APPLICATION_JSON_TYPE).header("Content-type", "application/json").get().readEntity(new GenericType<Page<Computer>>() { }));
         }
         return null;
     }

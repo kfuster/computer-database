@@ -20,6 +20,15 @@ public @interface DateAnterior {
      */
     String message() default "Date not anterior";
 
+    /**
+     * Return the groups parameter.
+     * @return a Class<?> array
+     */
     Class<?>[] groups() default { };
+
+    /**
+     * Return the payload parameter.
+     * @return a Class<? extends Payload> array
+     */
     Class<? extends Payload>[] payload() default { };
 }

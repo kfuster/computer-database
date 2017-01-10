@@ -27,7 +27,7 @@ public class CompanyController {
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(CompanyController.class);
     @Autowired
     private CompanyService companyService;
-    
+
     @RequestMapping(value = "/companies/{limit}/{pagenum}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<Company>> page(@PathVariable int limit, @PathVariable int pagenum) {
         PageFilter pageFilter = new PageFilter();
@@ -35,7 +35,7 @@ public class CompanyController {
         pageFilter.setPageNum(pagenum);
         return new ResponseEntity<>(companyService.getPage(pageFilter), HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = "/companies/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> delete(@PathVariable Long id) {
         ResourceBundle messages = ResourceBundle.getBundle("messages/messages", LocaleContextHolder.getLocale());
@@ -43,7 +43,7 @@ public class CompanyController {
             return new ResponseEntity<String>(messages.getString("message.unauthorizedId"), HttpStatus.NOT_ACCEPTABLE);
         }
         Company company = companyService.getById(id);
-        if( company == null ) {
+        if (company == null) {
             return new ResponseEntity<String>(messages.getString("message.companyNotFoundId") + id, HttpStatus.NOT_FOUND);
         }
         companyService.delete(id);

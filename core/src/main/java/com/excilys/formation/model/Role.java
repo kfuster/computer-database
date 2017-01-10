@@ -2,8 +2,15 @@ package com.excilys.formation.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
  * Class depicting the Role entity.
@@ -24,7 +31,7 @@ public class Role implements GrantedAuthority {
     /**
      * Default constructor.
      */
-    protected Role() {}
+    protected Role() { }
 
     /**
      * Constructor takeing a String for the user's role.
@@ -51,23 +58,30 @@ public class Role implements GrantedAuthority {
     }
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Role other = (Role) obj;
         if (id == null) {
-            if (other.id != null)
+            if (other.id != null) {
                 return false;
-        } else if (!id.equals(other.id))
+            }
+        } else if (!id.equals(other.id)) {
             return false;
+        }
         if (role == null) {
-            if (other.role != null)
+            if (other.role != null) {
                 return false;
-        } else if (!role.equals(other.role))
+            }
+        } else if (!role.equals(other.role)) {
             return false;
+        }
         return true;
     }
 }

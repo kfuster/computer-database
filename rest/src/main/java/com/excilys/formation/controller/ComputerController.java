@@ -12,7 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ResourceBundle;
 
@@ -31,7 +35,7 @@ public class ComputerController {
     public ComputerDto computer(@PathVariable Long id) {
         DtoMapper dtoMapper = new DtoMapper();
         Computer computer = computerService.getById(id);
-        if( computer == null ) {
+        if (computer == null) {
             return null;
         }
         return dtoMapper.fromComputer(computer);
@@ -52,7 +56,7 @@ public class ComputerController {
         createdComputer = computerService.create(dtoMapper.toComputer(computer));
         return dtoMapper.fromComputer(createdComputer);
     }
-    
+
     @RequestMapping(value = "/computers/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> delete(@PathVariable Long id) {
         ResourceBundle messages = ResourceBundle.getBundle("messages/messages", LocaleContextHolder.getLocale());
@@ -60,19 +64,18 @@ public class ComputerController {
             return new ResponseEntity<String>(messages.getString("message.unauthorizedId"), HttpStatus.NOT_ACCEPTABLE);
         }
         Computer computer = computerService.getById(id);
-        if( computer == null ) {
+        if (computer == null) {
             return new ResponseEntity<String>(messages.getString("message.computerNotFoundId") + id, HttpStatus.NOT_FOUND);
         }
-        
         try {
             computerService.delete(id);
         } catch (Exception e) {
-            LOGGER.error( "ComputerController : delete() catched ServiceException",e);
+            LOGGER.error("ComputerController : delete() catched ServiceException", e);
             return new ResponseEntity<String>(messages.getString("error.deletingComputer"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<String>(messages.getString("message.deleted"), HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = "/computers", method = RequestMethod.PUT)
     public ResponseEntity<String> update(@RequestBody ComputerDto computer) {
         ResourceBundle messages = ResourceBundle.getBundle("messages/messages", LocaleContextHolder.getLocale());
@@ -80,7 +83,7 @@ public class ComputerController {
         try {
             computerService.update(dtoMapper.toComputer(computer));
         } catch (Exception e) {
-            LOGGER.error( "ComputerController : update() catched ServiceException",e);
+            LOGGER.error("ComputerController : update() catched ServiceException", e);
             return new ResponseEntity<String>(messages.getString("error.updatingComputer"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<String>(messages.getString("message.updated"), HttpStatus.OK);

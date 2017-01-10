@@ -5,4 +5,4 @@ import com.excilys.formation.model.User;
 /**
  * Interface for the User services.
  */
-public interface UserService extends BaseService<User> {}
+public interface UserService extends BaseService<User> { }

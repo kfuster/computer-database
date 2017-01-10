@@ -50,6 +50,7 @@ public class ComputerController {
         Page<ComputerDto> computerPage = pageMapper.fromComputerToComputerDto(computerService.getPage(pageFilter));
         model.addObject("order", parameters.get("order"));
         model.addObject("column", parameters.get("column"));
+        model.addObject("search", parameters.get("search"));
         model.addObject("pageComputer", computerPage);
         return model;
     }

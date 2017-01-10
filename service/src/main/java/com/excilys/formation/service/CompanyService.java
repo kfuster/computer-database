@@ -9,15 +9,14 @@ import java.util.List;
 /**
  * Interface for CompanyServices.
  * @author kfuster
- *
  */
 public interface CompanyService extends BaseService<Company> {
     /**
      * Populate a list of Company according to the PageFilter parameters.
-     * @param pPageFilter the PageFilter containing the parameters
+     * @param pageFilter the PageFilter containing the parameters
      * @return the Page with the populated list
      */
-    Page<Company> getPage(PageFilter pPageFilter);
+    Page<Company> getPage(PageFilter pageFilter);
 
     /**
      * Get all Companies.
@@ -29,5 +28,5 @@ public interface CompanyService extends BaseService<Company> {
      * Get a Company by it's id.
      * @return a Company or null
      */
-    Company getById(long pId);
+    Company getById(long id);
 }

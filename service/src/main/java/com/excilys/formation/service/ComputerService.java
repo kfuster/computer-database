@@ -9,22 +9,22 @@ import java.util.List;
 /**
  * Interface for ComputerServices.
  * @author kfuster
- *
  */
 public interface ComputerService extends BaseService<Computer> {
+
     /**
      * Get a computer by its id.
-     * @param pId the id of the Computer to get
+     * @param id the id of the Computer to get
      * @return the ComputerDto of the computer obtained from the DB
      */
-    Computer getById(long pId);
+    Computer getById(long id);
 
     /**
      * Populate a page of Computer according to the ViewDto parameters.
-     * @param pPageFilter the PageFilter containing the parameters
+     * @param pageFilter the PageFilter containing the parameters
      * @return the Page with the populated list
      */
-    Page<Computer> getPage(PageFilter pPageFilter);
+    Page<Computer> getPage(PageFilter pageFilter);
 
     /**
      * Delete a list of Computers.

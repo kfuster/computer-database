@@ -11,39 +11,40 @@ import org.springframework.stereotype.Component;
 /**
  * Change a Page type.
  * @author kfuster
- *
  */
 @Component
 public class PageMapper {
+
     @Autowired
     private DtoMapper dtoMapper;
+
     /**
      * Converts a Page from Company to CompanyDto.
-     * @param pPageCompany the Page to convert
+     * @param pageCompany the Page to convert
      * @return a Page<CompanyDto>
      */
-    public static Page<CompanyDto> fromCompanyToCompanyDto(Page<Company> pPageCompany) {
-        System.out.println(pPageCompany);
+    public static Page<CompanyDto> fromCompanyToCompanyDto(Page<Company> pageCompany) {
+        System.out.println(pageCompany);
         Page<CompanyDto> pPageCompanyDto = null;
-        if (pPageCompany != null) {
+        if (pageCompany != null) {
             pPageCompanyDto = new Page<>(10);
-            copyAttributes(pPageCompany, pPageCompanyDto);
-            pPageCompanyDto.setElements(DtoMapper.fromCompanyList(pPageCompany.getElements()));
+            copyAttributes(pageCompany, pPageCompanyDto);
+            pPageCompanyDto.setElements(DtoMapper.fromCompanyList(pageCompany.getElements()));
         }
         return pPageCompanyDto;
     }
 
     /**
      * Converts a Page from Computer to ComputerDto.
-     * @param pPageComputer the Page to convert
+     * @param pageComputer the Page to convert
      * @return a Page<ComputerDto>
      */
-    public Page<ComputerDto> fromComputerToComputerDto(Page<Computer> pPageComputer) {
+    public Page<ComputerDto> fromComputerToComputerDto(Page<Computer> pageComputer) {
         Page<ComputerDto> pPageComputerDto = null;
-        if (pPageComputer != null) {
+        if (pageComputer != null) {
             pPageComputerDto = new Page<>(10);
-            copyAttributes(pPageComputer, pPageComputerDto);
-            pPageComputerDto.setElements(dtoMapper.fromComputerList(pPageComputer.getElements()));
+            copyAttributes(pageComputer, pPageComputerDto);
+            pPageComputerDto.setElements(dtoMapper.fromComputerList(pageComputer.getElements()));
         }
         return pPageComputerDto;
     }
@@ -52,13 +53,13 @@ public class PageMapper {
      * Copy attributes from to page to another, used when we need the same page
      * but with a different list of elements (like going from a DTO page to an
      * object page).
-     * @param pPageToCopy the page we want the attributes of
-     * @param pNewPage the page that'll receives the attribute
+     * @param pageToCopy the page we want the attributes of
+     * @param newPage the page that'll receives the attribute
      */
-    public static void copyAttributes(Page<?> pPageToCopy, Page<?> pNewPage) {
-        pNewPage.setPage(pPageToCopy.getPage());
-        pNewPage.setElementsByPage(pPageToCopy.getElementsByPage());
-        pNewPage.setTotalPages(pPageToCopy.getTotalPages());
-        pNewPage.setTotalElements(pPageToCopy.getTotalElements());
+    public static void copyAttributes(Page<?> pageToCopy, Page<?> newPage) {
+        newPage.setPage(pageToCopy.getPage());
+        newPage.setElementsByPage(pageToCopy.getElementsByPage());
+        newPage.setTotalPages(pageToCopy.getTotalPages());
+        newPage.setTotalElements(pageToCopy.getTotalElements());
     }
 }

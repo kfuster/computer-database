@@ -1,12 +1,11 @@
 package com.excilys.formation.service;
 
-
 /**
  * Basic service interface.
  * @author kfuster
- *
  */
 public interface BaseService<T> {
+
     /**
      * Creates a object in the DB by passing the data from a DTO to an pojo and
      * to the DAO.

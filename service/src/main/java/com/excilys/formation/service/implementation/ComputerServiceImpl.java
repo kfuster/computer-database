@@ -16,24 +16,25 @@ import java.util.List;
 /**
  * Service class for Computers.
  * @author kfuster
- *
  */
 @Service
 public class ComputerServiceImpl implements ComputerService {
+
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(ComputerServiceImpl.class);
+
     @Autowired
     private ComputerDao computerDao;
 
     @Override
     @Transactional
-    public Computer create(Computer pComputer) {
-        return computerDao.create(pComputer);
+    public Computer create(Computer computer) {
+        return computerDao.create(computer);
     }
 
     @Override
     @Transactional
-    public void delete(long pId) {
-        computerDao.delete(pId);
+    public void delete(long id) {
+        computerDao.delete(id);
     }
 
     @Override
@@ -44,19 +45,19 @@ public class ComputerServiceImpl implements ComputerService {
 
     @Override
     @Transactional(readOnly = true)
-    public Computer getById(long pId) {
-        return computerDao.getById(pId);
+    public Computer getById(long id) {
+        return computerDao.getById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Computer> getPage(PageFilter pViewDto) {
-        return computerDao.getPage(pViewDto);
+    public Page<Computer> getPage(PageFilter viewDto) {
+        return computerDao.getPage(viewDto);
     }
 
     @Override
     @Transactional
-    public void update(Computer pComputer) {
-        computerDao.update(pComputer);
+    public void update(Computer computer) {
+        computerDao.update(computer);
     }
 }

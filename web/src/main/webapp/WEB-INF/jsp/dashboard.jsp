@@ -25,9 +25,9 @@
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<a class="navbar-brand" href="dashboard"> Application - Computer
-				Database </a> <span style="float: right"> <img
+				Database </a> <span style="float: right"> <img style="cursor: pointer"
 				src="../resources/images/flag-en.png"
-				onclick="$.fn.changeLanguage('en')" /> <img
+				onclick="$.fn.changeLanguage('en')" /> <img style="cursor: pointer"
 				src="../resources/images/flag-fr.png"
 				onclick="$.fn.changeLanguage('fr')" /></span>
 		</div>
@@ -53,7 +53,7 @@
 					<form id="searchForm" action="" method="GET" class="form-inline">
 
 						<input type="search" id="searchbox" name="search"
-							<c:if test="${not empty filter}">value="${filter}"</c:if>
+							<c:if test="${not empty search}">value="${search}"</c:if>
 							class="form-control"
 							placeholder="<spring:message code="placeholder.search"/>" /> <input
 							type="submit" id="searchsubmit"
@@ -92,16 +92,51 @@
 									class="fa fa-trash-o fa-lg"></i>
 							</a>
 						</span></th>
-						<th id="computerName" onclick="$.fn.columnSort('computerName');"><spring:message
-								code="form.computerName" /></th>
-						<th id="introduced" onclick="$.fn.columnSort('introduced');"><spring:message
-								code="form.computerIntroduced" /></th>
+						<th id="computerName" onclick="$.fn.columnSort('computerName');"
+							style="cursor: pointer"><spring:message
+								code="form.computerName" />
+							<c:if test="${column == 'computerName' && order == 'ASC'}">
+								<div class="arrow-up" style="float: right;"></div>
+							</c:if> 
+							<span style="clear: both">
+							<c:if test="${column == 'computerName' && order == 'DESC'}">
+								<div class="arrow-down" style="float: right"></div>
+							</c:if>	
+								</th>
+						<th id="introduced" onclick="$.fn.columnSort('introduced');"
+							style="cursor: pointer"><spring:message
+								code="form.computerIntroduced" />
+							<c:if test="${column == 'introduced' && order == 'ASC'}">
+								<div class="arrow-up" style="float: right;"></div>
+							</c:if> 
+								<span style="clear: both">
+								<c:if test="${column == 'introduced' && order == 'DESC'}">
+								<div class="arrow-down" style="float: right"></div>
+							</c:if>	
+								</th>
 						<!-- Table header for Discontinued Date -->
-						<th id="discontinued" onclick="$.fn.columnSort('discontinued');"><spring:message
-								code="form.computerDiscontinued" /></th>
+						<th id="discontinued" onclick="$.fn.columnSort('discontinued');"
+							style="cursor: pointer"><spring:message
+								code="form.computerDiscontinued" />
+								<c:if test="${column == 'discontinued' && order == 'ASC'}">
+									<div class="arrow-up" style="float: right;"></div>
+								</c:if>  
+								<span style="clear: both">
+								<c:if test="${column == 'discontinued' && order == 'DESC'}">
+								<div class="arrow-down" style="float: right"></div>
+							</c:if>	
+								</th>
 						<!-- Table header for Company -->
-						<th id="companyName" onclick="$.fn.columnSort('companyName');"><spring:message
-								code="form.company" /></th>
+						<th id="companyName" onclick="$.fn.columnSort('companyName');"
+							style="cursor: pointer"><spring:message code="form.company" />
+							<c:if test="${column == 'companyName' && order == 'ASC'}">
+								<div class="arrow-up" style="float: right;"></div>
+							</c:if>  
+							<span style="clear: both">
+								<c:if test="${column == 'companyName' && order == 'DESC'}">
+								<div class="arrow-down" style="float: right"></div>
+							</c:if>	
+								</th>
 					</tr>
 				</thead>
 				<!-- Browse attribute computers -->
@@ -114,14 +149,16 @@
 
 	<footer class="navbar-fixed-bottom">
 		<div class="container text-center">
-		<ul class="pagination">
-			<div style="float: left;margin-right:5px;">
-				<form action="#" method="GET">
-					Page : <input type="number" style="width: 100px;" min="1" max="${pageComputer.totalPages}" value="${pageComputer.page}" name="page" />
-					<input type="hidden" value="${pageComputer.elementsByPage}" name="limit"/>
-				</form>
-			</div>
-			
+			<ul class="pagination">
+				<div style="float: left; margin-right: 5px;">
+					<form action="#" method="GET">
+						Page : <input type="number" style="width: 100px;" min="1"
+							max="${pageComputer.totalPages}" value="${pageComputer.page}"
+							name="page" /> <input type="hidden"
+							value="${pageComputer.elementsByPage}" name="limit" />
+					</form>
+				</div>
+
 				<my:link currentPage="${pageComputer.page}"
 					numberPages="${pageComputer.totalPages}"
 					currentLimit="${pageComputer.elementsByPage}" />
@@ -130,8 +167,9 @@
 			<div class="btn-group btn-group-sm pull-right" role="group">
 				<div style="float: left">
 					<form action="#" method="GET">
-						<input type="number" style="width: 100px;" min="1" name="limit" value="${pageComputer.elementsByPage}" />
-						<input type="hidden" value="${pageComputer.page}" name="page"/>
+						<input type="number" style="width: 100px;" min="1" name="limit"
+							value="${pageComputer.elementsByPage}" /> <input type="hidden"
+							value="${pageComputer.page}" name="page" />
 					</form>
 				</div>
 				<my:link currentPage="${pageComputer.page}"

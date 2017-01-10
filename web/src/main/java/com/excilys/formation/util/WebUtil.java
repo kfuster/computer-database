@@ -35,12 +35,16 @@ public class WebUtil {
         }
         if (parameters.containsKey("column")) {
             String column = parameters.get("column").replace("'", "''");
+            String table = null;
             if ("computerName".equals(column)) {
+                table = "computer";
                 column = "name";
             }
             if ("companyName".equals(column)) {
+                table = "company";
                 column = "name";
             }
+            pageFilter.addCondition("table", table);
             pageFilter.addCondition("column", column);
         }
         if (parameters.containsKey("order")) {

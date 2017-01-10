@@ -16,7 +16,7 @@
 		<div class="container">
 			<a class="navbar-brand" href="dashboard"> Application -
 				Computer Database </a>
-			<span style="float: right"> <img src="../resources/images/flag-en.png" onclick="$.fn.changeLanguage('en')"/>  <img src="../resources/images/flag-fr.png" onclick="$.fn.changeLanguage('fr')"/></span>
+			<span style="float: right"> <img style="cursor: pointer" src="../resources/images/flag-en.png" onclick="$.fn.changeLanguage('en')"/>  <img style="cursor: pointer" src="../resources/images/flag-fr.png" onclick="$.fn.changeLanguage('fr')"/></span>
 		</div>
 	</header>
 

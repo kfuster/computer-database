@@ -1,5 +1,6 @@
 package com.excilys.formation.persistence.implementation;
 
+import com.excilys.formation.model.Company;
 import com.excilys.formation.model.Computer;
 import com.excilys.formation.model.QCompany;
 import com.excilys.formation.model.QComputer;
@@ -126,18 +127,34 @@ public class ComputerDaoImpl implements ComputerDao {
     public HibernateQuery<Computer> addConditions(HibernateQuery<Computer> query, Map<String, String> conditions) {
         if (conditions != null && !conditions.isEmpty()) {
             PathBuilder<Computer> computerPath = new PathBuilder<>(Computer.class, "computer");
+            PathBuilder<Company> companyPath = new PathBuilder<>(Company.class, "company");
             if (conditions.containsKey("computerName") && conditions.containsKey("companyName")) {
                 query = query.where(qComputer.name.like(conditions.get("computerName") + "%").or(qComputer.company.name.like(conditions.get("companyName") + "%")));
             }
             if (conditions.containsKey("column")) {
                 if (conditions.containsKey("order")) {
                     if ("DESC".equals(conditions.get("order"))) {
-                        query = query.orderBy(computerPath.getString(conditions.get("column")).desc());
+                        if("computer".equals(conditions.get("table"))) {
+                            query = query.orderBy(computerPath.getString(conditions.get("column")).desc());
+                        }
+                        else if("company".equals(conditions.get("table"))) {
+                            query = query.orderBy(companyPath.getString(conditions.get("column")).desc());
+                        }
                     } else {
-                        query = query.orderBy(computerPath.getString(conditions.get("column")).asc());
+                        if("computer".equals(conditions.get("table"))) {
+                            query = query.orderBy(computerPath.getString(conditions.get("column")).asc());
+                        }
+                        else if("company".equals(conditions.get("table"))) {
+                            query = query.orderBy(companyPath.getString(conditions.get("column")).asc());
+                        }
                     }
                 } else {
-                    query = query.orderBy(computerPath.getString(conditions.get("column")).asc());
+                    if("computer".equals(conditions.get("table"))) {
+                        query = query.orderBy(computerPath.getString(conditions.get("column")).asc());
+                    }
+                    else if("company".equals(conditions.get("table"))) {
+                        query = query.orderBy(companyPath.getString(conditions.get("column")).asc());    
+                    }
                 }
             }
         }

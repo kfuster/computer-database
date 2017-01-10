@@ -12,6 +12,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.function.Supplier;
 
+/**
+ * DAO class for Users.
+ * @author kfuster
+ */
+
 @Repository
 public class UserDaoImpl implements UserDao {
     private static QUser qUser = QUser.user;
@@ -26,26 +31,26 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User create(User pUser) {
-        if (pUser == null) {
+    public User create(User user) {
+        if (user == null) {
             throw new IllegalArgumentException("A user is needed");
         }
-        sessionFactory.getCurrentSession().save(pUser);
-        return pUser;
+        sessionFactory.getCurrentSession().save(user);
+        return user;
     }
 
     @Override
-    public Page<User> getPage(PageFilter pPageFilter) {
+    public Page<User> getPage(PageFilter pageFilter) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public User getByName(String pName) {
-        return (User) queryFactory.get().from(qUser).where(qUser.username.eq(pName)).fetchOne();
+    public User getByName(String name) {
+        return (User) queryFactory.get().from(qUser).where(qUser.username.eq(name)).fetchOne();
     }
 
     @Override
-    public User getById(long pId) {
-        return (User) queryFactory.get().from(qUser).where(qUser.id.eq(pId)).fetchOne();
+    public User getById(long id) {
+        return (User) queryFactory.get().from(qUser).where(qUser.id.eq(id)).fetchOne();
     }
 }

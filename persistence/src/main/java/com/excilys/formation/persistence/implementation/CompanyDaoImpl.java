@@ -16,7 +16,6 @@ import java.util.function.Supplier;
 
 /**
  * DAO class for companies.
- *
  * @author kfuster
  */
 
@@ -34,32 +33,32 @@ public class CompanyDaoImpl implements CompanyDao {
     }
 
     @Override
-    public Company getById(long pId) {
-        return (Company) queryFactory.get().from(qCompany).where(qCompany.id.eq(pId)).fetchOne();
+    public Company getById(long id) {
+        return (Company) queryFactory.get().from(qCompany).where(qCompany.id.eq(id)).fetchOne();
     }
 
     @Override
-    public void delete(long pId) {
-        queryFactory.get().delete(qCompany).where(qCompany.id.eq(pId)).execute();
+    public void delete(long id) {
+        queryFactory.get().delete(qCompany).where(qCompany.id.eq(id)).execute();
     }
 
     @Override
-    public Page<Company> getPage(PageFilter pPageFilter) {
-        if (pPageFilter == null) {
+    public Page<Company> getPage(PageFilter pageFilter) {
+        if (pageFilter == null) {
             throw new IllegalArgumentException("A PageFilter is needed");
         }
         List<Company> allCompanies;
         Page<Company> pPage;
         HibernateQuery<Company> query = queryFactory.get().selectFrom(qCompany);
         int total = (int) query.fetchCount();
-        query = query.limit(pPageFilter.getElementsByPage())
-                .offset((pPageFilter.getPageNum() - 1) * pPageFilter.getElementsByPage());
+        query = query.limit(pageFilter.getElementsByPage())
+                .offset((pageFilter.getPageNum() - 1) * pageFilter.getElementsByPage());
         allCompanies = query.fetch();
-        pPage = new Page<>(pPageFilter.getElementsByPage());
-        pPage.setPage(pPageFilter.getPageNum());
+        pPage = new Page<>(pageFilter.getElementsByPage());
+        pPage.setPage(pageFilter.getPageNum());
         pPage.setElements((allCompanies));
         pPage.setTotalElements(total);
-        pPageFilter.setNbPage(pPage.getTotalPages());
+        pageFilter.setNbPage(pPage.getTotalPages());
         return pPage;
     }
 

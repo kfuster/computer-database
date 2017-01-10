@@ -4,13 +4,17 @@ import com.excilys.formation.model.Company;
 
 import java.util.List;
 
+/**
+ * Interface representing the DAO of a Company.
+ */
 public interface CompanyDao extends BaseDao<Company> {
+
     /**
      * Get a company by its id.
-     * @param pId the company's Id
+     * @param id the company's Id
      * @return a Company
      */
-    Company getById(long pId);
+    Company getById(long id);
 
     /**
      * Get all Companies.
@@ -20,7 +24,7 @@ public interface CompanyDao extends BaseDao<Company> {
 
     /**
      * Delete a Company.
-     * @param pId the Id of the Company
+     * @param id the Id of the Company
      */
-    void delete(long pId);
+    void delete(long id);
 }

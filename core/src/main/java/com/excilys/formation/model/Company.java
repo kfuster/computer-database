@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Company entity.
- *
+ * Class representing a company entity.
+ * Typically a company manufactured one or several computers.
  * @author kfuster
  */
 @Entity
@@ -28,7 +28,6 @@ public final class Company implements Serializable {
 
     /**
      * Company constructor.
-     *
      * @param pName the name of the Company.
      */
     private Company(String pName) {
@@ -36,18 +35,35 @@ public final class Company implements Serializable {
     }
 
     // ######### SETTERS/GETTERS #########
+
+    /**
+     * Getter for the id field.
+     * @return Long representing the id.
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Setter for the id field.
+     * @param id Long representing the id.
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Getter for the name field.
+     * @return String representing the name;
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Setter for the name field.
+     * @param name String representing the name;
+     */
     public void setName(String name) {
         this.name = name;
     }
@@ -92,34 +108,34 @@ public final class Company implements Serializable {
         return "Company [id=" + id + ", name=" + name + "]";
     }
 
+    /**
+     * Class allowing the creation of companies.
+     */
     public static class CompanyBuilder {
         private Long id;
         private String name;
 
         /**
          * CompanyBuilder constructor.
-         *
-         * @param pName the company's name
+         * @param name the company's name
          */
-        public CompanyBuilder(String pName) {
-            name = pName;
+        public CompanyBuilder(String name) {
+            this.name = name;
         }
 
         /**
-         * Set the CompanyBuilder's id.
-         *
-         * @param pId the Company's Id
+         * Setter for the CompanyBuilder's id.
+         * @param id the Company's Id
          * @return the CompanyBuilder
          */
-        public CompanyBuilder id(Long pId) {
-            id = pId;
+        public CompanyBuilder id(Long id) {
+            this.id = id;
             return this;
         }
 
         /**
          * Build a company from the builder's attributes.
-         *
-         * @return a Company
+         * @return a Company built with the builder's values.
          */
         public Company build() {
             Company company = new Company(name);

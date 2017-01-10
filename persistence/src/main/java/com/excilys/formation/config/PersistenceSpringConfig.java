@@ -17,7 +17,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.util.Properties;
 
 /**
- * Created by Ookami on 31/12/2016.
+ * Created by kfuster on 31/12/2016.
+ *
  */
 
 @Configuration

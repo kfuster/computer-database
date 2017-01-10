@@ -7,17 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Map to request to different objects.
- *
+ * Utility class that contains mapping methods transforming request into different objects.
  * @author kfuster
  */
 public class WebUtil {
 
     /**
      * Fills a PageFilter from the parameters of a request.
-     *
-     * @param parameters a map containing the parameters
-     * @return a PageFilter
+     * @param parameters a map containing the parameters.
+     * @return a PageFilter.
      */
     public static PageFilter toPageFilter(Map<String, String> parameters) {
         PageFilter pageFilter = new PageFilter();
@@ -54,9 +52,8 @@ public class WebUtil {
 
     /**
      * Parse the String of ids to delete to a List.
-     *
-     * @param selection the String of ids
-     * @return a List<Long> of ids
+     * @param selection the String of ids.
+     * @return a List<Long> of ids.
      */
     public static List<Long> toListIds(String selection) {
         List<Long> listIds = new ArrayList<>();

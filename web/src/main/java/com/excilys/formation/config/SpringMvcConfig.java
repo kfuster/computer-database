@@ -19,6 +19,7 @@ import java.util.Locale;
 
 /**
  * Created by Ookami on 31/12/2016.
+ * Class configuring the Spring MVC.
  */
 @Configuration
 @EnableWebMvc

@@ -70,7 +70,7 @@
 		<java.source>1.8</java.source>
 		<java.target>1.8</java.target>
 
-		<cdb.version>1.7-SNAPSHOT</cdb.version>
+		<cdb.version>1.8-SNAPSHOT</cdb.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>

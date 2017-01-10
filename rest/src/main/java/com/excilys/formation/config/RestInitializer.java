@@ -4,6 +4,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 /**
  * Created by Ookami on 03/01/2017.
+ * Class initializing the Spring context for the rest module.
  */
 public class RestInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 

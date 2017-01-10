@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ResourceBundle;
 
+/**
+ * Rest Controller class for the companies.
+ */
 @RestController
 @RequestMapping(value = "/rest")
 public class CompanyController {
@@ -39,12 +42,10 @@ public class CompanyController {
         if (id <= 0) {
             return new ResponseEntity<String>(messages.getString("message.unauthorizedId"), HttpStatus.NOT_ACCEPTABLE);
         }
-        
         Company company = companyService.getById(id);
         if( company == null ) {
             return new ResponseEntity<String>(messages.getString("message.companyNotFoundId") + id, HttpStatus.NOT_FOUND);
         }
-
         companyService.delete(id);
         return new ResponseEntity<String>(messages.getString("error.companyDeleted"), HttpStatus.OK);
     }

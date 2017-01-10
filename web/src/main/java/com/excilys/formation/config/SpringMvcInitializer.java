@@ -9,6 +9,7 @@ import javax.servlet.ServletRegistration;
 
 /**
  * Created by Ookami on 31/12/2016.
+ * Class initializing the Spring contexts for the MVC.
  */
 public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 

@@ -12,15 +12,18 @@ import org.springframework.security.web.authentication.www.DigestAuthenticationF
 
 import javax.annotation.Resource;
 
+/**
+ * Class configuring the Spring beans needed for the security part of the webapp.
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Resource(name = "UserService")
     private UserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         DigestAuthenticationEntryPoint authenticationEntryPoint = new DigestAuthenticationEntryPoint();
         authenticationEntryPoint.setKey("cdb");
         authenticationEntryPoint.setRealmName("Authentication via Digest");

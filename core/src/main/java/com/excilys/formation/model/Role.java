@@ -5,6 +5,10 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Class depicting the Role entity.
+ * Typically every User has a Role.
+ */
 @Entity
 @Table(name = "role")
 public class Role implements GrantedAuthority {
@@ -16,9 +20,16 @@ public class Role implements GrantedAuthority {
     private String role;
     @ManyToMany(mappedBy = "authorities")
     private List<User> users;
-    
+
+    /**
+     * Default constructor.
+     */
     protected Role() {}
-    
+
+    /**
+     * Constructor takeing a String for the user's role.
+     * @param role String depicting the role.
+     */
     public Role(String role) {
         this.role = role;
     }

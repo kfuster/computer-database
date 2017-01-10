@@ -6,8 +6,7 @@ import java.util.List;
 /**
  * A Page object containing informations about the current page shown.
  * @author kfuster
- *
- * @param <T>
+ * @param <T> the objects that our pages will contain.
  */
 public class Page<T> implements Serializable {
     private int elementsByPage = 10;
@@ -23,11 +22,11 @@ public class Page<T> implements Serializable {
 
     /**
      * Page constructor which set elemByPage.
-     * @param pElemByPage the number of elements by page. Used as LIMIT and to
+     * @param elemByPage the number of elements by page. Used as LIMIT and to
      *            calculate OFFSET in requests
      */
-    public Page(int pElemByPage) {
-        elementsByPage = pElemByPage;
+    public Page(int elemByPage) {
+        elementsByPage = elemByPage;
     }
 
     /**
@@ -41,10 +40,10 @@ public class Page<T> implements Serializable {
 
     /**
      * Set the number of elements by pages and calculates the number of pages.
-     * @param pElemByPage the number of elements by pages
+     * @param elemByPage the number of elements by pages
      */
-    public void setElementsByPage(int pElemByPage) {
-        elementsByPage = pElemByPage;
+    public void setElementsByPage(int elemByPage) {
+        elementsByPage = elemByPage;
         calculateNbPages();
     }
 
@@ -60,34 +59,66 @@ public class Page<T> implements Serializable {
         }
     }
 
+    /**
+     * Getter for the totalElements field.
+     * @return int representing the number of elements.
+     */
     public int getTotalElements() {
         return totalElements;
     }
 
+    /**
+     * Getter for the totalPages field.
+     * @return int representing the number of pages.
+     */
     public int getTotalPages() {
         return totalPages;
     }
 
+    /**
+     * Setter for the totalPages field.
+     * @param nbPages int representing the number of pages.
+     */
     public void setTotalPages(int nbPages) {
         this.totalPages = nbPages;
     }
 
+    /**
+     * Getter for the elements field.
+     * @return List<T> representing the objects contained in our current page.
+     */
     public List<T> getElements() {
         return elements;
     }
 
+    /**
+     * Setter for the elements field.
+     * @param elems List<T> representing the objects contained in our current page.
+     */
     public void setElements(List<T> elems) {
         this.elements = elems;
     }
 
+    /**
+     * Getter for the elementsByPage field.
+     * @return int representing the number of elements per page.
+     */
     public int getElementsByPage() {
         return elementsByPage;
     }
 
+    /**
+     * Getter for the page field.
+     * @return int representing the current page number.
+     */
     public int getPage() {
         return page;
     }
 
+    /**
+     * Setter for the page field.
+     * @param page int representing the current page number.
+     */
     public void setPage(int page) {
         this.page = page;
     }

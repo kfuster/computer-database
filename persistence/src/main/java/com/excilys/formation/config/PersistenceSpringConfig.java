@@ -17,7 +17,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.util.Properties;
 
 /**
- * Created by Ookami on 31/12/2016.
+ * Created by kfuster on 31/12/2016.
+ * Class configuring the different Spring beans in this module.
  */
 
 @Configuration
@@ -85,6 +86,10 @@ public class PersistenceSpringConfig {
         return dataSource;
     }
 
+    /**
+     * Method that return hibernateProperties.
+     * @return Properties containing the new properties.
+     */
     private Properties hibernateProperties() {
         return new Properties() {
             {

@@ -29,16 +29,24 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the computer.
+ */
 @Controller
 @RequestMapping("/")
 public class ComputerController {
+
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(ComputerController.class);
+
     @Autowired
     private CompanyService companyService;
+
     @Autowired
     private ComputerService computerService;
+
     @Autowired
     private DtoMapper dtoMapper;
+
     @Autowired
     private PageMapper pageMapper;
 

@@ -19,7 +19,6 @@ import java.util.function.Supplier;
 
 /**
  * DAO class for computers.
- *
  * @author kfuster
  */
 @Repository
@@ -35,31 +34,31 @@ public class ComputerDaoImpl implements ComputerDao {
     }
 
     @Override
-    public Computer create(Computer pComputer) {
-        if (pComputer == null) {
+    public Computer create(Computer computer) {
+        if (computer == null) {
             throw new IllegalArgumentException("A computer is needed");
         }
-        sessionFactory.getCurrentSession().save(pComputer);
-        return pComputer;
+        sessionFactory.getCurrentSession().save(computer);
+        return computer;
     }
 
     @Override
-    public void update(Computer pComputer) {
-        if (pComputer == null) {
+    public void update(Computer computer) {
+        if (computer == null) {
             throw new IllegalArgumentException("A computer is needed");
         }
         queryFactory.get().update(qComputer)
-                .where(qComputer.id.eq(pComputer.getId()))
-                .set(qComputer.name, pComputer.getName())
-                .set(qComputer.introduced, pComputer.getIntroduced())
-                .set(qComputer.discontinued, pComputer.getDiscontinued())
-                .set(qComputer.company, pComputer.getCompany())
+                .where(qComputer.id.eq(computer.getId()))
+                .set(qComputer.name, computer.getName())
+                .set(qComputer.introduced, computer.getIntroduced())
+                .set(qComputer.discontinued, computer.getDiscontinued())
+                .set(qComputer.company, computer.getCompany())
                 .execute();
     }
 
     @Override
-    public void delete(long pId) {
-        queryFactory.get().delete(qComputer).where(qComputer.id.eq(pId)).execute();
+    public void delete(long id) {
+        queryFactory.get().delete(qComputer).where(qComputer.id.eq(id)).execute();
     }
 
     @Override
@@ -68,53 +67,62 @@ public class ComputerDaoImpl implements ComputerDao {
     }
 
     @Override
-    public void deleteByCompany(long pId) {
-        queryFactory.get().delete(qComputer).where(qComputer.company.id.eq(pId)).execute();
+    public void deleteByCompany(long id) {
+        queryFactory.get().delete(qComputer).where(qComputer.company.id.eq(id)).execute();
     }
 
     @Override
-    public Computer getById(long pId) {
-        return (Computer) queryFactory.get().from(qComputer).where(qComputer.id.eq(pId)).fetchOne();
+    public Computer getById(long id) {
+        return (Computer) queryFactory.get().from(qComputer).where(qComputer.id.eq(id)).fetchOne();
     }
 
     @Override
-    public Computer getByName(String pName) {
-        if (pName == null) {
+    public Computer getByName(String name) {
+        if (name == null) {
             throw new IllegalArgumentException("A name is needed");
         }
-        return (Computer) queryFactory.get().from(qComputer).where(qComputer.name.eq(pName)).fetchOne();
+        return (Computer) queryFactory.get().from(qComputer).where(qComputer.name.eq(name)).fetchOne();
     }
 
     @Override
-    public Page<Computer> getPage(PageFilter pPageFilter) {
-        if (pPageFilter == null) {
+    public Page<Computer> getPage(PageFilter pageFilter) {
+        if (pageFilter == null) {
             throw new IllegalArgumentException("A PageFilter is needed");
         }
         List<Computer> computers;
-        Page<Computer> pPage = new Page<>(pPageFilter.getElementsByPage());
+        Page<Computer> pPage = new Page<>(pageFilter.getElementsByPage());
         HibernateQuery<Computer> query = queryFactory.get().selectFrom(qComputer)
                 .leftJoin(qComputer.company, QCompany.company);
-        Map<String, String> conditions = pPageFilter.getConditions();
-        PathBuilder<Computer> computerPath = new PathBuilder<>(Computer.class, "computer");
-        
+        Map<String, String> conditions = pageFilter.getConditions();
         if (conditions != null && !conditions.isEmpty()) {
             query = addConditions(query, conditions);
         }
-        
         int total = getCount(query);
-        query = query.limit(pPageFilter.getElementsByPage())
-                .offset((pPageFilter.getPageNum() - 1) * pPageFilter.getElementsByPage());
+        query = query.limit(pageFilter.getElementsByPage())
+                .offset((pageFilter.getPageNum() - 1) * pageFilter.getElementsByPage());
         computers = query.fetch();
-        pPage.setPage(pPageFilter.getPageNum());
+        pPage.setPage(pageFilter.getPageNum());
         pPage.setElements(computers);
         pPage.setTotalElements(total);
-        pPageFilter.setNbPage(pPage.getTotalPages());
+        pageFilter.setNbPage(pPage.getTotalPages());
         return pPage;
     }
-    
+
+    /**
+     * Method allowing to get the count of a specific query.
+     * @param query HibernateQuery<Computer> representing the query where we want to count the result entries.
+     * @return int representing the number of result entries of the given query.
+     */
     public int getCount(HibernateQuery<Computer> query) {
         return (int) query.fetchCount();
     }
+
+    /**
+     * Method adding different conditions to a given query.
+     * @param query HibernateQuery<Computer> representing the query where we'll append our conditions.
+     * @param conditions Map<String,String> reprensenting the conditions that we'll append to our query.
+     * @return HibernateQuery<Computer> a query where the given conditions have been added?
+     */
     public HibernateQuery<Computer> addConditions(HibernateQuery<Computer> query, Map<String, String> conditions) {
         if (conditions != null && !conditions.isEmpty()) {
             PathBuilder<Computer> computerPath = new PathBuilder<>(Computer.class, "computer");
@@ -134,6 +142,5 @@ public class ComputerDaoImpl implements ComputerDao {
             }
         }
         return query;
-        
     }
 }

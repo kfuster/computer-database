@@ -6,6 +6,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
  * Created by Ookami on 03/01/2017.
+ * Class configuring the different beans for this module.
  */
 @Configuration
 @EnableWebMvc

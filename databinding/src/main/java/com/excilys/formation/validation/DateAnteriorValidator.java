@@ -11,6 +11,10 @@ import javax.validation.ConstraintValidatorContext;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class validating the DateAnterior annotation.
+ * DateAnterior annotation can only be put on a ComputerDto.
+ */
 public class DateAnteriorValidator implements ConstraintValidator<DateAnterior, ComputerDto> {
     @Autowired
     private MessageSource messageSource;

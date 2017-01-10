@@ -7,13 +7,15 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Interface representing the DateAnterior annotation.
+ */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = DateAnteriorValidator.class)
 public @interface DateAnterior {
     /**
      * Return the message parameter.
-     *
      * @return a String
      */
     String message() default "Date not anterior";

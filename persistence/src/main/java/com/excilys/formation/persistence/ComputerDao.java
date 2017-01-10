@@ -4,20 +4,24 @@ import com.excilys.formation.model.Computer;
 
 import java.util.List;
 
+/**
+ * Interface representing the DAO of a Computer.
+ */
 public interface ComputerDao extends BaseDao<Computer> {
+
     /**
      * Get a computer by its name.
-     * @param pName the name of the computer to get
+     * @param name the name of the computer to get
      * @return a computer or null
      */
-    Computer getByName(String pName);
+    Computer getByName(String name);
 
     /**
      * Get a computer by its id.
-     * @param pId the id of the computer to get
+     * @param id the id of the computer to get
      * @return a Computer or null
      */
-    Computer getById(long pId);
+    Computer getById(long id);
 
     /**
      * Deletes all computers from a company.
@@ -27,7 +31,7 @@ public interface ComputerDao extends BaseDao<Computer> {
 
     /**
      * Deletes a list of Computers.
-     * @param idList the computers id in a String of the form "1,2,3,4"
+     * @param idList List<Long> representing the ids to delete.
      */
     void deleteList(List<Long> idList);
 }

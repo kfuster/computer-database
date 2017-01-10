@@ -12,26 +12,29 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Service class for Users.
+ */
 @Service("UserService")
 public class UserServiceImpl implements UserService, UserDetailsService {
+
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
     private UserDao userDao;
 
     @Override
     @Transactional
-    public User create(User pUser){
-        return userDao.create(pUser);
+    public User create(User user){
+        return userDao.create(user);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String pName) throws UsernameNotFoundException {
-        User user = null;
-        user =  userDao.getByName(pName);
-        
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+        User user = userDao.getByName(name);
         if (user == null) {
-            throw new UsernameNotFoundException(String.format("User %s does not exist!", pName));
+            throw new UsernameNotFoundException(String.format("User %s does not exist!", name));
         }
         return user;
     }

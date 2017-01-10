@@ -14,6 +14,9 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Class configuring the cache.
+ */
 @Configuration
 @EnableCaching
 public class CacheConfig extends CachingConfigurerSupport {

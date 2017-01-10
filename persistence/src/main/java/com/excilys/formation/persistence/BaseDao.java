@@ -6,7 +6,6 @@ import com.excilys.formation.pagination.Page;
 /**
  * Interface for DAO classes.
  * @author kfuster
- *
  * @param <T> The Selected entity
  */
 public interface BaseDao<T> {
@@ -37,8 +36,8 @@ public interface BaseDao<T> {
 
     /**
      * Method to get a page of elements.
-     * @param pPageFilter the PageFilter containing the useful informations
+     * @param pageFilter the PageFilter containing the useful informations
      * @return the obtained page
      */
-    Page<T> getPage(PageFilter pPageFilter);
+    Page<T> getPage(PageFilter pageFilter);
 }

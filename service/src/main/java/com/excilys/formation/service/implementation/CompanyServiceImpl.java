@@ -19,30 +19,30 @@ import java.util.List;
 /**
  * Manages Company services.
  * @author kfuster
- *
  */
 @Service
 public class CompanyServiceImpl implements CompanyService {
+
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(CompanyServiceImpl.class);
+
     @Autowired
     private CompanyDao companyDao;
+
     @Autowired
     private ComputerDao computerDao;
-    
-   
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Company> getPage(PageFilter pPageFilter) {
-        return companyDao.getPage(pPageFilter);
+    public Page<Company> getPage(PageFilter pageFilter) {
+        return companyDao.getPage(pageFilter);
     }
 
-    @Transactional
     @Override
+    @Transactional
     @CacheEvict(value="cacheCompanies", allEntries=true)
-    public void delete(long pId) {
-        computerDao.deleteByCompany(pId);
-        companyDao.delete(pId);
+    public void delete(long id) {
+        computerDao.deleteByCompany(id);
+        companyDao.delete(id);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     @Transactional(readOnly = true)
-    public Company getById(long pId) {
-        return companyDao.getById(pId);
+    public Company getById(long id) {
+        return companyDao.getById(id);
     }
 }

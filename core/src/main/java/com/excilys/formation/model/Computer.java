@@ -13,8 +13,7 @@ import java.util.Objects;
 
 
 /**
- * Computer entity.
- *
+ * Class representing the computer entity.
  * @author kfuster
  */
 @Entity
@@ -58,42 +57,83 @@ public final class Computer implements Serializable {
     }
 
     // ######### GETTERS/SETTERS #########
+
+    /**
+     * Getter for the id field.
+     * @return Long representing the id.
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Setter for the id field.
+     * @param id Long representing the id.
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Getter for the name field.
+     * @return String representing the name.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Setter for the name field.
+     * @param name String representing the name.
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Getter for the introduced field.
+     * @return LocalDate representing the introduced.
+     */
     public LocalDate getIntroduced() {
         return introduced;
     }
 
+    /**
+     * Setter for the introduced field.
+     * @param introduced LocalDate representing the introduced.
+     */
     public void setIntroduced(LocalDate introduced) {
         this.introduced = introduced;
     }
 
+    /**
+     * Getter for the discontinued field.
+     * @return LocalDate representing the discontinued.
+     */
     public LocalDate getDiscontinued() {
         return discontinued;
     }
 
+    /**
+     * Setter for the discontinued field.
+     * @param discontinued LocalDate representing the discontinued.
+     */
     public void setDiscontinued(LocalDate discontinued) {
         this.discontinued = discontinued;
     }
 
+    /**
+     * Getter for the company field.
+     * @return Company representing the company.
+     */
     public Company getCompany() {
         return company;
     }
 
+    /**
+     * Setter for the company field.
+     * @param company Company representing the company.
+     */
     public void setCompany(Company company) {
         this.company = company;
     }
@@ -164,6 +204,9 @@ public final class Computer implements Serializable {
                 ", company=" + company + "]";
     }
 
+    /**
+     * Class allowing the creation of computers.
+     */
     public static class ComputerBuilder {
         private Long id;
         private String name;
@@ -173,61 +216,55 @@ public final class Computer implements Serializable {
 
         /**
          * ComputerBuilder constructor.
-         *
-         * @param pName the computer's name
+         * @param name the computer's name
          */
-        public ComputerBuilder(String pName) {
-            name = pName;
+        public ComputerBuilder(String name) {
+            this.name = name;
         }
 
         /**
          * Setter for the ComputerBuilder's company.
-         *
-         * @param pCompany the Computer's Company
+         * @param company the Computer's Company
          * @return the ComputerBuilder
          */
-        public ComputerBuilder company(Company pCompany) {
-            company = pCompany;
+        public ComputerBuilder company(Company company) {
+            this.company = company;
             return this;
         }
 
         /**
          * Setter for the ComputerBuilder's id.
-         *
-         * @param pId the Computer's Id
+         * @param id the Computer's Id
          * @return the ComputerBuilder
          */
-        public ComputerBuilder id(Long pId) {
-            id = pId;
+        public ComputerBuilder id(Long id) {
+            this.id = id;
             return this;
         }
 
         /**
          * Setter for the ComputerBuilder's introduced date.
-         *
-         * @param pDate the Computer's introduced date
+         * @param date the Computer's introduced date
          * @return the ComputerBuilder
          */
-        public ComputerBuilder dateIntro(LocalDate pDate) {
-            introduced = pDate;
+        public ComputerBuilder dateIntro(LocalDate date) {
+            introduced = date;
             return this;
         }
 
         /**
          * Setter for the ComputerBuilder's discontinued date.
-         *
-         * @param pDate the Computer's discontinued date
+         * @param date the Computer's discontinued date
          * @return the ComputerBuilder
          */
-        public ComputerBuilder dateDisc(LocalDate pDate) {
-            discontinued = pDate;
+        public ComputerBuilder dateDisc(LocalDate date) {
+            discontinued = date;
             return this;
         }
 
         /**
          * Build a Computer from the ComputerBuilder's attributes.
-         *
-         * @return a Computer
+         * @return a Computer built with the builder's attributes.
          */
         public Computer build() {
             if (name.length() < 2) {

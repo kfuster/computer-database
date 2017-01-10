@@ -5,6 +5,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 
+/**
+ * Class depicting a User entity.
+ * @author kfuster
+ */
+
 @Entity
 @Table(name = "user")
 public class User implements UserDetails {
@@ -60,30 +65,58 @@ public class User implements UserDetails {
         return true;
     }
 
+    /**
+     * Getter for the id field.
+     * @return Long representing the id.
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Setter for the id field.
+     * @param id Long representing the id.
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Getter for the status field.
+     * @return boolean representing the status.
+     */
     public boolean isStatus() {
         return status;
     }
 
+    /**
+     * Setter for the status field.
+     * @param status boolean representing the status.
+     */
     public void setStatus(boolean status) {
         this.status = status;
     }
 
+    /**
+     * Setter for the username field.
+     * @param username String representing the name.
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Setter for the password field.
+     * @param password String representing the password.
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Setter for the authorities field.
+     * @param authorities Collection<Role> representing the authorities.
+     */
     public void setAuthorities(Collection<Role> authorities) {
         this.authorities = authorities;
     }
@@ -130,7 +163,10 @@ public class User implements UserDetails {
         return "User [id=" + id + ", username=" + username + ", password=" + password + ", authorities=" + authorities
                 + ", status=" + status + "]";
     }
-    
+
+    /**
+     * Class allowing user creation.
+     */
     public static final class UserBuilder {
         Collection<Role> authorities;
         boolean status;
@@ -138,34 +174,66 @@ public class User implements UserDetails {
         private String username;
         private String password;
 
+        /**
+         * Default constructor.
+         */
         public UserBuilder() {
         }
 
+        /**
+         * Setter for the id field.
+         * @param id Long representing the id.
+         * @return UserBuilder
+         */
         public UserBuilder id(Long id) {
             this.id = id;
             return this;
         }
 
+        /**
+         * Setter for the username field.
+         * @param username String representing the username.
+         * @return UserBuilder
+         */
         public UserBuilder username(String username) {
             this.username = username;
             return this;
         }
 
+        /**
+         * Setter for the password field.
+         * @param password String representing the password.
+         * @return UserBuilder.
+         */
         public UserBuilder password(String password) {
             this.password = password;
             return this;
         }
 
+        /**
+         * Setter for the authorities field.
+         * @param authorities Collection<Role> representing the authorities.
+         * @return UserBuilder.
+         */
         public UserBuilder authorities(Collection<Role> authorities) {
             this.authorities = authorities;
             return this;
         }
 
+        /**
+         * Setter for the status field.
+         * @param status boolean representing the status.
+         * @return UserBuilder
+         */
         public UserBuilder status(boolean status) {
             this.status = status;
             return this;
         }
 
+        /**
+         * Build a User from the USerBuilder's attributes.
+         * @return a User built with the builder's attributes.
+         */
         public User build() {
             User user = new User();
             user.setId(id);
@@ -175,5 +243,5 @@ public class User implements UserDetails {
             user.setStatus(status);
             return user;
         }
-    }    
+    }
 }

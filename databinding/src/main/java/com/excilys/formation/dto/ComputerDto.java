@@ -10,7 +10,6 @@ import java.util.Objects;
 
 /**
  * DTO class for computers.
- *
  * @author kfuster
  */
 @DateAnterior
@@ -26,50 +25,98 @@ public class ComputerDto implements Serializable {
     private Long companyId;
     private String companyName;
 
+    /**
+     * Getter for the id field.
+     * @return Long representing the id.
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Setter for the id field.
+     * @param id Long representing the id.
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Getter for the name field.
+     * @return String representing the name field.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Setter for the name field.
+     * @param name String representing the name field.
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Getter for the introduced field.
+     * @return String representing the introduced.
+     */
     public String getIntroduced() {
         return introduced;
     }
 
+    /**
+     * Setter for the introduced field.
+     * @param introduced String representing the introduced.
+     */
     public void setIntroduced(String introduced) {
         this.introduced = introduced;
     }
 
+    /**
+     * Getter for the discontinued field.
+     * @return String representing the discontinued field.
+     */
     public String getDiscontinued() {
         return discontinued;
     }
 
+    /**
+     * Setter for the discontinued field.
+     * @param discontinued String representing the discontinued field.
+     */
     public void setDiscontinued(String discontinued) {
         this.discontinued = discontinued;
     }
 
+    /**
+     * Getter for the companyId field.
+     * @return Long representing the companyId.
+     */
     public Long getCompanyId() {
         return companyId;
     }
 
+    /**
+     * Setter for the companyId field.
+     * @param companyId Long representing the compayId.
+     */
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }
 
+    /**
+     * Getter for the companyName field.
+     * @return String representing the companyName.
+     */
     public String getCompanyName() {
         return companyName;
     }
 
+    /**
+     * Setter for the companyName field.
+     * @param companyName String representing the companyName.
+     */
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
@@ -153,6 +200,9 @@ public class ComputerDto implements Serializable {
         return stringBuilder.toString();
     }
 
+    /**
+     * Class allowing the construction of ComputerDtos.
+     */
     public static class ComputerDtoBuilder {
         private Long id;
         private String name;
@@ -163,71 +213,64 @@ public class ComputerDto implements Serializable {
 
         /**
          * ComputerDtoBuilder's constructor.
-         *
-         * @param pName the computer's name
+         * @param name the computer's name
          */
-        public ComputerDtoBuilder(String pName) {
-            name = pName;
+        public ComputerDtoBuilder(String name) {
+            this.name = name;
         }
 
         /**
          * Setter for the ComputerDtoBuilder's companyId.
-         *
-         * @param pCompanyId the Company's Id
+         * @param companyId the Company's Id
          * @return the ComputerDtoBuilder
          */
-        public ComputerDtoBuilder companyId(Long pCompanyId) {
-            companyId = pCompanyId;
+        public ComputerDtoBuilder companyId(Long companyId) {
+            this.companyId = companyId;
             return this;
         }
 
         /**
          * Setter for the ComputerDtoBuilder's company.
-         *
-         * @param pCompanyName the Computer's Company
+         * @param companyName the Computer's Company
          * @return the ComputerDtoBuilder
          */
-        public ComputerDtoBuilder companyName(String pCompanyName) {
-            companyName = pCompanyName;
+        public ComputerDtoBuilder companyName(String companyName) {
+            this.companyName = companyName;
             return this;
         }
 
         /**
          * Setter for the ComputerDtoBuilder's id.
-         *
-         * @param pId the Computer's Id
+         * @param id the Computer's Id
          * @return the ComputerDtoBuilder
          */
-        public ComputerDtoBuilder id(Long pId) {
-            id = pId;
+        public ComputerDtoBuilder id(Long id) {
+            this.id = id;
             return this;
         }
 
         /**
          * Setter for the ComputerDtoBuilder's introduced date.
-         *
-         * @param pDate the Computer's introduced date
+         * @param date the Computer's introduced date
          * @return the ComputerDtoBuilder
          */
-        public ComputerDtoBuilder introduced(String pDate) {
-            introduced = pDate;
+        public ComputerDtoBuilder introduced(String date) {
+            introduced = date;
             return this;
         }
 
         /**
          * Setter for the ComputerDtoBuilder's discontinued date.
-         *
-         * @param pDate the Computer's discontinued date
+         * @param date the Computer's discontinued date
          * @return the ComputerDtoBuilder
          */
-        public ComputerDtoBuilder discontinued(String pDate) {
-            discontinued = pDate;
+        public ComputerDtoBuilder discontinued(String date) {
+            discontinued = date;
             return this;
         }
 
         /**
          * Build a ComputerDto from the ComputerDtoBuilder's attributes.
-         *
          * @return a ComputerDto
          */
         public ComputerDto build() {

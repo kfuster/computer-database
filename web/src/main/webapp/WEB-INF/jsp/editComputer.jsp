@@ -6,10 +6,10 @@
 <title>Computer Database</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap -->
-<link href="../resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="../resources/css/font-awesome.css" rel="stylesheet" media="screen">
-<link href="../resources/css/jquery-ui.min.css" rel="stylesheet" media="screen">
-<link href="../resources/css/main.css" rel="stylesheet" media="screen">
+<link href="../computer-database/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="../computer-database/resources/css/font-awesome.css" rel="stylesheet" media="screen">
+<link href="../computer-database/resources/css/jquery-ui.min.css" rel="stylesheet" media="screen">
+<link href="../computer-database/resources/css/main.css" rel="stylesheet" media="screen">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
@@ -69,11 +69,11 @@
 			</div>
 		</div>
 	</section>
-	<script src="../resources/js/jquery.min.js"></script>
-	<script src="../resources/js/jquery-ui.min.js"></script>
-	<script src="../resources/js/jquery.validate.min.js"></script>
-	<script src="../resources/js/bootstrap.min.js"></script>
-	<script src="/internationalization.js"></script>
-	<script src="../resources/js/editComputer.js"></script>
+	<script src="../computer-database/resources/js/jquery.min.js"></script>
+	<script src="../computer-database/resources/js/jquery-ui.min.js"></script>
+	<script src="../computer-database/resources/js/jquery.validate.min.js"></script>
+	<script src="../computer-database/resources/js/bootstrap.min.js"></script>
+	<script src="/computer-database/internationalization.js"></script>
+	<script src="../computer-database/resources/js/editComputer.js"></script>
 </body>
 </html>

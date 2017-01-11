@@ -90,20 +90,19 @@ public class ComputerDaoImpl implements ComputerDao {
         if (pageFilter == null) {
             throw new IllegalArgumentException("A PageFilter is needed");
         }
-        List<Computer> computers;
         Page<Computer> pPage = new Page<>(pageFilter.getElementsByPage());
-        HibernateQuery<Computer> query = queryFactory.get().selectFrom(qComputer)
-                .leftJoin(qComputer.company, QCompany.company);
+        HibernateQuery<Computer> query = queryFactory.get().selectFrom(qComputer);
+        int total = getCount(query);
+        query = query.leftJoin(qComputer.company, QCompany.company);
         Map<String, String> conditions = pageFilter.getConditions();
         if (conditions != null && !conditions.isEmpty()) {
             query = addConditions(query, conditions);
         }
-        int total = getCount(query);
+        
         query = query.limit(pageFilter.getElementsByPage())
                 .offset((pageFilter.getPageNum() - 1) * pageFilter.getElementsByPage());
-        computers = query.fetch();
         pPage.setPage(pageFilter.getPageNum());
-        pPage.setElements(computers);
+        pPage.setElements(query.fetch());
         pPage.setTotalElements(total);
         pageFilter.setNbPage(pPage.getTotalPages());
         return pPage;

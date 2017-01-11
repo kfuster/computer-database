@@ -21,9 +21,10 @@ import javax.ws.rs.core.MediaType;
 
 @Component
 public class Controller {
+
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(Controller.class);
     private static Client client = ClientBuilder.newClient();
-    private static final String BASE_URL = "http://localhost:8181/rest/";
+    private static final String BASE_URL = "http://localhost:8180/rest/";
     @Autowired
     private PageMapper pageMapper;
 

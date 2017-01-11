@@ -31,7 +31,7 @@ public class ControllerTest {
     @Autowired
     private Controller controller;
     @Rule
-    public WireMockRule wireMockRule = new WireMockRule(8181);
+    public WireMockRule wireMockRule = new WireMockRule(8180);
     @Test
     public void getPageCompany_ShouldReturnCompanyDtoPage() throws Exception {
         PageFilter pageFilter = new PageFilter();

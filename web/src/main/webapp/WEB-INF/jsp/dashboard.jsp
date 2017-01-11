@@ -156,6 +156,12 @@
 							max="${pageComputer.totalPages}" value="${pageComputer.page}"
 							name="page" /> <input type="hidden"
 							value="${pageComputer.elementsByPage}" name="limit" />
+							<input type="hidden"
+							value="${search}" name="search" />
+							<input type="hidden"
+							value="${order}" name="order" />
+							<input type="hidden"
+							value="${column}" name="column" />
 					</form>
 				</div>
 
@@ -170,6 +176,12 @@
 						<input type="number" style="width: 100px;" min="1" name="limit"
 							value="${pageComputer.elementsByPage}" /> <input type="hidden"
 							value="${pageComputer.page}" name="page" />
+							<input type="hidden"
+							value="${search}" name="search" />
+							<input type="hidden"
+							value="${order}" name="order" />
+							<input type="hidden"
+							value="${column}" name="column" />
 					</form>
 				</div>
 				<my:link currentPage="${pageComputer.page}"

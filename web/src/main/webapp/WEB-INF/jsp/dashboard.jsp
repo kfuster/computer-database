@@ -59,6 +59,12 @@
 							type="submit" id="searchsubmit"
 							value="<spring:message code="button.filter"/>"
 							class="btn btn-primary" />
+						<input type="hidden"
+							   value="${pageComputer.elementsByPage}" name="limit" />
+						<input type="hidden"
+							   value="${order}" name="order" />
+						<input type="hidden"
+							   value="${column}" name="column" />
 					</form>
 				</div>
 				<div class="pull-right">

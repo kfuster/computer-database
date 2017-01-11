@@ -456,7 +456,7 @@
 						</configuration>
 					</configuration>
 					<!-- TODO search why blank pages when using cargo, suspect problem with spring configuration being java -->
-					<!-- <executions>
+					 <!-- <executions>
 						<execution>
 							<id>start-container</id>
 							<phase>pre-integration-test</phase>

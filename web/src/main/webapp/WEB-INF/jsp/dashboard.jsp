@@ -154,7 +154,7 @@
 					<form action="#" method="GET">
 						Page : <input type="number" style="width: 100px;" min="1"
 							max="${pageComputer.totalPages}" value="${pageComputer.page}"
-							name="page" /> <input type="hidden"
+							name="page" required/> <input type="hidden"
 							value="${pageComputer.elementsByPage}" name="limit" />
 							<input type="hidden"
 							value="${search}" name="search" />
@@ -174,7 +174,7 @@
 				<div style="float: left">
 					<form action="#" method="GET">
 						<input type="number" style="width: 100px;" min="1" name="limit"
-							value="${pageComputer.elementsByPage}" /> <input type="hidden"
+							value="${pageComputer.elementsByPage}" required/> <input type="hidden"
 							value="${pageComputer.page}" name="page" />
 							<input type="hidden"
 							value="${search}" name="search" />

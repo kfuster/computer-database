@@ -13,11 +13,11 @@ object Search {
   val feeder = csv("data/search.csv").random
 
   val search = exec(http("Search: Home of the application")
-    .get(config.getString("application.urls.dashboardPage")))
+    .get(config.getString("application.urls.dashboardPage")).digestAuth(config.getString("application.urls.form.authenticate.username"), config.getString("application.urls.form.authenticate.password")))
     .pause(3,10)
     .feed(feeder)
     .exec(http("Search: Search a computer ${searchCriterion}")
-      .get(config.getString("application.urls.dashboardPage"))
+      .get(config.getString("application.urls.dashboardPage")).digestAuth(config.getString("application.urls.form.authenticate.username"), config.getString("application.urls.form.authenticate.password"))
         .queryParam(config.getString("application.urls.param.search").toString(),"${searchCriterion}")
         .check(status.is(200))
     )

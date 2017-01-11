@@ -12,7 +12,7 @@ object Edit {
   val config = ConfigFactory.load()
 
   val edit = exec(http("Edit: Search for edit")
-    .get(config.getString("application.urls.dashboardPage")).digestAuth("admin", "admin")
+    .get(config.getString("application.urls.dashboardPage")).digestAuth(config.getString("application.urls.form.authenticate.username"), config.getString("application.urls.form.authenticate.password"))
     .queryParam(config.getString("application.urls.param.search").toString(), "${addComputerName}")
     .check(
       status.is(200),
@@ -21,14 +21,14 @@ object Edit {
   )
     .pause(3, 10)
     .exec(http("Edit: Select for edit")
-      .get("${computerURL}").digestAuth("admin", "admin")
+      .get("${computerURL}").digestAuth(config.getString("application.urls.form.authenticate.username"), config.getString("application.urls.form.authenticate.password"))
       .check(
         status.is(200),
         css(config.getString("application.urls.idElement.edit.id").get, "value").saveAs("computer_id")
       )
     )
     .exec(http("Edit: Edit Post")
-      .post(config.getString("application.urls.editPost").get).digestAuth("admin", "admin")
+      .post(config.getString("application.urls.editPost").get).digestAuth(config.getString("application.urls.form.authenticate.username"), config.getString("application.urls.form.authenticate.password"))
       .formParam(config.getString("application.urls.form.edit.id").get, "${computer_id}")
       .formParam(config.getString("application.urls.form.edit.name").get, "${addComputerName}_edited")
       .formParam(config.getString("application.urls.form.edit.introduced").get, "${addComputerIntroduced}")

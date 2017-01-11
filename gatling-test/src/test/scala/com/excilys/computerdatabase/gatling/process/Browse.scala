@@ -25,7 +25,7 @@ object Browse {
     .feed(feederPage)
     .repeat(numberPage) {
       exec(http("Browse: Browse page: ${page},  pageSize: ${pageSize}, column: ${column}, order: ${order}")
-        .get(config.getString("application.urls.dashboardPage"))
+        .get(config.getString("application.urls.dashboardPage")).digestAuth(config.getString("application.urls.form.authenticate.username"), config.getString("application.urls.form.authenticate.password"))
         .queryParam(config.getString("application.urls.param.page").toString(), "${page}")
         .queryParam(config.getString("application.urls.param.pageSize").toString(), "${pageSize}")
         .queryParam(config.getString("application.urls.param.column").toString(), "${column}")

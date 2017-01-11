@@ -9,11 +9,11 @@
 <meta charset="utf-8">
 
 <!-- Bootstrap -->
-<link href="../computer-database/resources/css/bootstrap.min.css" rel="stylesheet"
+<link href="../resources/css/bootstrap.min.css" rel="stylesheet"
 	media="screen">
-<link href="../computer-database/resources/css/font-awesome.css" rel="stylesheet"
+<link href="../resources/css/font-awesome.css" rel="stylesheet"
 	media="screen">
-<link href="../computer-database/resources/css/main.css" rel="stylesheet" media="screen">
+<link href="../resources/css/main.css" rel="stylesheet" media="screen">
 <jsp:useBean id="pageComputer" scope="request"
 	type="com.excilys.formation.pagination.Page" />
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
@@ -59,6 +59,12 @@
 							type="submit" id="searchsubmit"
 							value="<spring:message code="button.filter"/>"
 							class="btn btn-primary" />
+						<input type="hidden"
+							   value="${pageComputer.elementsByPage}" name="limit" />
+						<input type="hidden"
+							   value="${order}" name="order" />
+						<input type="hidden"
+							   value="${column}" name="column" />
 					</form>
 				</div>
 				<div class="pull-right">
@@ -193,9 +199,9 @@
 			</div>
 		</div>
 	</footer>
-	<script src="../computer-database/resources/js/jquery.min.js"></script>
-	<script src="../computer-database/resources/js/bootstrap.min.js"></script>
-	<script src="/computer-database/internationalization.js"></script>
-	<script src="../computer-database/resources/js/dashboard.js"></script>
+	<script src="../resources/js/jquery.min.js"></script>
+	<script src="../resources/js/bootstrap.min.js"></script>
+	<script src="/internationalization.js"></script>
+	<script src="../resources/js/dashboard.js"></script>
 </body>
 </html>

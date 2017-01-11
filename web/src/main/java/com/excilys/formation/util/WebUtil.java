@@ -21,10 +21,10 @@ public class WebUtil {
         PageFilter pageFilter = new PageFilter();
         pageFilter.setElementsByPage(10);
         pageFilter.setPageNum(1);
-        if (parameters.containsKey("page")) {
+        if (parameters.containsKey("page") && parameters.get("page") != null && !parameters.get("page").isEmpty()) {
             pageFilter.setPageNum(Integer.parseInt(parameters.get("page")));
         }
-        if (parameters.containsKey("limit")) {
+        if (parameters.containsKey("limit") && parameters.get("limit") != null && !parameters.get("limit").isEmpty()) {
             pageFilter.setElementsByPage(Integer.parseInt(parameters.get("limit")));
         }
 

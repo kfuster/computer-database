@@ -6,6 +6,7 @@ import com.excilys.formation.persistence.UserDao;
 import com.excilys.formation.service.UserService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,6 +32,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable("cacheUsers")
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         User user = userDao.getByName(name);
         if (user == null) {

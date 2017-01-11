@@ -79,7 +79,7 @@ public class PersistenceSpringConfig {
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setDataSourceClassName(dataSourceClassName);
         dataSource.setIdleTimeout(idleTimeout);
-        dataSource.setMaximumPoolSize(15);
+        dataSource.setMaximumPoolSize(20);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
         dataSource.addDataSourceProperty("url", jdbcUrl);

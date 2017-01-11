@@ -24,7 +24,6 @@ public class PageMapper {
      * @return a Page<CompanyDto>
      */
     public static Page<CompanyDto> fromCompanyToCompanyDto(Page<Company> pageCompany) {
-        System.out.println(pageCompany);
         Page<CompanyDto> pPageCompanyDto = null;
         if (pageCompany != null) {
             pPageCompanyDto = new Page<>(10);
@@ -45,6 +44,8 @@ public class PageMapper {
             pPageComputerDto = new Page<>(10);
             copyAttributes(pageComputer, pPageComputerDto);
             pPageComputerDto.setElements(dtoMapper.fromComputerList(pageComputer.getElements()));
+            pageComputer = null;
+            System.gc();
         }
         return pPageComputerDto;
     }

@@ -26,9 +26,9 @@
 		<div class="container">
 			<a class="navbar-brand" href="dashboard"> Application - Computer
 				Database </a> <span style="float: right"> <img style="cursor: pointer"
-				src="../resources/images/flag-en.png"
+				src="../computer-database/resources/images/flag-en.png"
 				onclick="$.fn.changeLanguage('en')" /> <img style="cursor: pointer"
-				src="../resources/images/flag-fr.png"
+				src="../computer-database/resources/images/flag-fr.png"
 				onclick="$.fn.changeLanguage('fr')" /></span>
 		</div>
 	</header>
@@ -59,6 +59,12 @@
 							type="submit" id="searchsubmit"
 							value="<spring:message code="button.filter"/>"
 							class="btn btn-primary" />
+						<input type="hidden"
+							   value="${pageComputer.elementsByPage}" name="limit" />
+						<input type="hidden"
+							   value="${order}" name="order" />
+						<input type="hidden"
+							   value="${column}" name="column" />
 					</form>
 				</div>
 				<div class="pull-right">

@@ -6,10 +6,10 @@
 <title>Computer Database</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap -->
-<link href="../resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="../resources/css/jquery-ui.min.css" rel="stylesheet" media="screen">
-<link href="../resources/css/font-awesome.css" rel="stylesheet" media="screen">
-<link href="../resources/css/main.css" rel="stylesheet" media="screen">
+<link href="../computer-database/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="../computer-database/resources/css/jquery-ui.min.css" rel="stylesheet" media="screen">
+<link href="../computer-database/resources/css/font-awesome.css" rel="stylesheet" media="screen">
+<link href="../computer-database/resources/css/main.css" rel="stylesheet" media="screen">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -19,9 +19,9 @@
     <div class="container">
         <a class="navbar-brand" href="dashboard"> Application - Computer
             Database </a>
-        <span style="float: right"> <img style="cursor: pointer" src="../resources/images/flag-en.png"
+        <span style="float: right"> <img style="cursor: pointer" src="../computer-database/resources/images/flag-en.png"
                                          onclick="$.fn.changeLanguage('en')"/>  <img style="cursor: pointer"
-                src="../resources/images/flag-fr.png" onclick="$.fn.changeLanguage('fr')"/></span>
+                src="../computer-database/resources/images/flag-fr.png" onclick="$.fn.changeLanguage('fr')"/></span>
     </div>
 
 </header>
@@ -71,11 +71,11 @@
 			</div>
 		</div>
 	</section>
-	<script src="../resources/js/jquery.min.js"></script>
-	<script src="../resources/js/jquery-ui.min.js"></script>
-	<script src="../resources/js/jquery.validate.min.js"></script>
-	<script src="../resources/js/bootstrap.min.js"></script>
-	<script src="/internationalization.js"></script>
-	<script src="../resources/js/addComputer.js"></script>
+	<script src="../computer-database/resources/js/jquery.min.js"></script>
+	<script src="../computer-database/resources/js/jquery-ui.min.js"></script>
+	<script src="../computer-database/resources/js/jquery.validate.min.js"></script>
+	<script src="../computer-database/resources/js/bootstrap.min.js"></script>
+	<script src="/computer-database/internationalization.js"></script>
+	<script src="../computer-database/resources/js/addComputer.js"></script>
 </body>
 </html>

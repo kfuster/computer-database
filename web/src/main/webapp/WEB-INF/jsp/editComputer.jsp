@@ -19,7 +19,7 @@
 		<div class="container">
 			<a class="navbar-brand" href="dashboard"> Application -
 				Computer Database </a>
-				<span style="float: right"> <img style="cursor: pointer" src="../resources/images/flag-en.png" onclick="$.fn.changeLanguage('en')"/>  <img style="cursor: pointer" src="../resources/images/flag-fr.png" onclick="$.fn.changeLanguage('fr')"/></span>
+				<span style="float: right"> <img style="cursor: pointer" src="../computer-database/resources/images/flag-en.png" onclick="$.fn.changeLanguage('en')"/>  <img style="cursor: pointer" src="../computer-database/resources/images/flag-fr.png" onclick="$.fn.changeLanguage('fr')"/></span>
 		</div>
 	</header>
 	<section id="main">
@@ -69,11 +69,11 @@
 			</div>
 		</div>
 	</section>
-	<script src="../resources/js/jquery.min.js"></script>
-	<script src="../resources/js/jquery-ui.min.js"></script>
-	<script src="../resources/js/jquery.validate.min.js"></script>
-	<script src="../resources/js/bootstrap.min.js"></script>
-	<script src="/internationalization.js"></script>
-	<script src="../resources/js/editComputer.js"></script>
+	<script src="../computer-database/resources/js/jquery.min.js"></script>
+	<script src="../computer-database/resources/js/jquery-ui.min.js"></script>
+	<script src="../computer-database/resources/js/jquery.validate.min.js"></script>
+	<script src="../computer-database/resources/js/bootstrap.min.js"></script>
+	<script src="/computer-database/internationalization.js"></script>
+	<script src="../computer-database/resources/js/editComputer.js"></script>
 </body>
 </html>

@@ -179,7 +179,7 @@
 			<div class="btn-group btn-group-sm pull-right" role="group">
 				<div style="float: left">
 					<form action="#" method="GET">
-						<input type="number" style="width: 100px;" min="1" name="limit"
+						<input type="number" style="width: 100px;" min="1" name="limit" max="${pageComputer.totalElements}"
 							value="${pageComputer.elementsByPage}" required/> <input type="hidden"
 							value="${pageComputer.page}" name="page" />
 							<input type="hidden"

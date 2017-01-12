@@ -76,6 +76,7 @@ public class ComputerController {
     @RequestMapping(path = "/addComputer", method = RequestMethod.POST)
     public ModelAndView addComputerPost(@Valid @ModelAttribute("computerDto") ComputerDto pComputerDto,
             BindingResult bindingResult) {
+
         if (!bindingResult.hasErrors()) {
             ModelAndView model = new ModelAndView("redirect:/dashboard");
             try {

@@ -97,7 +97,6 @@ public class MenuUtil {
         boolean ok = false;
         while (!ok) {
             int nextOption = MenuUtil.waitForInt();
-            System.out.println(nextOption);
             if (nextOption == 1) {
                 if (pPageFilter.getPageNum() - 1 >= 1) {
                     pPageFilter.setPageNum(pPageFilter.getPageNum() - 1);

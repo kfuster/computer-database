@@ -38,7 +38,7 @@ with password: `qwerty1234`
 - Create a new Tomcat 8.0 Server: **Run** -> **Edit Configurations** and point it to your local Tomcat directory (button **Configure...**) 
 - Set project structure: In **File** -> **Project Structure**, add an Artifact with default options (Artifact tab)  
 
-##3. Git repository
+##3. Git repository 
 - Create your own github account, and initialize a new git repository called "computer-database".  
 - After the initial commit, add and commit a meaningful .gitignore file. 
 

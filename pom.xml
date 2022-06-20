@@ -29,7 +29,7 @@
 		<groovy.version>2.4.7</groovy.version>
 
 		<!-- DB connector -->
-		<mysqlConnector.version>6.0.5</mysqlConnector.version>
+		<mysqlConnector.version>8.0.28</mysqlConnector.version>
 		<!-- DataSource dependencies -->
 		<hikariCp.version>2.5.1</hikariCp.version>
 		<!-- Persistence dependencies -->

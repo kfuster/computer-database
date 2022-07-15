@@ -47,7 +47,7 @@
 		<javaxValidation.version>1.1.0.Final</javaxValidation.version>
 		<hibernateValidator.version>5.3.4.Final</hibernateValidator.version>
 		<commonsValidator.version>1.5.1</commonsValidator.version>
-		<jackson.version>2.8.5</jackson.version>
+		<jackson.version>2.12.6.1</jackson.version>
 		<hibernateJava8.version>5.2.5.Final</hibernateJava8.version>
 		<glassfishCore.version>2.22.2</glassfishCore.version>
 		<!-- Test dependencies -->

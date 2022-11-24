@@ -35,7 +35,7 @@
 		<!-- Persistence dependencies -->
 		<javaxPersistenceApi.version>2.1.1</javaxPersistenceApi.version>
 		<queryDsl.version>4.1.4</queryDsl.version>
-		<hibernateCore.version>5.1.3.Final</hibernateCore.version>
+		<hibernateCore.version>5.3.20.Final</hibernateCore.version>
 		<!-- Spring dependencies -->
 		<spring.version>4.3.5.RELEASE</spring.version>
 		<springSecurity.version>4.2.1.RELEASE</springSecurity.version>
